@@ -10,6 +10,7 @@ import {
 } from "@/lib/quran-data/tafsir-editions";
 import { QuranSheetShell } from "./quran-sheet";
 import { parseVerseKey } from "./mushaf-page-for-ayah";
+import "./mushaf-tafsir-sheet.css";
 
 /**
  * مصادر التفسير الفعلية فقط — كل تبويب يجلب نصّه المستقل.
@@ -56,13 +57,24 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
 
   const parsed = verseKey ? parseVerseKey(verseKey) : null;
   const surahName = parsed ? getSurahMeta(parsed.surah).name : "";
-  const title = parsed ? `سورة ${surahName}، الآية ${parsed.ayah}` : "التفسير";
+  const title = "تفسير الآية";
+  const reference = parsed ? `سورة ${surahName}، الآية ${parsed.ayah}` : "";
   const technicalRef = parsed ? `${parsed.surah}:${parsed.ayah}` : "";
+  const activeEditionLabel =
+    EDITION_TABS.find((t) => isEditionActive(editionId, t.id, t.id))?.label ?? "التفسير";
 
   /** يمنع استجابة قديمة من استبدال اختيار أحدث عند التبديل السريع */
   const fetchGenRef = useRef(0);
   const activeEditionRef = useRef(editionId);
   activeEditionRef.current = editionId;
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) {
@@ -75,6 +87,7 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
     if (!open || !parsed) {
       setText(null);
       setError(null);
+      setLoading(false);
       return;
     }
     const gen = ++fetchGenRef.current;
@@ -82,11 +95,12 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
     const ac = new AbortController();
     setLoading(true);
     setError(null);
-    /* لا نفرّغ النص فورًا — يقلّل الوميض؛ يُستبدل عند وصول النتيجة */
+    setText(null);
     fetchMushafAyahTafsir(parsed.surah, parsed.ayah, requestedEdition, ac.signal)
       .then((res) => {
         if (ac.signal.aborted || gen !== fetchGenRef.current) return;
         if (activeEditionRef.current !== requestedEdition) return;
+        if (!mountedRef.current) return;
         if (!res?.text) {
           setError("لم يتوفر تفسير لهذه الآية حاليًا");
           setText(null);
@@ -96,12 +110,14 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
         }
       })
       .catch(() => {
-        if (!ac.signal.aborted && gen === fetchGenRef.current) {
+        if (!ac.signal.aborted && gen === fetchGenRef.current && mountedRef.current) {
           setError("تعذر تحميل هذا التفسير");
         }
       })
       .finally(() => {
-        if (!ac.signal.aborted && gen === fetchGenRef.current) setLoading(false);
+        if (!ac.signal.aborted && gen === fetchGenRef.current && mountedRef.current) {
+          setLoading(false);
+        }
       });
     return () => {
       ac.abort();
@@ -112,18 +128,19 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
     if (isEditionActive(editionId, id, id)) return;
     setEditionId(id);
     saveMushafTafsirEdition(id);
-    setSnap("full");
   };
 
   const retry = () => {
     if (!parsed) return;
     setError(null);
     setLoading(true);
+    setText(null);
     const gen = ++fetchGenRef.current;
     const requestedEdition = editionId;
-    fetchMushafAyahTafsir(parsed.surah, parsed.ayah, requestedEdition)
+    const ac = new AbortController();
+    fetchMushafAyahTafsir(parsed.surah, parsed.ayah, requestedEdition, ac.signal)
       .then((res) => {
-        if (gen !== fetchGenRef.current) return;
+        if (gen !== fetchGenRef.current || !mountedRef.current) return;
         if (!res?.text) {
           setError("لم يتوفر تفسير لهذه الآية حاليًا");
           setText(null);
@@ -133,23 +150,25 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
         }
       })
       .catch(() => {
-        if (gen === fetchGenRef.current) setError("تعذر تحميل هذا التفسير");
+        if (gen === fetchGenRef.current && mountedRef.current) setError("تعذر تحميل هذا التفسير");
       })
       .finally(() => {
-        if (gen === fetchGenRef.current) setLoading(false);
+        if (gen === fetchGenRef.current && mountedRef.current) setLoading(false);
       });
   };
 
   return (
     <QuranSheetShell
       open={open}
-      ariaLabel="التفسير"
+      ariaLabel="تفسير الآية"
       title={title}
       titleId={titleId}
       onClose={onClose}
       snap={snap}
       testId="mushaf-tafsir-sheet"
+      className="mm-tafsir-sheet"
       panelClassName="mm-tafsir-sheet__panel"
+      closeAriaLabel="إغلاق التفسير وإلغاء تحديد الآية"
       onDragEnd={(dy) => {
         if (dy < -48) setSnap("full");
         else if (dy > 72) {
@@ -158,21 +177,30 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
         }
       }}
     >
-      <div className="mm-tafsir quran-sheet__body">
+      <div className="mm-tafsir quran-sheet__body" data-testid="mushaf-tafsir-root">
         {parsed ? (
-          <header className="mm-tafsir__meta">
-            {/* العنوان العربي يُعرض مرة واحدة في رأس الشيت — هنا المرجع الثانوي فقط */}
+          <header className="mm-tafsir__meta mm-tafsir__sheet-head" data-testid="mushaf-tafsir-header">
+            <p className="mm-tafsir__sheet-kicker">تفسير الآية</p>
+            <p className="mm-tafsir__ref-line" data-testid="mushaf-tafsir-reference">
+              {reference}
+            </p>
             {technicalRef ? (
               <p className="mm-tafsir__meta-ref" data-testid="mushaf-tafsir-ref">
                 {technicalRef}
               </p>
             ) : null}
-            {ayahText ? (
-              <p className="mm-tafsir__ayah" dir="rtl" lang="ar" data-testid="mushaf-tafsir-ayah">
-                {ayahText}
-              </p>
-            ) : null}
           </header>
+        ) : null}
+
+        {parsed && ayahText ? (
+          <p
+            className="mm-tafsir__ayah mm-tafsir__ayah-preview"
+            dir="rtl"
+            lang="ar"
+            data-testid="mushaf-tafsir-ayah"
+          >
+            {ayahText}
+          </p>
         ) : null}
 
         <div className="mm-tafsir__toolbar" role="group" aria-label="مصدر التفسير">
@@ -202,12 +230,14 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
           </div>
         </div>
 
-        {loading && !text ? <p className="mm-tafsir__status">تجهيز التفسير…</p> : null}
-        {loading && text ? (
-          <p className="mm-tafsir__status" aria-live="polite">
-            تحديث المصدر…
-          </p>
+        {loading ? (
+          <div className="mm-tafsir__skeleton" aria-busy="true" aria-label="بانتظار نص التفسير">
+            <div className="mm-tafsir__skeleton-line" />
+            <div className="mm-tafsir__skeleton-line" />
+            <div className="mm-tafsir__skeleton-line" />
+          </div>
         ) : null}
+
         {!loading && error ? (
           <div className="mm-tafsir__status mm-tafsir__status--err">
             <p>{error}</p>
@@ -221,10 +251,16 @@ export function MushafTafsirSheet({ open, verseKey, ayahText = "", onClose }: Pr
             </button>
           </div>
         ) : null}
-        {text ? (
-          <div className="mm-tafsir__body" dir="rtl" lang="ar" data-testid="mushaf-tafsir-body">
-            {text}
-          </div>
+
+        {!loading && text ? (
+          <>
+            <div className="mm-tafsir__body" dir="rtl" lang="ar" data-testid="mushaf-tafsir-body">
+              {text}
+            </div>
+            <p className="mm-tafsir__source-meta" data-testid="mushaf-tafsir-source-meta">
+              المصدر: {activeEditionLabel}
+            </p>
+          </>
         ) : null}
       </div>
     </QuranSheetShell>

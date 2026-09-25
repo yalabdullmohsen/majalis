@@ -1224,6 +1224,25 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   min-height: 1em;
 }
 
+.nm-verse-menu__clear {
+  appearance: none;
+  width: 100%;
+  min-height: 2.75rem;
+  margin-top: 0.15rem;
+  border-radius: 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--nm-ink) 18%, transparent);
+  background: color-mix(in srgb, var(--nm-paper) 90%, var(--nm-ink) 4%);
+  color: var(--nm-ink);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nm-verse-menu__clear:active {
+  background: color-mix(in srgb, var(--nm-gold) 14%, var(--nm-paper));
+}
+
 /* لا نكدّس قائمة الآية فوق رصيف التلاوة — أحدهما فقط */
 .nm-root[data-ayah-bar="1"] .mm-audio-dock {
   opacity: 0 !important;

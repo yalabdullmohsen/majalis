@@ -43,7 +43,7 @@ const openIdx = reader.indexOf("const openTafsir", lp);
 assert.ok(lp >= 0 && openIdx > lp, "onLongPressVerse / openTafsir blocks");
 const lpBlock = reader.slice(lp, openIdx);
 assert.doesNotMatch(lpBlock, /setTafsirOpen\(\s*true\s*\)/);
-assert.match(lpBlock, /setActionsOpen\(\s*true\s*\)/);
+assert.match(lpBlock, /applyVerseSelection\(\s*verseKey\s*,\s*true\s*\)|setActionsOpen\(\s*true\s*\)/);
 
 const ayah = reader.indexOf("onAyahChange");
 assert.ok(ayah >= 0, "onAyahChange present");

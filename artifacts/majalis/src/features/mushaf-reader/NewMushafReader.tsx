@@ -105,6 +105,10 @@ import {
 } from "./mushaf-turn-telemetry";
 import { mushafExperienceMark } from "./mushaf-experience-perf";
 import {
+  clearAyahSelection,
+  selectAyah,
+} from "./mushaf-selection-controller";
+import {
   bumpTafsirGeneration,
   createTafsirOpenIntent,
   isValidTafsirOpenIntent,
@@ -401,6 +405,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     if (pending) {
       /* تمييز بحث — بلا قائمة آية / بلا تفسير / بلا صوت */
       setMushafAyahSearchHighlight(pending);
+      clearAyahSelection();
       setSelectedVerseKey(null);
       setActionsOpen(false);
       setTafsirOpen(false);
@@ -584,6 +589,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     tafsirIntentRef.current = null;
     tafsirOpenRef.current = false;
     setActionsOpen(false);
+    clearAyahSelection();
     setSelectedVerseKey(null);
     setTafsirOpen(false);
     setTafsirVerseKey(null);
@@ -743,12 +749,37 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   );
 
   const clearSelection = useCallback(() => {
-    if (playerState === "playing" || playerState === "buffering" || playerState === "loading") {
-      return;
+    mushafExperienceMark("mushaf:selection-complete");
+    clearAyahSelection();
+    setSelectedVerseKey(null);
+    setActionsOpen(false);
+  }, []);
+
+  const applyVerseSelection = useCallback((verseKey: string, openActions: boolean) => {
+    const parsed = parseVerseKey(verseKey);
+    if (!parsed) return;
+    mushafExperienceMark("mushaf:selection-start");
+    selectAyah({
+      surahNumber: parsed.surah,
+      ayahNumber: parsed.ayah,
+      pageNumber: pageRef.current,
+    });
+    setSelectedVerseKey(verseKey);
+    setActionsOpen(openActions);
+    setChromeOpen(false);
+    setStatus(null);
+    setAudioError(null);
+    if (typeof document !== "undefined") {
+      const ae = document.activeElement;
+      if (
+        ae instanceof HTMLElement &&
+        ae.closest?.('[data-testid="mushaf-ayah-hit"], .nm-word[role="button"]')
+      ) {
+        ae.blur();
+      }
     }
     mushafExperienceMark("mushaf:selection-complete");
-    setSelectedVerseKey(null);
-  }, [playerState]);
+  }, []);
 
   const onSelectVerse = useCallback(
     (verseKey: string) => {
@@ -756,39 +787,23 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         setActionsOpen(false);
         return;
       }
-      mushafExperienceMark("mushaf:selection-start");
       haptics.selection();
-      setSelectedVerseKey(verseKey);
-      setActionsOpen(true);
-      setChromeOpen(false);
-      setStatus(null);
-      setAudioError(null);
-      /* لا تُبقِ التركيز على هدف الآية — يمنع لوحة مفاتيح/تمرير iOS */
-      if (typeof document !== "undefined") {
-        const ae = document.activeElement;
-        if (
-          ae instanceof HTMLElement &&
-          ae.closest?.('[data-testid="mushaf-ayah-hit"], .nm-word[role="button"]')
-        ) {
-          ae.blur();
-        }
-      }
-      mushafExperienceMark("mushaf:selection-complete");
+      applyVerseSelection(verseKey, true);
     },
-    [actionsOpen, selectedVerseKey],
+    [actionsOpen, applyVerseSelection, selectedVerseKey],
   );
 
-  const onLongPressVerse = useCallback((verseKey: string) => {
-    /* Long press = تحديد + قائمة فقط — ممنوع فتح التفسير بدون Intent صريح */
-    if (typeof document !== "undefined" && document.querySelector('[data-mushaf-panning="1"]')) {
-      return;
-    }
-    haptics.selection();
-    setSelectedVerseKey(verseKey);
-    setActionsOpen(true);
-    setChromeOpen(false);
-    setStatus(null);
-  }, []);
+  const onLongPressVerse = useCallback(
+    (verseKey: string) => {
+      /* Long press = تحديد + قائمة فقط — ممنوع فتح التفسير بدون Intent صريح */
+      if (typeof document !== "undefined" && document.querySelector('[data-mushaf-panning="1"]')) {
+        return;
+      }
+      haptics.selection();
+      applyVerseSelection(verseKey, true);
+    },
+    [applyVerseSelection],
+  );
 
   const openTafsir = useCallback(() => {
     if (!selectedVerseKey) return;
@@ -814,6 +829,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     setTafsirOpen(false);
     setTafsirVerseKey(null);
     setChromeOpen(chromeBeforeTafsirRef.current);
+    /* إغلاق التفسير يمسح التحديد دائمًا — بلا حجب أثناء التلاوة */
+    clearAyahSelection();
+    setSelectedVerseKey(null);
+    setActionsOpen(false);
   }, []);
 
   const closeActions = useCallback(() => setActionsOpen(false), []);
@@ -1072,9 +1091,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         onBookmarkMarkerOpen={
           role === "current"
             ? (ayahKey) => {
-                setSelectedVerseKey(ayahKey);
-                setActionsOpen(true);
-                setChromeOpen(false);
+                applyVerseSelection(ayahKey, true);
               }
             : undefined
         }
@@ -1085,6 +1102,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       onSelectVerse,
       onLongPressVerse,
       onPageNumberPressCurrent,
+      applyVerseSelection,
       error,
       bookmarkEpoch,
     ],
@@ -1135,6 +1153,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     setTafsirVerseKey(null);
     setActionsOpen(false);
     setBookmarkComposerOpen(false);
+    clearAyahSelection();
     setSelectedVerseKey(null);
     setControlsMoreOpen(false);
     setGotoOpen(false);
@@ -1184,7 +1203,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         beginPageTurn();
       }}
       onPanVisualStart={() => {
-        /* telemetry أولاً؛ إغلاق التفسير فقط إن كان مفتوحًا (لا يغيّر geometry) */
+        /* telemetry أولاً؛ إغلاق التفسير + مسح التحديد إن كان مفتوحًا */
         mushafTurnMark("firstPageMovement", page);
         if (tafsirOpenRef.current) {
           bumpTafsirGeneration();
@@ -1192,6 +1211,8 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           tafsirOpenRef.current = false;
           setTafsirOpen(false);
           setTafsirVerseKey(null);
+          clearAyahSelection();
+          setSelectedVerseKey(null);
           setActionsOpen(false);
         }
       }}
@@ -1431,6 +1452,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           onCopy={() => void onCopy()}
           onBookmark={onBookmark}
           onClose={closeActions}
+          onClearSelection={clearSelection}
         />
       ) : null}
 
@@ -1469,6 +1491,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
               if (verseKey && n === page) {
                 pendingSelectRef.current = null;
                 setMushafAyahSearchHighlight(verseKey);
+                clearAyahSelection();
                 setSelectedVerseKey(null);
                 setActionsOpen(false);
                 setTafsirOpen(false);

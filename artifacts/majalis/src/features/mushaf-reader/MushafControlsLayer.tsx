@@ -452,9 +452,10 @@ type MenuProps = {
   onCopy: () => void;
   onBookmark: () => void;
   onClose: () => void;
+  onClearSelection: () => void;
 };
 
-/** قائمة آية مختصرة: تلاوة · تفسير · نسخ · حفظ */
+/** قائمة آية: تفسير · استماع · نسخ · فاصل · إلغاء التحديد */
 export const MushafVerseMenu = memo(function MushafVerseMenu({
   verseKey,
   status,
@@ -463,6 +464,7 @@ export const MushafVerseMenu = memo(function MushafVerseMenu({
   onCopy,
   onBookmark,
   onClose,
+  onClearSelection,
 }: MenuProps) {
   const parsed = parseVerseKey(verseKey);
   const label = parsed
@@ -481,18 +483,18 @@ export const MushafVerseMenu = memo(function MushafVerseMenu({
           type="button"
           className="nm-verse-menu__close"
           onClick={onClose}
-          aria-label="إغلاق"
+          aria-label="إغلاق القائمة"
         >
           إغلاق
         </button>
         <span className="nm-verse-menu__label">{label}</span>
       </div>
       <div className="nm-verse-menu__grid">
-        <button type="button" className="nm-verse-menu__action" onClick={onPlay}>
-          استماع
-        </button>
         <button type="button" className="nm-verse-menu__action" onClick={onTafsir}>
           تفسير
+        </button>
+        <button type="button" className="nm-verse-menu__action" onClick={onPlay}>
+          استماع
         </button>
         <button type="button" className="nm-verse-menu__action" onClick={onCopy}>
           نسخ
@@ -501,6 +503,15 @@ export const MushafVerseMenu = memo(function MushafVerseMenu({
           إضافة فاصل
         </button>
       </div>
+      <button
+        type="button"
+        className="nm-verse-menu__clear"
+        data-testid="nm-verse-clear-selection"
+        onClick={onClearSelection}
+        aria-label="إلغاء التحديد"
+      >
+        إلغاء التحديد
+      </button>
       <div className="nm-verse-menu__status" aria-live="polite">
         {status ?? ""}
       </div>
