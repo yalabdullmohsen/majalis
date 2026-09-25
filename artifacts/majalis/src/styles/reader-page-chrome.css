@@ -686,6 +686,14 @@ html[data-theme="dark"] .mm-tafsir__ed-btn {
   margin-inline: auto;
 }
 
+/* لوح: كتلة الافتتاح تتبع غلاف الصفحة لا عمود 22.5rem */
+@media (min-width: 768px) and (min-height: 600px) {
+  .nm-root .nm-page--opening .nm-page__body,
+  .nm-root .nm-page--lead .nm-page__body {
+    width: 100%;
+  }
+}
+
 .nm-page--opening .nm-line,
 .nm-page--lead .nm-line {
   width: 100%;

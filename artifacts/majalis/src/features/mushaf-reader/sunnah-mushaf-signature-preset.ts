@@ -113,13 +113,14 @@ export const SIGNATURE_FONT_SIZE_BANDS = [
 
 /**
  * قاسم عرض يثبّت 24px على 390 مع contentWidth الأوسع (sidePx=2 → body≈386).
- * لا يُستخدم لرفع الخط فوق SIGNATURE_FONT_SIZE_MAX_PX.
+ * لا يُستخدم لرفع الخط فوق SIGNATURE_FONT_SIZE_MAX_PX على الهاتف.
+ * على اللوح يستخدمه useStableMushafLayout لعرض الحبر الآمن.
  */
 export const SIGNATURE_WIDTH_CAPACITY_EM = 15.8;
 
 /**
  * حجم Signature من فئة الشاشة + سقف هندسي موحّد (عرض/ارتفاع).
- * مقفول عند 24 — التقارب من المرجع عبر توسيع العرض/الهوامش لا عبر تكبير إضافي.
+ * مقفول عند 24 — مسار اللوح في useStableMushafLayout يوسّع بشكل منفصل.
  */
 export function resolveSignatureFontSizePx(
   contentWidthPx: number,
@@ -137,5 +138,35 @@ export function resolveSignatureFontSizePx(
   return Math.max(
     18,
     Math.min(band.fontSize, byHeight, byWidth, SIGNATURE_FONT_SIZE_MAX_PX),
+  );
+}
+
+/** سقف خط اللوح — byHeight/byWidth يقيّدان؛ سعة السطر 15.8em */
+export const TABLET_MUSHAF_FONT_SIZE_MAX_PX = 48;
+
+/** عرض غلاف الصفحة على اللوح = عرض الحبر الآمن للخط + الحشو. */
+export function resolveTabletPageMaxWidthPx(
+  viewportW: number,
+  fontSizePx: number,
+  sidePadPx: number,
+): number {
+  const inkW = Math.ceil(fontSizePx * SIGNATURE_WIDTH_CAPACITY_EM);
+  return Math.max(120, Math.min(viewportW, inkW + sidePadPx * 2));
+}
+
+/** حجم خط اللوح من الارتفاع/العرض — بلا رفع سقف الهاتف 24 في Signature. */
+export function resolveTabletSignatureFontSizePx(
+  contentWidthPx: number,
+  bodyHeightPx: number,
+): number {
+  const byHeight =
+    bodyHeightPx > 0 ? Math.floor(bodyHeightPx / 15 / 1.85) : 24;
+  const byWidth =
+    contentWidthPx > 0
+      ? Math.floor(contentWidthPx / SIGNATURE_WIDTH_CAPACITY_EM)
+      : 24;
+  return Math.max(
+    18,
+    Math.min(byHeight, byWidth, TABLET_MUSHAF_FONT_SIZE_MAX_PX),
   );
 }
