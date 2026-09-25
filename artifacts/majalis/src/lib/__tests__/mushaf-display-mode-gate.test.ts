@@ -70,9 +70,18 @@ assert.match(more, /إعدادات المصحف/);
 const css = read("src/features/mushaf-reader/mushaf-reader.css");
 assert.match(css, /html\[data-mushaf-appearance="night"\] \.nm-root/);
 assert.match(css, /html\[data-mushaf-appearance="light"\] \.nm-root/);
+assert.match(css, /--mm-paper:\s*var\(--mushaf-paper/);
 assert.doesNotMatch(
   css,
   /html\[data-mushaf-appearance="night"\] \.nm-root,\s*\.nm-root\[data-mushaf-appearance="night"\],\s*html\[data-theme="dark"\] \.nm-root,\s*html\.dark \.nm-root \{/,
+);
+
+const madinah = read("src/features/mushaf-madinah/mushaf-madinah.css");
+assert.match(madinah, /html\[data-mushaf-appearance="night"\] \.mm-viewport/);
+assert.match(madinah, /html\[data-mushaf-appearance="light"\] \.mm-viewport/);
+assert.doesNotMatch(
+  madinah,
+  /html\[data-theme="dark"\] \.mm-viewport,\s*html\.dark \.mm-viewport/,
 );
 
 const reader = read("src/features/mushaf-reader/NewMushafReader.tsx");

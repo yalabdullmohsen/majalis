@@ -155,8 +155,9 @@
   --mm-dock-pad: calc(4rem + var(--inset-bottom, 0px));
 }
 
-html[data-theme="dark"] .mm-viewport,
-html.dark .mm-viewport,
+/* وضع عرض المصحف فقط — لا يُربط بـ Theme التطبيق (SYSTEM/LIGHT/DARK) */
+html[data-mushaf-appearance="night"] .mm-viewport,
+.mm-viewport[data-mushaf-appearance="night"],
 .mm-viewport[data-mushaf-theme="night"],
 .mm-viewport[data-mushaf-theme="oled"] {
   --mm-paper: #101820;
@@ -182,6 +183,31 @@ html.dark .mm-viewport,
   --mm-chrome: color-mix(in srgb, #152028 94%, transparent);
   --mm-chrome-fg: #f4efe5;
   --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 42%, transparent);
+  --mushaf-bg: var(--mm-outer-bg);
+  background: var(--mm-outer-bg);
+}
+
+/* LIGHT صريح — يهزم أي بقايا Theme التطبيق على سطح المصحف */
+html[data-mushaf-appearance="light"] .mm-viewport,
+.mm-viewport[data-mushaf-appearance="light"] {
+  --mm-paper: #fffcf7;
+  --mm-paper-deep: #fffcf7;
+  --mm-outer-bg: #fffcf7;
+  --mm-ink: #111111;
+  --mm-gold: #a68b67;
+  --mm-gold-soft: #c5b396;
+  --mm-gold-deep: #785e38;
+  --mm-ayah-mark: #785e38;
+  --mm-header: #8a6a32;
+  --mm-banner-fill: linear-gradient(180deg, #efe6d8 0%, #e8dcc8 48%, #d5c4a1 100%);
+  --mm-banner-name-bg: #efe6d8;
+  --mm-ayah-select: #e8d4b0;
+  --mm-ayah-play: #f0e0c8;
+  --mm-ui-accent: #135034;
+  --mm-ui-accent-deep: #0e3d27;
+  --mm-chrome: color-mix(in srgb, var(--mm-paper) 94%, #fff);
+  --mm-chrome-fg: var(--mm-ink);
+  --mm-chrome-border: color-mix(in srgb, var(--mm-gold) 28%, transparent);
   --mushaf-bg: var(--mm-outer-bg);
   background: var(--mm-outer-bg);
 }
@@ -512,8 +538,10 @@ html.dark .mm-viewport,
   padding-bottom: 0;
 }
 
-html[data-theme="dark"] .mm-viewport .mm-page,
-html.dark .mm-viewport .mm-page {
+html[data-mushaf-appearance="night"] .mm-viewport .mm-page,
+.mm-viewport[data-mushaf-appearance="night"] .mm-page,
+.mm-viewport[data-mushaf-theme="night"] .mm-page,
+.mm-viewport[data-mushaf-theme="oled"] .mm-page {
   box-shadow: none;
 }
 

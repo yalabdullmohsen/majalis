@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-25T09:45:52.253Z",
+  "generatedAt": "2026-09-25T09:54:31.435Z",
   "total": 30,
   "PASS": 23,
   "FIXED": 7,
@@ -80,7 +80,7 @@
       "expectedAction": "set SYSTEM appearance",
       "handler": "onChange(SYSTEM)",
       "status": "FIXED",
-      "rootCause": "ATTRIBUTE_NOT_UPDATED — data-mushaf-appearance لم يكن مربوطًا على .nm-root عبر React"
+      "rootCause": "CSS_OVERRIDE — mushaf-madinah.css ربط night بـ html[data-theme=dark]؛ فُصل إلى data-mushaf-appearance"
     },
     {
       "elementId": "mushaf-display-mode-LIGHT",
@@ -89,7 +89,7 @@
       "expectedAction": "set LIGHT appearance",
       "handler": "onChange(LIGHT)",
       "status": "FIXED",
-      "rootCause": "ATTRIBUTE_NOT_UPDATED + missing explicit light remapper"
+      "rootCause": "CSS_OVERRIDE + ATTRIBUTE_NOT_UPDATED — remapper نهاري + فك ارتباط Theme التطبيق"
     },
     {
       "elementId": "mushaf-display-mode-DARK",
@@ -98,7 +98,7 @@
       "expectedAction": "set DARK appearance",
       "handler": "onChange(DARK)",
       "status": "FIXED",
-      "rootCause": "ATTRIBUTE_NOT_UPDATED"
+      "rootCause": "CSS_OVERRIDE — --mm-paper كان يبقى عاجيًا رغم data-mushaf-appearance=night"
     },
     {
       "elementId": "mushaf-page-arrows-toggle",

@@ -1,6 +1,6 @@
 # جرد أزرار المصحف — Controls Inventory
 
-**Generated:** 2026-09-25T09:45:52.253Z  
+**Generated:** 2026-09-25T09:54:31.435Z  
 **Method:** static source inventory (exact counts from `CONTROLS` list; not estimates)
 
 ## Summary
@@ -17,7 +17,7 @@
 
 ## Root causes fixed
 
-1. **SYSTEM/LIGHT/DARK — ATTRIBUTE_NOT_UPDATED:** `NewMushafReader` now binds `data-mushaf-appearance={mushafAppearanceResolved}` and updates it on preference/OS scheme change. Explicit light remapper added.
+1. **SYSTEM/LIGHT/DARK — CSS_OVERRIDE:** `mushaf-madinah.css` كان يفرض night عبر `html[data-theme=dark] .mm-viewport` ويتجاهل وضع العرض. فُصل إلى `data-mushaf-appearance` + ربط React على `.nm-root` + مزامنة `--mm-*`.
 2. **Page arrows — CSS_HIDDEN:** `data-chrome="0"` rules no longer hide arrows when `data-page-arrows="1"`. Visibility no longer requires `chromeOpen`.
 3. **Ayah marker clarity:** external size stays `1.15em`; number `1.52em`; soft 8-petal clip; `inline-grid` + `place-items:center`.
 

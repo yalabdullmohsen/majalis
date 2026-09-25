@@ -1289,6 +1289,11 @@ html[data-mushaf-appearance="light"] .nm-root,
   --mushaf-verse-marker-number: var(--mushaf-marker-number);
   --nm-gold: var(--mushaf-marker-background);
   --nm-gold-deep: var(--mushaf-marker-border);
+  /* مزامنة عائلة --mm-* (تُحمَّل madinah بعد هذا الملف وتكتب قيمًا حرفية) */
+  --mm-paper: var(--mushaf-paper-reading-surface);
+  --mm-paper-deep: var(--mushaf-paper-reading-surface);
+  --mm-outer-bg: var(--mushaf-paper-reading-surface);
+  --mm-ink: var(--mushaf-ink-primary);
 }
 
 /* مظهر ليلي للمصحف — يعتمد وضع عرض المصحف فقط، لا Theme التطبيق */
@@ -1324,6 +1329,10 @@ html[data-mushaf-appearance="night"] .nm-root,
   --mushaf-selected-ayah: color-mix(in srgb, var(--mushaf-accent-fill-night) 22%, transparent);
   --mushaf-focus-ring: color-mix(in srgb, var(--mushaf-accent-fill-night) 48%, transparent);
   --mushaf-accent-soft: color-mix(in srgb, var(--mushaf-accent-fill-night) 22%, transparent);
+  --mm-paper: var(--mushaf-paper-warm-yellow-dark);
+  --mm-paper-deep: #1a1610;
+  --mm-outer-bg: var(--mushaf-paper-warm-yellow-dark);
+  --mm-ink: var(--mushaf-ink-dark);
 }
 
 /*

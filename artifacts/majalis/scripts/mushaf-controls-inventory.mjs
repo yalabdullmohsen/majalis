@@ -80,7 +80,7 @@ const CONTROLS = [
     expectedAction: "set SYSTEM appearance",
     handler: "onChange(SYSTEM)",
     status: "FIXED",
-    rootCause: "ATTRIBUTE_NOT_UPDATED — data-mushaf-appearance لم يكن مربوطًا على .nm-root عبر React",
+    rootCause: "CSS_OVERRIDE — mushaf-madinah.css ربط night بـ html[data-theme=dark]؛ فُصل إلى data-mushaf-appearance",
   },
   {
     elementId: "mushaf-display-mode-LIGHT",
@@ -89,7 +89,7 @@ const CONTROLS = [
     expectedAction: "set LIGHT appearance",
     handler: "onChange(LIGHT)",
     status: "FIXED",
-    rootCause: "ATTRIBUTE_NOT_UPDATED + missing explicit light remapper",
+    rootCause: "CSS_OVERRIDE + ATTRIBUTE_NOT_UPDATED — remapper نهاري + فك ارتباط Theme التطبيق",
   },
   {
     elementId: "mushaf-display-mode-DARK",
@@ -98,7 +98,7 @@ const CONTROLS = [
     expectedAction: "set DARK appearance",
     handler: "onChange(DARK)",
     status: "FIXED",
-    rootCause: "ATTRIBUTE_NOT_UPDATED",
+    rootCause: "CSS_OVERRIDE — --mm-paper كان يبقى عاجيًا رغم data-mushaf-appearance=night",
   },
   {
     elementId: "mushaf-page-arrows-toggle",
@@ -322,7 +322,7 @@ const md = `# جرد أزرار المصحف — Controls Inventory
 
 ## Root causes fixed
 
-1. **SYSTEM/LIGHT/DARK — ATTRIBUTE_NOT_UPDATED:** \`NewMushafReader\` now binds \`data-mushaf-appearance={mushafAppearanceResolved}\` and updates it on preference/OS scheme change. Explicit light remapper added.
+1. **SYSTEM/LIGHT/DARK — CSS_OVERRIDE:** \`mushaf-madinah.css\` كان يفرض night عبر \`html[data-theme=dark] .mm-viewport\` ويتجاهل وضع العرض. فُصل إلى \`data-mushaf-appearance\` + ربط React على \`.nm-root\` + مزامنة \`--mm-*\`.
 2. **Page arrows — CSS_HIDDEN:** \`data-chrome="0"\` rules no longer hide arrows when \`data-page-arrows="1"\`. Visibility no longer requires \`chromeOpen\`.
 3. **Ayah marker clarity:** external size stays \`1.15em\`; number \`1.52em\`; soft 8-petal clip; \`inline-grid\` + \`place-items:center\`.
 
