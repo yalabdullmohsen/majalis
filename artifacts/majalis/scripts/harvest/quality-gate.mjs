@@ -380,6 +380,8 @@ export function curateStoredFeedItems(items, now = new Date()) {
         place: card.place,
         starts_at: card.starts_at,
         register_url: card.register_url,
+        time_text: card.time_text,
+        schedule_kind: card.schedule_kind,
       },
       now,
     });
@@ -392,10 +394,15 @@ export function curateStoredFeedItems(items, now = new Date()) {
       continue;
     }
     const resolvedPublished = resolvePublishedAt(card.published_at, text);
+    const keepTitle =
+      typeof card.title_ar === "string" &&
+      card.title_ar.trim().length >= 3 &&
+      card.title_ar.trim().length <= 80 &&
+      !/…|\.\.\.$/.test(card.title_ar.trim());
     kept.push({
       ...card,
       type: gate.type,
-      title_ar: gate.title_ar,
+      title_ar: keepTitle ? card.title_ar.trim() : gate.title_ar,
       published_at: resolvedPublished || card.published_at,
     });
   }
@@ -404,8 +411,14 @@ export function curateStoredFeedItems(items, now = new Date()) {
   const deduped = [];
   for (const card of kept.sort((a, b) => feedPriorityScore(b) - feedPriorityScore(a))) {
     const srcId = card.sources?.[0]?.id || card.id;
-    if (seenSource.has(srcId)) continue;
-    seenSource.add(srcId);
+    // جداول أسبوعية/شهرية: عدة دروس من نفس المصدر (مثلاً جدول عثمان الخميس)
+    const multiSlot =
+      card.schedule_kind === "weekly" || card.schedule_kind === "monthly";
+    const slotKey = multiSlot
+      ? `${srcId}:${card.starts_at || ""}:${normalizeArabic(card.title_ar || "").slice(0, 40)}`
+      : srcId;
+    if (seenSource.has(slotKey)) continue;
+    seenSource.add(slotKey);
     deduped.push(card);
   }
 
