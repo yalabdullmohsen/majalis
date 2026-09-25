@@ -16,18 +16,20 @@ const speech = readFileSync(resolve(root, "src/lib/speech-read-aloud.ts"), "utf8
 const stb = readFileSync(resolve(root, "src/styles/components/scholarly-trust.css"), "utf8");
 
 assert.equal(isCompactHeaderPath("/prophets"), true);
-assert.equal(isPinnedChromePath("/prophets/nuh"), true);
+assert.equal(isPinnedChromePath("/prophets"), true);
+assert.equal(isPinnedChromePath("/prophets/nuh"), false);
 assert.match(app, /isPinnedChromePath\(location\)/);
 
 assert.match(css, /inset-inline-start:\s*1\.15rem/);
 assert.doesNotMatch(css, /\.prophet-timeline__line\s*\{[^}]*left:\s*50%/s);
 assert.match(css, /\.prophet-timeline__card[\s\S]{0,220}max-width:\s*none/);
 assert.match(css, /\.prophet-detail-lux \.stb-row__label/);
-assert.match(css, /\.prophet-story-lux__footer span[\s\S]{0,120}--ps-text-primary/);
 assert.match(css, /overflow-x:\s*clip/);
-assert.match(css, /padding-bottom:\s*calc\(var\(--bottom-nav-height/);
+assert.match(css, /\.prophet-reader-header/);
+assert.match(css, /padding-bottom:\s*calc\(var\(--inset-bottom/);
 
 assert.match(view, /prophet-speech-btn/);
+assert.match(view, /ProphetStoryReader/);
 assert.match(view, /playAiNarration|stopAiNarration|speakArabicText|stopSpeechReadAloud/);
 assert.match(view, /استماع/);
 assert.match(speech, /speechSynthesis|playAiNarration/);

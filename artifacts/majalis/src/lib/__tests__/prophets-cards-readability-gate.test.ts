@@ -22,8 +22,8 @@ assert.match(
   /\.prophets-lux-grid\s*>\s*:last-child:nth-child\(odd\)[\s\S]{0,120}?max-width:\s*none/s,
 );
 
-/* ~مساحة موحّدة أقصر */
-assert.match(css, /\.prophet-lux-card\s*\{[^}]*min-height:\s*12\.5rem/s);
+/* ارتفاع طبيعي — بلا فراغ ضخم ثابت */
+assert.match(css, /\.prophet-lux-card\s*\{[^}]*min-height:\s*0/s);
 assert.match(css, /\.prophet-lux-card__name\s*\{[^}]*font-size:\s*clamp\(1\.32rem/s);
 assert.match(css, /\.prophet-lux-card__name\s*\{[^}]*font-weight:\s*800/s);
 assert.match(css, /\.prophet-lux-card__title\s*\{[^}]*font-weight:\s*750/s);
@@ -44,12 +44,12 @@ assert.match(
 assert.match(css, /--ps-ink-soft:\s*var\(--text-secondary/);
 assert.match(css, /html\.dark \.prophets-lux-page[\s\S]{0,80}?--ps-ink-soft:\s*#C8D5CF/s);
 assert.match(css, /html\.dark \.prophet-lux-card__chip[\s\S]{0,220}?#E8F0EC/s);
-assert.match(css, /\.prophet-fact-card\s*\{[^}]*min-height:\s*6\.5rem/s);
+assert.match(css, /\.prophet-fact-card\s*\{[^}]*min-height:\s*0/s);
 assert.doesNotMatch(css, /word-break:\s*break-all/);
+assert.match(view, /ProphetTopicCard/);
 
 /* عرض ضيق: عمود واحد + chips أصغر عند 320px */
 assert.match(css, /@media \(max-width:\s*320px\)[\s\S]{0,220}?\.prophet-lux-card__chip/s);
-assert.match(css, /@media \(max-width:\s*390px\)[\s\S]{0,220}?min-height:\s*11\.5rem/s);
 
 /* سيرة مختصرة + CTA كامل */
 assert.match(view, /prophets-seerah-brief/);
