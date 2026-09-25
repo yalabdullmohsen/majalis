@@ -30,6 +30,7 @@
   align-items: stretch;
   gap: 0.25rem;
   min-height: 3.35rem;
+  width: 100%;
   padding: 0.7rem 0.85rem;
   border-radius: var(--ds-radius-md, 0.75rem);
   border: 1px solid color-mix(in srgb, var(--mj-brand, #1e5f4b) 18%, transparent);
@@ -38,6 +39,9 @@
   font: inherit;
   text-align: start;
   cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
