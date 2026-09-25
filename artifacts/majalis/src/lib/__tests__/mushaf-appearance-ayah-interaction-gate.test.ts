@@ -40,7 +40,7 @@ assert.match(css, /--mushaf-accent-soft:/);
 console.log("=== Unified marker scale (no opening inflation) ===");
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 assert.match(css, /--mushaf-ayah-mark-font-size:\s*0\.62em/);
-assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.28em/);
+assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.40em/);
 assert.doesNotMatch(chrome, /--mushaf-ayah-mark-size:\s*1\.22em/);
 assert.doesNotMatch(chrome, /font-size:\s*var\(--mushaf-ayah-mark-number-size,\s*0\.7em\)/);
 
