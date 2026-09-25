@@ -18,12 +18,12 @@
 .cr-note {
   margin: 0;
   padding: var(--read-card-pad-block, 1.15rem) var(--read-card-pad-inline, 1.2rem);
-  border-radius: var(--radius-card, 24px);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 18%, transparent);
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 7%, var(--ss-card-bg, #fffcf7));
-  color: var(--mj-ink, #16241e);
-  font-size: var(--type-body-sm, 0.9rem);
-  line-height: var(--lh-prose, 1.85);
+  border-radius: var(--mie-radius-card, var(--radius-card, 24px));
+  border: 1px solid var(--mie-border, color-mix(in srgb, var(--brand-olive, #3d5c45) 14%, transparent));
+  background: var(--surface-card, color-mix(in srgb, var(--brand-olive, #3d5c45) 7%, #fffbf5));
+  color: var(--text-primary, var(--mj-ink, #1a241c));
+  font-size: var(--mie-type-body, var(--type-body-sm, 1.0625rem));
+  line-height: var(--mie-lh-reading, var(--lh-prose, 1.9));
   font-weight: 550;
 }
 
@@ -50,24 +50,24 @@
 
 .cr-faq__item {
   padding: 0.75rem 0.85rem;
-  border-radius: 18px;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 14%, transparent);
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 4%, transparent);
+  border-radius: var(--mie-radius-card, 1.35rem);
+  border: 1px solid var(--mie-border, color-mix(in srgb, var(--brand-olive, #3d5c45) 14%, transparent));
+  background: var(--surface-card, color-mix(in srgb, var(--brand-olive, #3d5c45) 4%, transparent));
 }
 
 .cr-faq__q {
   margin: 0 0 0.45rem;
-  font-size: var(--type-section, 0.95rem);
+  font-size: var(--mie-type-card, var(--type-section, 1.05rem));
   font-weight: 800;
-  color: var(--brand-on-light, var(--mj-brand-deep, #0d4a39));
+  color: var(--brand-olive-deep, var(--brand-on-light, #2a4030));
   line-height: var(--lh-reading-section, 1.35);
 }
 
 .cr-faq__a {
   margin: 0;
-  font-size: var(--type-body-regular, 0.92rem);
-  line-height: var(--lh-reading, 1.9);
-  color: var(--mj-ink, #16241e);
+  font-size: var(--mie-type-body, var(--type-body-regular, 1.0625rem));
+  line-height: var(--mie-lh-reading, var(--lh-reading, 1.9));
+  color: var(--text-primary, var(--mj-ink, #1a241c));
   font-weight: 500;
 }
 

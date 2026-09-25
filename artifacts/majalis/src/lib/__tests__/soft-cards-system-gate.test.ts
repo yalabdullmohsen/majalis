@@ -44,7 +44,11 @@ assert.match(finalRelease, /\.hub-card\s*,/, "HubCard ضمن polish الحواف
 assert.doesNotMatch(soft, /\bbutton\s*\{/, "لا قاعدة button عامة في soft-cards");
 assert.doesNotMatch(finalRelease, /^\s*button\s*\{/m, "لا قاعدة button عامة في final-release");
 
-assert.match(prayer, /--pts-radius:\s*var\(--radius-card,\s*24px\)/, "الصلاة تستخدم نصف قطر البطاقة الناعمة 24px");
+assert.match(
+  prayer,
+  /--pts-radius:\s*var\(--mie-radius-card,\s*var\(--radius-card,\s*24px\)\)/,
+  "الصلاة تستخدم نصف قطر Editorial/البطاقة الناعمة 24px",
+);
 assert.match(prayer, /inset 0 1px 0 rgba\(255,\s*255,\s*255,\s*0\.12\)/, "highlight بطاقة البطل");
 assert.doesNotMatch(prayer, /\.pts-row--next[\s\S]{0,120}border:\s*1\.5px/, "لا إطار سميك للصلاة القادمة");
 assert.match(prayer, /\.pts-row\s*\{[\s\S]*?grid-template-columns:/, "صفوف المواقيت أفقية مضغوطة");

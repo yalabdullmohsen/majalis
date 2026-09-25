@@ -72,6 +72,7 @@
 | `docs/architecture/TECHNOLOGY_INVENTORY.md` | **World-Class Eng PR-0** — جرد تقنيات + قرارات تبعيات + هدف معماري |
 
 | `artifacts/majalis/docs/design/SUNNAH_VISUAL_LANGUAGE.md` | لغة سُنّة البصرية (SVL) — أساس + موجات PR |
+| `artifacts/majalis/src/styles/modern-islamic-editorial-tokens.css` | **Modern Islamic Editorial** — ورق/زيتوني/ذهب (تعليمي؛ ليس المصحف) |
 | `docs/design/SUNNAH_DESIGN_SYSTEM_REPORT.md` | توحيد Design System (PR-3 استقرار) |
 | `docs/design/SUNNAH_FOUNDATION_RESET_PR0_BASELINE.md` | Foundation Reset PR-0 — خريطة اعتماديات + Baseline |
 | `docs/design/SUNNAH_FOUNDATION_RESET_PR1_TOKENS.md` | Foundation Reset PR-1 — Tokens + Typography + Density |

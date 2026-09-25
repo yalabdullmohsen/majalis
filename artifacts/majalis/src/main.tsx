@@ -72,6 +72,9 @@ import "./styles/sections-calm-polish.css";
 /* نمط مكارم الأخلاق — مؤجَّل (زينة أقسام، ليس أول طلاء) */
 /* تباين بطاقات الأقسام/المعجم/العقيدة — نهاري وليلي */
 import "./styles/section-cards-theme.css";
+/* Modern Islamic Editorial — آخر طبقة رموز تعليمية حتى تفوز على الجسور */
+import "./styles/modern-islamic-editorial-tokens.css";
+import "./styles/modern-islamic-editorial.css";
 /* صقل منتج سُنّة — توكنات/بطاقات/درج/بحث/ليلي */
 import "./styles/ssunnah-ux-polish.css";
 /* semantic-tokens + card-unify مؤجّلان — ميزانية CSS الحرج ≤60KiB gzip */
@@ -143,6 +146,9 @@ function loadNonCriticalCss() {
       void import("./styles/dark-mode-recovery.css");
       // كنس الشريط الزخرفي بعد الطبقات المتأخرة
       void import("./styles/card-decorative-strip-cleanup.css");
+      /* Editorial أخيرًا حتى تفوز رموز الورق/الزيتون على الطبقات المتأخرة */
+      void import("./styles/modern-islamic-editorial-tokens.css");
+      void import("./styles/modern-islamic-editorial.css");
     });
   });
   void import("./styles/components/instant-interaction.css");

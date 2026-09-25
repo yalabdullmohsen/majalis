@@ -642,6 +642,7 @@
     "test:sunnah-identity-reset-pr10": "node --import tsx src/lib/__tests__/sunnah-identity-reset-pr10-gate.test.ts",
     "test:sunnah-foundation-reset-pr0": "node --import tsx src/lib/__tests__/sunnah-foundation-reset-pr0-gate.test.ts",
     "test:sunnah-foundation-reset-pr1": "node --import tsx src/lib/__tests__/sunnah-foundation-reset-pr1-gate.test.ts && node scripts/lint-sunnah-foundation-tokens.mjs",
+    "test:modern-islamic-editorial": "node --import tsx src/lib/__tests__/modern-islamic-editorial-gate.test.ts",
     "test:deeplink-learn-series": "node --import tsx src/lib/__tests__/deeplink-learn-series-gate.test.ts",
     "test:mushaf-advanced-bookmarks": "node --import tsx src/lib/__tests__/mushaf-advanced-bookmarks-gate.test.ts",
     "test:content-quality-wave32": "node --import tsx src/lib/__tests__/content-quality-wave32-gate.test.ts",

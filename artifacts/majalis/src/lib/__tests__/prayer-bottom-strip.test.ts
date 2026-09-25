@@ -14,8 +14,8 @@ const page = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerTimesView
 
 assert.match(
   css,
-  /html\.pts-immersive[\s\S]*?linear-gradient\(180deg,\s*#0f4a38\s+0%,\s*#083528\s+55%,\s*#06271f\s+100%\)/,
-  "تدرّج موحّد على html/body/#root",
+  /html\.pts-immersive[\s\S]*?linear-gradient\(\s*180deg,\s*var\(--brand-olive/,
+  "تدرّج موحّد زيتوني Editorial على html/body/#root",
 );
 assert.match(css, /html\.pts-immersive\s+\.bottom-nav--m2030/, "يغطي صنف m2030");
 assert.match(
@@ -35,8 +35,8 @@ assert.match(
 );
 assert.match(
   css,
-  /html\.pts-immersive #root[\s\S]*?background-color:\s*#06271f/,
-  "#root مطلي بزمرد الصلاة لا --app-bg",
+  /html\.pts-immersive #root[\s\S]*?background-color:\s*var\(--brand-olive-deep/,
+  "#root مطلي بزيتون Editorial لا --app-bg",
 );
 assert.doesNotMatch(
   css,
@@ -72,7 +72,7 @@ assert.doesNotMatch(
 );
 assert.match(
   css,
-  /html\.pts-immersive[\s\S]*?linear-gradient\(180deg,\s*#0f4a38\s+0%,\s*#083528\s+55%,\s*#06271f\s+100%\)/,
+  /html\.pts-immersive[\s\S]*?linear-gradient\(\s*180deg,\s*var\(--brand-olive/,
 );
 assert.match(css, /\.pts-screen\s*\{[\s\S]*?width:\s*100%/);
 assert.match(css, /\.pts-screen\s*\{[\s\S]*?background:\s*transparent/);

@@ -45,8 +45,8 @@ assert.match(cardTsx, /التقويم/);
 
 assert.match(prayerCss, /--pts-muted:\s*rgba\(250,\s*250,\s*248,\s*0\.9\)/);
 assert.match(prayerCss, /--pts-card-bg:/);
-/* ذهب النص صلب عبر --mj-accent — لا --mj-accent-soft الشفاف ليلاً (CI #6676) */
-assert.match(prayerCss, /--pts-gold:\s*var\(--mj-accent/);
+/* ذهب Editorial صلب عبر --brand-gold → --mj-accent — لا accent-soft الشفاف */
+assert.match(prayerCss, /--pts-gold:\s*var\(--brand-gold,\s*var\(--mj-accent/);
 assert.doesNotMatch(
   prayerCss,
   /--pts-gold:\s*var\(--mj-accent-soft/,
