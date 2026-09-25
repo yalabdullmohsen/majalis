@@ -22,7 +22,11 @@
   --prophets-text-primary: var(--text-primary, #1a241c);
   --prophets-text-secondary: var(--text-secondary, #3f4f46);
   --prophets-text-muted: var(--text-muted, #5e6e65);
+  /* على accent فاتح/أزرار زمردية فاتحة */
   --prophets-text-on-accent: #fffef9;
+  /* على سطح زمردي عميق (Hero) — عاجي دائمًا في الفاتح والداكن */
+  --prophets-text-on-deep: #fffef9;
+  --ps-on-emerald: var(--prophets-text-on-deep);
 
   /* Accent — زمردي/زيتوني بلا أزرق */
   --prophets-accent: var(--brand-olive, #3d5c45);
@@ -65,7 +69,11 @@ html[data-theme="dark"] .prophet-story-reader {
   --prophets-text-primary: #ecf2ef;
   --prophets-text-secondary: #c8d5cf;
   --prophets-text-muted: #9aaba3;
+  /* على accent الزمردي الفاتح الليلي (أزرار/chips) */
   --prophets-text-on-accent: #0f1614;
+  /* على سطح زمردي عميق (Hero) — يبقى عاجيًا؛ ممنوع الحبر الداكن */
+  --prophets-text-on-deep: #fffef9;
+  --ps-on-emerald: var(--prophets-text-on-deep);
 
   --prophets-accent: #7a9a82;
   --prophets-accent-hover: #9ab5a1;

@@ -559,7 +559,7 @@ html.dark .prophets-page-lead {
 }
 
 /* يهزم لون النص الداكن العام من elite-2026 داخل صفحة التفصيل */
-.prophet-detail-lux h1,
+.prophet-detail-lux h1:not(.prophet-identity-hero__name),
 .prophet-detail-lux h2,
 .prophet-detail-lux h3,
 .prophet-detail-lux p {
@@ -633,9 +633,8 @@ html.dark .prophets-page-lead {
   border-radius: var(--mie-radius-card, var(--radius-card, 1.35rem));
   background-color: var(--ps-emerald, var(--brand-olive-deep, #2a4030));
   background-image: none;
-  /* نص عاجي فوق الزمرد — يهزم --prophets-text-on-accent الليلي الداكن داخل الهيرو */
-  --prophets-text-on-accent: var(--ps-on-emerald, #fffef9);
-  color: var(--prophets-text-on-accent, var(--ps-on-emerald, #fffef9));
+  /* عاجي على العميق — لا تستخدم --prophets-text-on-accent الليلي الداكن */
+  color: var(--prophets-text-on-deep, var(--ps-on-emerald, #fffef9));
   border: 1px solid color-mix(in srgb, var(--prophets-gold, var(--ps-brass)) 28%, transparent);
   text-align: start;
 }
@@ -658,9 +657,9 @@ html.dark .prophets-page-lead {
   font-weight: 650;
   padding: 0.2rem 0.7rem;
   border-radius: var(--radius-pill, 999px);
-  border: 1px solid color-mix(in srgb, var(--prophets-text-on-accent, #fffef9) 28%, transparent);
-  background: color-mix(in srgb, var(--prophets-text-on-accent, #fffef9) 12%, transparent);
-  color: var(--prophets-text-on-accent, var(--ps-on-emerald, #fffef9));
+  border: 1px solid color-mix(in srgb, var(--prophets-text-on-deep, #fffef9) 28%, transparent);
+  background: color-mix(in srgb, var(--prophets-text-on-deep, #fffef9) 12%, transparent);
+  color: var(--prophets-text-on-deep, var(--ps-on-emerald, #fffef9));
 }
 .prophet-identity-hero__name {
   margin: 0;
@@ -668,29 +667,30 @@ html.dark .prophets-page-lead {
   font-size: clamp(1.45rem, 4.2vw, 2.05rem);
   font-weight: 800;
   line-height: 1.25;
-  color: var(--prophets-text-on-accent, var(--ps-on-emerald, #fffef9));
+  color: var(--prophets-text-on-deep, var(--ps-on-emerald, #fffef9));
 }
-/* يهزم .prophet-detail-lux h1 { color: --ps-text-primary } الذي كان يضع حبرًا داكنًا على الزمرد */
-.prophet-detail-lux h1.prophet-identity-hero__name {
-  color: var(--ps-on-emerald, var(--prophets-text-on-accent, #fffef9));
+/* يهزم .prophet-detail-lux h1 { color: --ps-text-primary / --text-primary } */
+.prophet-detail-lux h1.prophet-identity-hero__name,
+.prophet-story-reader h1.prophet-identity-hero__name {
+  color: var(--prophets-text-on-deep, var(--ps-on-emerald, #fffef9));
 }
 .prophet-identity-hero__pbuh {
   margin: 0;
   font-size: 0.92rem;
-  color: color-mix(in srgb, var(--prophets-text-on-accent, #fffef9) 92%, transparent);
+  color: color-mix(in srgb, var(--prophets-text-on-deep, #fffef9) 92%, transparent);
 }
 .prophet-identity-hero__title {
   margin: 0;
   font-size: 1.05rem;
   font-weight: 650;
-  color: var(--prophets-text-on-accent, var(--ps-on-emerald, #fffef9));
+  color: var(--prophets-text-on-deep, var(--ps-on-emerald, #fffef9));
 }
 .prophet-identity-hero__quran {
   margin: 0.15rem 0 0;
   font-family: "Amiri Quran", "Amiri", serif;
   font-size: 1.05rem;
   font-weight: 600;
-  color: var(--prophets-text-on-accent, var(--ps-on-emerald, #fffef9));
+  color: var(--prophets-text-on-deep, var(--ps-on-emerald, #fffef9));
 }
 .prophet-identity-hero__chips {
   list-style: none;
@@ -707,18 +707,20 @@ html.dark .prophets-page-lead {
   min-width: 0;
   padding: 0.4rem 0.65rem;
   border-radius: var(--radius-tile, 12px);
-  background: color-mix(in srgb, var(--prophets-text-on-accent, #fffef9) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--prophets-text-on-accent, #fffef9) 22%, transparent);
+  background: color-mix(in srgb, var(--prophets-text-on-deep, #fffef9) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--prophets-text-on-deep, #fffef9) 22%, transparent);
 }
 .prophet-identity-hero__chip-label {
   font-size: 0.72rem;
   font-weight: 600;
   opacity: 0.88;
+  color: var(--prophets-text-on-deep, var(--ps-on-emerald, #fffef9));
 }
 .prophet-identity-hero__chip-value {
   font-size: 0.88rem;
   font-weight: 700;
   line-height: 1.35;
+  color: var(--prophets-text-on-deep, var(--ps-on-emerald, #fffef9));
 }
 .prophet-detail-lux .prophet-detail-lux__hero .prophet-detail-lux__name,
 .prophet-detail-lux .prophet-detail-lux__hero .prophet-detail-lux__pbuh,
