@@ -1,4 +1,4 @@
-import { type ReactNode, type RefObject } from "react";
+import { type ReactNode, type RefObject, useEffect } from "react";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
 import "@/styles/components/quran-audio-chrome.css";
@@ -21,6 +21,8 @@ type Props = {
   /** سحب للتوسيع/الطي */
   onDragEnd?: (dy: number) => void;
   testId?: string;
+  /** تسمية زر الإغلاق — افتراضي «إغلاق» */
+  closeAriaLabel?: string;
 };
 
 const SNAP_CLASS: Record<QuranSheetSnap, string> = {
@@ -44,9 +46,22 @@ export function QuranSheetShell({
   zIndex = 9999,
   onDragEnd,
   testId,
+  closeAriaLabel = "إغلاق",
 }: Props) {
   /* يبقى في الشجرة — إخفاء عبر CSS يمنع وميض Mount عند فتح التفسير/القوائم */
   let dragY: number | null = null;
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
 
   return createPortal(
     <div
@@ -64,7 +79,7 @@ export function QuranSheetShell({
       <button
         type="button"
         className="quran-sheet__scrim"
-        aria-label="إغلاق"
+        aria-label={closeAriaLabel}
         onClick={onClose}
         tabIndex={open ? 0 : -1}
         style={{ pointerEvents: open ? "auto" : "none" }}
@@ -101,7 +116,14 @@ export function QuranSheetShell({
             ) : (
               <span id={titleId} />
             )}
-            <button type="button" className="quran-sheet__close" onClick={onClose} aria-label="إغلاق" tabIndex={open ? 0 : -1} data-testid="mushaf-settings-close">
+            <button
+              type="button"
+              className="quran-sheet__close"
+              onClick={onClose}
+              aria-label={closeAriaLabel}
+              tabIndex={open ? 0 : -1}
+              data-testid="mushaf-settings-close"
+            >
               <X size={14} strokeWidth={2.25} aria-hidden="true" />
             </button>
           </header>

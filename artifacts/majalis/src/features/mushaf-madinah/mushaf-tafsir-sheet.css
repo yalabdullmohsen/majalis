@@ -1,0 +1,228 @@
+/**
+ * Tokens + كثافة شيت تفسير المصحف (PR tafsir/selection).
+ * خط الآية = قرآن · خط المتن = قراءة عربية UI — بلا تعديل Geometry للمصحف.
+ */
+.mm-tafsir-sheet,
+.mm-tafsir-sheet .quran-sheet__panel,
+.mm-tafsir {
+  --tafsir-sheet-bg: var(--mm-paper, #fdf9f3);
+  --tafsir-surface: color-mix(in srgb, var(--mm-paper, #fdf9f3) 88%, #fff);
+  --tafsir-surface-selected: color-mix(in srgb, var(--mm-ui-accent, #135034) 12%, var(--mm-paper, #fdf9f3));
+  --tafsir-border: color-mix(in srgb, var(--mm-gold, #a68b67) 30%, transparent);
+  --tafsir-text-primary: var(--mm-ink, #1a1510);
+  --tafsir-text-secondary: color-mix(in srgb, var(--mm-ink, #1a1510) 72%, transparent);
+  --tafsir-text-muted: color-mix(in srgb, var(--mm-ink, #1a1510) 55%, transparent);
+  --tafsir-accent: var(--mm-ui-accent, #135034);
+  --tafsir-focus-ring: color-mix(in srgb, var(--mm-ui-accent, #135034) 35%, transparent);
+  --tafsir-overlay: rgba(20, 16, 10, 0.28);
+
+  --tafsir-title-size: 0.92rem;
+  --tafsir-reference-size: 0.78rem;
+  --tafsir-ayah-size: 1.05rem;
+  --tafsir-body-size: 0.94rem;
+  --tafsir-body-line-height: 1.75;
+  --tafsir-metadata-size: 0.72rem;
+  --tafsir-reading-width: 36rem;
+}
+
+html[data-theme="dark"] .mm-tafsir-sheet,
+html.dark .mm-tafsir-sheet,
+html[data-theme="dark"] .mm-tafsir,
+html.dark .mm-tafsir {
+  --tafsir-sheet-bg: #152018;
+  --tafsir-surface: #1c2920;
+  --tafsir-surface-selected: color-mix(in srgb, #5ec49a 16%, #152018);
+  --tafsir-border: color-mix(in srgb, #5ec49a 28%, transparent);
+  --tafsir-text-primary: #f3efe6;
+  --tafsir-text-secondary: color-mix(in srgb, #f3efe6 78%, #9aa39a);
+  --tafsir-text-muted: color-mix(in srgb, #f3efe6 58%, #9aa39a);
+  --tafsir-accent: #5ec49a;
+  --tafsir-focus-ring: color-mix(in srgb, #5ec49a 40%, transparent);
+  --tafsir-overlay: rgba(0, 0, 0, 0.42);
+}
+
+.mm-tafsir-sheet .quran-sheet__scrim {
+  background: var(--tafsir-overlay);
+}
+
+.mm-tafsir-sheet .quran-sheet__panel,
+.mm-tafsir-sheet__panel {
+  background: var(--tafsir-sheet-bg);
+  color: var(--tafsir-text-primary);
+  border: 1px solid var(--tafsir-border);
+  width: min(100%, var(--tafsir-reading-width));
+  max-width: var(--tafsir-reading-width);
+}
+
+.mm-tafsir-sheet.quran-sheet--half .quran-sheet__panel {
+  max-height: min(58dvh, 32rem);
+}
+
+.mm-tafsir-sheet.quran-sheet--full .quran-sheet__panel {
+  max-height: min(88dvh, 42rem);
+}
+
+.mm-tafsir-sheet .quran-sheet__title {
+  font-size: var(--tafsir-title-size);
+  color: var(--tafsir-accent);
+}
+
+.mm-tafsir-sheet .quran-sheet__close {
+  border-radius: 0.65rem;
+  border-color: var(--tafsir-border);
+  background: var(--tafsir-surface);
+}
+
+.mm-tafsir {
+  display: grid;
+  gap: 0.55rem;
+  min-height: 0;
+}
+
+.mm-tafsir__sheet-head {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.mm-tafsir__sheet-kicker {
+  margin: 0;
+  font-size: var(--tafsir-metadata-size);
+  font-weight: 700;
+  color: var(--tafsir-text-muted);
+}
+
+.mm-tafsir__ref-line {
+  margin: 0;
+  font-size: var(--tafsir-reference-size);
+  font-weight: 700;
+  color: var(--tafsir-text-secondary);
+}
+
+.mm-tafsir__ayah-preview {
+  margin: 0;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--tafsir-border);
+  background: var(--tafsir-surface);
+  font-family: "Amiri Quran", "KFGQPC Hafs Uthmanic", serif;
+  font-size: var(--tafsir-ayah-size);
+  line-height: 1.7;
+  color: var(--tafsir-text-primary);
+  text-align: start;
+}
+
+.mm-tafsir__editions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.mm-tafsir__ed-btn {
+  appearance: none;
+  min-height: 40px;
+  padding: 0.28rem 0.35rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--tafsir-border);
+  background: var(--tafsir-surface);
+  color: var(--tafsir-text-primary);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mm-tafsir__ed-btn.is-active {
+  background: var(--tafsir-surface-selected);
+  border-color: color-mix(in srgb, var(--tafsir-accent) 45%, transparent);
+  color: var(--tafsir-accent);
+  box-shadow: inset 0 -2px 0 var(--tafsir-accent);
+}
+
+.mm-tafsir__ed-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--tafsir-focus-ring);
+}
+
+.mm-tafsir__skeleton {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.35rem 0;
+}
+
+.mm-tafsir__skeleton-line {
+  height: 0.72rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--tafsir-text-muted) 22%, transparent);
+}
+
+.mm-tafsir__skeleton-line:nth-child(2) {
+  width: 92%;
+}
+.mm-tafsir__skeleton-line:nth-child(3) {
+  width: 78%;
+}
+
+.mm-tafsir__status {
+  margin: 0;
+  font-size: var(--tafsir-metadata-size);
+  color: var(--tafsir-text-muted);
+}
+
+.mm-tafsir__status--err {
+  color: #b45309;
+}
+
+html[data-theme="dark"] .mm-tafsir__status--err,
+html.dark .mm-tafsir__status--err {
+  color: #fbbf24;
+}
+
+.mm-tafsir__body {
+  font-family: "IBM Plex Sans Arabic", "Noto Naskh Arabic", sans-serif;
+  font-size: var(--tafsir-body-size);
+  line-height: var(--tafsir-body-line-height);
+  color: var(--tafsir-text-primary);
+  white-space: pre-wrap;
+  text-align: start;
+  max-width: var(--tafsir-reading-width);
+  padding-bottom: max(0.75rem, var(--inset-bottom, 0px));
+  overflow-wrap: anywhere;
+}
+
+.mm-tafsir__source-meta {
+  margin: 0;
+  font-size: var(--tafsir-metadata-size);
+  color: var(--tafsir-text-muted);
+}
+
+.mm-tafsir__retry {
+  margin-top: 0.35rem;
+  min-height: 40px;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--tafsir-accent) 35%, transparent);
+  background: var(--tafsir-surface-selected);
+  color: var(--tafsir-accent);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .mm-tafsir-sheet {
+    align-items: center !important;
+  }
+
+  .mm-tafsir-sheet .quran-sheet__panel,
+  .mm-tafsir-sheet__panel {
+    width: min(28rem, 92vw);
+    border-radius: 1rem;
+    margin-block-end: 1.5rem;
+    max-height: min(70dvh, 36rem);
+  }
+
+  .mm-tafsir-sheet.quran-sheet--full .quran-sheet__panel {
+    max-height: min(82dvh, 40rem);
+  }
+}
