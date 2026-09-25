@@ -14,7 +14,7 @@ const fiqh = read("src/components/FiqhGuidePage.tsx");
 assert.match(fiqh, /EMPTY\.search/);
 assert.doesNotMatch(fiqh, /لا نتائج لهذا البحث في الباب الحالي/);
 
-const hub = read("src/components/SectionAccordionLayout.tsx");
+const hub = read("src/components/knowledge-collection/KnowledgeCollectionSystem.tsx");
 assert.match(hub, /EMPTY\.search/);
 assert.doesNotMatch(hub, /لا نتائج مطابقة — جرّب كلمات أخرى/);
 

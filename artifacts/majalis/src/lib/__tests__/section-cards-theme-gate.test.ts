@@ -148,13 +148,10 @@ const explore = read("src/components/ExploreAlsoNav.tsx");
 assert.match(explore, /InternalLinkCard/);
 assert.match(explore, /fg-related--footer|data-related-footer/);
 assert.match(explore, /ليست جزءًا من محتوى/);
-const sectionHub = read("src/components/SectionAccordionLayout.tsx");
-assert.match(sectionHub, /section-hub__related/);
-assert.match(sectionHub, /data-section-related-footer/);
-assert.ok(
-  sectionHub.indexOf("section-hub__end") < sectionHub.indexOf("section-hub__related"),
-  "روابط ذات الصلة يجب أن تأتي بعد نهاية محتوى القسم",
-);
+const sectionHub = read("src/components/knowledge-collection/KnowledgeCollectionSystem.tsx");
+assert.match(sectionHub, /ExploreAlsoNav/);
+assert.match(sectionHub, /KnowledgeCollectionSystem/);
+assert.doesNotMatch(sectionHub, /AppBottomSheet/);
 const miracles = read("src/views/MiraclesPage.tsx");
 assert.match(miracles, /SectionEntryCard/);
 assert.match(miracles, /mk-card__hit/);
