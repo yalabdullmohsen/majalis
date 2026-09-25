@@ -76,6 +76,7 @@
 | `docs/design/SUNNAH_FOUNDATION_RESET_PR0_BASELINE.md` | Foundation Reset PR-0 — خريطة اعتماديات + Baseline |
 | `docs/design/SUNNAH_FOUNDATION_RESET_PR1_TOKENS.md` | Foundation Reset PR-1 — Tokens + Typography + Density |
 | `docs/design/PROPHETS_STORIES_REBUILD_BASELINE.md` | **قصص الأنبياء PR-0** — جرد Routes/ألوان كحلية/كروم (بلا إصلاح منتج) |
+| `docs/qa/MUSHAF_CONTROLS_INVENTORY.md` | جرد أزرار المصحف + إصلاح SYSTEM/LIGHT/DARK والأسهم والفاصل |
 
 | `docs/performance/SUNNAH_WORLD_CLASS_BASELINE.md` | خط أساس برنامج World-Class Product Polish (PR-1) |
 | `docs/performance/STARTUP_ROOT_CAUSE_REPORT.md` | **Startup PR-0** — Timeline + جرد مصادر الجاهزية + أسباب جذرية (بلا إصلاح منتج) |

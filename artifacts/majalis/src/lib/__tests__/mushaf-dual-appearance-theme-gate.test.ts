@@ -45,7 +45,7 @@ console.log("=== CSS: gold on .nm-root · لا زمردي افتراضي ===");
   assert.match(css, /--mushaf-marker-background:\s*var\(--mushaf-accent-fill\)/);
   assert.match(css, /--mushaf-verse-marker-fill:\s*var\(--mushaf-marker-background\)/);
   assert.match(css, /--mushaf-ayah-mark-font-size:\s*0\.62em/);
-  assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.40em/);
+  assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.52em/);
   assert.match(css, /\.nm-ayah-mark\s*\{[^}]*font-size:\s*var\(--mushaf-ayah-mark-font-size/s);
   assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
   assert.match(css, /--mushaf-accent-strong:/);

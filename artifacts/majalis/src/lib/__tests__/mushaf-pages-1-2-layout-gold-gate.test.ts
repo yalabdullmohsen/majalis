@@ -68,7 +68,7 @@ assert.doesNotMatch(css, /--mushaf-verse-marker-fill:\s*#dcb424/i);
 console.log("=== علامة آية أوضح بلا تجاوز النص عالميًا ===");
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 assert.match(css, /--mushaf-ayah-mark-font-size:\s*0\.62em/);
-assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.40em/);
+assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.52em/);
 assert.match(css, /\.nm-ayah-mark__glyph\s*\{[^}]*font-size:\s*var\(--mushaf-ayah-mark-number-size/s);
 /* ص١–ص٢: لا تضخيم علامة منفصل — نفس عقد العلامة العام */
 assert.doesNotMatch(chrome, /\.nm-page--opening[\s\S]{0,400}--mushaf-ayah-mark-size:\s*1\.22em/);

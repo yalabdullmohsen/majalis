@@ -174,6 +174,10 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
   /** وضع قراءة كامل — لا يُفرض عند أول فتح؛ يُحفظ بعد اختيار صريح فقط */
   const [focusReadingMode, setFocusReadingMode] = useState(false);
   const [pageArrowsEnabled, setPageArrowsEnabled] = useState(() => loadPageArrowsEnabled());
+  /** مظهر المصحف المحلول — مربوط بـ React على .nm-root (لا يعتمد فقط على setAttribute أمرّي) */
+  const [mushafAppearanceResolved, setMushafAppearanceResolved] = useState(() =>
+    QuranSettingsRepository.resolveAppearance(),
+  );
   const [controlsMoreOpen, setControlsMoreOpen] = useState(false);
   const focusReadingModeRef = useRef(false);
   focusReadingModeRef.current = focusReadingMode;
@@ -280,6 +284,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     const syncAppearance = () => {
       const appearance = QuranSettingsRepository.getAppearanceMode();
       QuranSettingsRepository.applyAppearance(appearance);
+      setMushafAppearanceResolved(QuranSettingsRepository.resolveAppearance(appearance));
       return appearance;
     };
 
@@ -288,6 +293,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     const onScheme = () => {
       if (QuranSettingsRepository.getAppearanceMode() === "SYSTEM") {
         QuranSettingsRepository.applyAppearance("SYSTEM");
+        setMushafAppearanceResolved(QuranSettingsRepository.resolveAppearance("SYSTEM"));
       }
     };
     const bindSystem = () => {
@@ -1209,6 +1215,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       /* مصدر واحد: تفضيل التركيز الصريح فقط — عقد الإخفاء عبر data-chrome */
       data-focus-reading={focusReadingMode ? "1" : "0"}
       data-page-arrows={pageArrowsEnabled ? "1" : "0"}
+      data-mushaf-appearance={mushafAppearanceResolved}
       data-mushaf-accent="gold"
       data-signature-preset={import.meta.env.DEV ? "sunnah-mushaf-signature-v1" : undefined}
       dir="rtl"
@@ -1338,7 +1345,15 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       </Suspense>
       <MushafPageArrows
         page={page}
-        visible={chromeOpen && !actionsOpen && !gotoOpen && !tafsirOpen && !searchOpen && !indexOpen}
+        /* التفعيل مستقل عن Chrome — الإخفاء فقط عند الشيتات/القوائم المتداخلة */
+        visible={
+          !actionsOpen &&
+          !gotoOpen &&
+          !tafsirOpen &&
+          !searchOpen &&
+          !indexOpen &&
+          !controlsMoreOpen
+        }
         enabled={pageArrowsEnabled}
         /* busy يخفّف التفاعل دون إخفاء السهم (كان :disabled يصفّر opacity) */
         busy={edgesDisabled || !pagerSettled}

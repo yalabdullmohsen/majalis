@@ -29,7 +29,7 @@ assert.doesNotMatch(marker, /scale\(/);
 /* هندسة خارجية ثابتة */
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 assert.match(css, /--mushaf-ayah-mark-font-size:\s*0\.62em/);
-assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.40em/);
+assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.52em/);
 
 /* Tokens الفاصل */
 assert.match(css, /--mushaf-ayah-marker-fill:\s*var\(--mushaf-verse-marker-fill\)/);
@@ -37,6 +37,7 @@ assert.match(css, /--mushaf-ayah-marker-stroke:\s*var\(--mushaf-verse-marker-bor
 assert.match(css, /--mushaf-ayah-marker-number:\s*var\(--mushaf-verse-marker-number\)/);
 assert.match(css, /--mushaf-ayah-marker-size:\s*var\(--mushaf-ayah-mark-size\)/);
 assert.match(css, /--mushaf-ayah-marker-inner-size:\s*var\(--mushaf-ayah-mark-number-size\)/);
+assert.match(css, /--mushaf-ayah-marker-number-weight:\s*700/);
 
 /* وردة ناعمة: clip-path موجود · بلا طرف 2٪ الشائك · بلا أخضر داخل الفاصل */
 assert.match(css, /SunnahVerseRosette/);
@@ -44,7 +45,9 @@ assert.match(css, /\.nm-ayah-mark[\s\S]*?clip-path:\s*polygon/);
 assert.match(css, /8 بتلات|فصوص ناعمة/);
 assert.doesNotMatch(css, /\.nm-ayah-mark[\s\S]*?50%\s*2%/);
 assert.doesNotMatch(css, /\.nm-ayah-mark[\s\S]*?50%\s*6%/);
-assert.match(css, /\.nm-ayah-mark[\s\S]*?50\.0%\s*10\.0%/);
+assert.match(css, /\.nm-ayah-mark[\s\S]*?50\.0%\s*14\.0%/);
+assert.match(css, /\.nm-ayah-mark[\s\S]*?display:\s*inline-grid/);
+assert.match(css, /\.nm-ayah-mark[\s\S]*?place-items:\s*center/);
 assert.doesNotMatch(
   css,
   /\.nm-ayah-mark\s*\{[^}]*(?:#1f4f3c|#0[Ee]7[Aa]6[Bb]|green|emerald)/i,
@@ -52,7 +55,7 @@ assert.doesNotMatch(
 
 /* الرقم أوضح · وزن متوسط · tabular إن وُجد */
 assert.match(css, /\.nm-ayah-mark__glyph[\s\S]*?font-variant-numeric:\s*tabular-nums/);
-assert.match(css, /\.nm-ayah-mark\s*\{[^}]*font-weight:\s*700/s);
+assert.match(css, /\.nm-ayah-mark\s*\{[^}]*font-weight:\s*var\(--mushaf-ayah-marker-number-weight/s);
 assert.doesNotMatch(css, /\.nm-ayah-mark\s*\{[^}]*font-weight:\s*800/s);
 assert.doesNotMatch(css, /\.nm-ayah-mark[\s\S]{0,400}transform:\s*scale\(/);
 
