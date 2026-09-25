@@ -47,8 +47,14 @@ assert.doesNotMatch(chrome, /font-size:\s*var\(--mushaf-ayah-mark-number-size,\s
 console.log("=== Ayah body tap + edge strip narrowed ===");
 assert.match(verse, /كلمات المتن قابلة للتحديد/);
 assert.match(verse, /data-testid=\{interactive \? "mushaf-ayah-hit"/);
+assert.match(verse, /tabIndex=\{interactive \? -1/);
+assert.match(verse, /blurAyahHitTarget/);
+assert.doesNotMatch(verse, /tabIndex=\{interactive \? 0/);
+assert.doesNotMatch(verse, /tabIndex=\{0\}/);
 assert.match(madinahCss, /\.mm-page-edge--next\s*\{[^}]*width:\s*8%/s);
 assert.match(madinahCss, /\.mm-page-edge--prev\s*\{[^}]*width:\s*8%/s);
 assert.doesNotMatch(css, /transform:\s*scale\(/);
+assert.match(css, /touch-action:\s*manipulation/);
+assert.match(css, /-webkit-touch-callout:\s*none/);
 
 console.log("mushaf-appearance-ayah-interaction-gate.test.ts: ok");

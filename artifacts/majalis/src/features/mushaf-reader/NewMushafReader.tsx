@@ -759,6 +759,16 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
       setChromeOpen(false);
       setStatus(null);
       setAudioError(null);
+      /* لا تُبقِ التركيز على هدف الآية — يمنع لوحة مفاتيح/تمرير iOS */
+      if (typeof document !== "undefined") {
+        const ae = document.activeElement;
+        if (
+          ae instanceof HTMLElement &&
+          ae.closest?.('[data-testid="mushaf-ayah-hit"], .nm-word[role="button"]')
+        ) {
+          ae.blur();
+        }
+      }
     },
     [actionsOpen, selectedVerseKey],
   );

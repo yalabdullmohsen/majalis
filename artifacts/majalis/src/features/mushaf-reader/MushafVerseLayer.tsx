@@ -50,6 +50,22 @@ function verseAriaLabel(verseKey: string): string {
   return `سورة ${name} آية ${toArabicDigits(ayah || a)}`;
 }
 
+/** إزالة التركيز بعد اللمس — يمنع لوحة مفاتيح/تمرير/تكبير iOS عند tabIndex على هدف الآية */
+function blurAyahHitTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return;
+  const active = typeof document !== "undefined" ? document.activeElement : null;
+  if (active === target || (active instanceof Node && target.contains(active))) {
+    target.blur();
+  }
+  if (
+    active instanceof HTMLElement &&
+    active !== target &&
+    active.closest?.('[data-testid="mushaf-ayah-hit"], .nm-word[role="button"], .nm-basmala [role="button"]')
+  ) {
+    active.blur();
+  }
+}
+
 const VerseWord = memo(function VerseWord({
   word,
   onSelectVerse,
@@ -89,18 +105,34 @@ const VerseWord = memo(function VerseWord({
         data-ayah={word.verseKey}
         data-testid={interactive ? "mushaf-ayah-hit" : undefined}
         role={interactive ? "button" : undefined}
-        tabIndex={interactive ? 0 : undefined}
+        /* -1: قابل للتركيز برمجيًا فقط — لا tabIndex=0 حتى لا يفتح iOS لوحة المفاتيح عند اللمس */
+        tabIndex={interactive ? -1 : undefined}
         aria-label={interactive ? verseAriaLabel(word.verseKey) : undefined}
         aria-pressed={interactive ? selected : undefined}
-        onPointerDown={interactive ? (e) => startPress(word.verseKey, e) : undefined}
+        onPointerDown={
+          interactive
+            ? (e) => {
+                if (e.pointerType === "mouse") e.preventDefault();
+                startPress(word.verseKey, e);
+              }
+            : undefined
+        }
         onPointerMove={interactive ? movePress : undefined}
-        onPointerUp={interactive ? () => endPress(word.verseKey) : undefined}
+        onPointerUp={
+          interactive
+            ? (e) => {
+                endPress(word.verseKey);
+                blurAyahHitTarget(e.currentTarget);
+              }
+            : undefined
+        }
         onPointerCancel={interactive ? clearPress : undefined}
         onClick={
           interactive
             ? (e: MouseEvent<HTMLElement>) => {
                 e.preventDefault();
                 e.stopPropagation();
+                blurAyahHitTarget(e.currentTarget);
               }
             : undefined
         }
@@ -129,16 +161,23 @@ const VerseWord = memo(function VerseWord({
       data-ayah={word.verseKey}
       data-testid="mushaf-ayah-hit"
       role="button"
-      tabIndex={0}
+      tabIndex={-1}
       aria-label={verseAriaLabel(word.verseKey)}
       aria-pressed={selected}
-      onPointerDown={(e) => startPress(word.verseKey, e)}
+      onPointerDown={(e) => {
+        if (e.pointerType === "mouse") e.preventDefault();
+        startPress(word.verseKey, e);
+      }}
       onPointerMove={movePress}
-      onPointerUp={() => endPress(word.verseKey)}
+      onPointerUp={(e) => {
+        endPress(word.verseKey);
+        blurAyahHitTarget(e.currentTarget);
+      }}
       onPointerCancel={clearPress}
       onClick={(e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
         e.stopPropagation();
+        blurAyahHitTarget(e.currentTarget);
       }}
       onKeyDown={(e: KeyboardEvent<HTMLElement>) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -287,11 +326,13 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
           data-verse="1:1"
           data-testid={onSelect || onLongPress ? "mushaf-ayah-hit" : undefined}
           role={onSelect || onLongPress ? "button" : undefined}
-          tabIndex={onSelect || onLongPress ? 0 : undefined}
+          tabIndex={onSelect || onLongPress ? -1 : undefined}
           aria-label={onSelect || onLongPress ? verseAriaLabel("1:1") : undefined}
           onPointerDown={
             onSelect || onLongPress
               ? (e) => {
+                  /* يمنع تركيز المتصفح على الهدف (iOS keyboard/scroll) دون منع Pan إن بدأ السحب */
+                  if (e.pointerType === "mouse") e.preventDefault();
                   if (mushafPageIsPanning()) return;
                   clear();
                   const longTimer = window.setTimeout(() => {
@@ -325,7 +366,7 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
           }
           onPointerUp={
             onSelect || onLongPress
-              ? () => {
+              ? (e) => {
                   const cur = pressRef.current;
                   if (mushafPageIsPanning()) {
                     clear();
@@ -333,6 +374,7 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
                   }
                   if (cur && !cur.longFired) onSelect?.();
                   clear();
+                  blurAyahHitTarget(e.currentTarget);
                 }
               : undefined
           }
@@ -348,10 +390,11 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
           data-verse="1:1"
           data-ayah="1:1"
           role={onSelect || onLongPress ? "button" : undefined}
-          tabIndex={onSelect || onLongPress ? 0 : undefined}
+          tabIndex={onSelect || onLongPress ? -1 : undefined}
           aria-label={verseAriaLabel("1:1")}
           onPointerDown={(e) => {
             if (!onLongPress && !onSelect) return;
+            if (e.pointerType === "mouse") e.preventDefault();
             if (mushafPageIsPanning()) return;
             clear();
             const longTimer = window.setTimeout(() => {
@@ -377,7 +420,7 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
               clear();
             }
           }}
-          onPointerUp={() => {
+          onPointerUp={(e) => {
             const cur = pressRef.current;
             if (mushafPageIsPanning()) {
               clear();
@@ -385,11 +428,13 @@ export const MushafBasmalaView = memo(function MushafBasmalaView({
             }
             if (cur && !cur.longFired) onSelect?.();
             clear();
+            blurAyahHitTarget(e.currentTarget);
           }}
           onPointerCancel={clear}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            blurAyahHitTarget(e.currentTarget);
           }}
           onKeyDown={(e) => {
             if ((e.key === "Enter" || e.key === " ") && onSelect) {
