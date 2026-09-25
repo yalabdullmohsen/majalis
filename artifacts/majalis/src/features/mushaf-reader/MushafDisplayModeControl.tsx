@@ -43,7 +43,12 @@ export function MushafDisplayModeControl({
               aria-checked={active}
               data-testid={`mushaf-display-mode-${opt.id}`}
               className={`mushaf-display-mode__card${active ? " is-active" : ""}`}
-              onClick={() => onChange(opt.id)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onChange(opt.id);
+              }}
+              onPointerDown={(e) => e.stopPropagation()}
             >
               <span className="mushaf-display-mode__card-top">
                 <span className="mushaf-display-mode__label">{opt.label}</span>

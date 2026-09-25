@@ -1774,6 +1774,20 @@ html[data-theme="dark"] .nm-exit-control {
   box-shadow: none;
   display: grid;
   gap: 0.55rem;
+  /* الأب .nm-controls pointer-events:none لتمرير لمسات الصفحة —
+     يجب إعادة تفعيل اللوحة وإلا تُبتلع نقرات SYSTEM/LIGHT/DARK */
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+.nm-controls-more button,
+.nm-controls-more a,
+.nm-controls-more input,
+.nm-controls-more label,
+.nm-controls-more .mushaf-display-mode,
+.nm-controls-more .mushaf-display-mode__card {
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .nm-controls-more__title {
