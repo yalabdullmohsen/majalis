@@ -24,12 +24,17 @@ assert.ok(existsSync(resolve(majalisRoot, "src/components/prophets/ProphetStoryR
 assert.ok(existsSync(resolve(majalisRoot, "src/components/prophets/ProphetStorySectionHeader.tsx")));
 assert.ok(existsSync(resolve(majalisRoot, "src/components/prophets/ProphetTopicCard.tsx")));
 assert.ok(existsSync(resolve(majalisRoot, "src/components/prophets/ProphetStorySourcesBlock.tsx")));
+assert.ok(existsSync(resolve(majalisRoot, "src/components/prophets/ProphetIdentityHero.tsx")));
+assert.ok(existsSync(resolve(majalisRoot, "src/components/prophets/ProphetQuickFacts.tsx")));
+assert.ok(existsSync(resolve(majalisRoot, "src/components/prophets/ProphetStoryTabs.tsx")));
 
 assert.match(view, /ProphetStoryReader/);
 assert.match(view, /ProphetStoryReaderHeader/);
 assert.match(view, /ProphetStorySectionHeader/);
-assert.match(view, /ProphetTopicCard/);
+assert.match(view, /ProphetTopicCard|ProphetQuickFacts/);
 assert.match(view, /ProphetStorySourcesBlock/);
+assert.match(view, /ProphetIdentityHero/);
+assert.match(view, /ProphetStoryTabs/);
 assert.match(view, /data-prophets-rebuild="1"/);
 assert.match(view, /data-prophets-reader|ProphetStoryReader/);
 assert.doesNotMatch(view, /prophet-detail-lux__keys-hint/);
@@ -54,6 +59,8 @@ assert.match(css, /\.prophet-sources-block\s*\{/);
 assert.match(css, /\.prophet-story-reader\s*\{/);
 assert.match(css, /\.prophet-section-lux__rule\s*\{/);
 
+assert.match(css, /\.prophet-identity-hero\s*\{[^}]*background-color:\s*var\(--ps-emerald/s);
+assert.match(css, /\.prophet-identity-hero__name\s*\{[^}]*color:\s*var\(--prophets-text-on-accent/s);
 assert.match(css, /\.prophet-detail-lux__hero\s*\{[^}]*background-color:\s*var\(--ps-emerald/s);
 assert.match(css, /\.prophet-detail-lux h1\.prophet-detail-lux__name\s*\{[^}]*color:\s*var\(--ps-on-emerald/s);
 assert.doesNotMatch(
