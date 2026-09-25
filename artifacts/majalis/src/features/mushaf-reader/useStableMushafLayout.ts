@@ -3,6 +3,8 @@ import { mushafPerfInc } from "./mushaf-turn-telemetry";
 import {
   resolveSunnahMushafSignaturePreset,
   resolveSignatureFontSizePx,
+  resolveTabletPageMaxWidthPx,
+  resolveTabletSignatureFontSizePx,
   SUNNAH_MUSHAF_SIGNATURE_PRESET_ID,
 } from "./sunnah-mushaf-signature-preset";
 
@@ -16,20 +18,42 @@ const LINE_HEIGHT = "1.85";
 const FONT_WEIGHT = "400";
 /** لا نعيد حساب الخط إلا إذا تغيّر العرض بهذا القدر (فتح الرصيف يغيّر الارتفاع فقط) */
 const WIDTH_LOCK_PX = 4;
-/** سقف متن هاتفي — اللوح (≥768×600) يستخدم العرض المتاح بلا عمود 480 */
+/** سقف متن هاتفي — اللوح (≥768×600) يوسّع الحبر حسب الارتفاع بلا عمود 480 */
 const PHONE_BODY_CAP_PX = 30 * 16;
 const TABLET_MIN_WIDTH_PX = 768;
 /** يستبعد landscape الهاتف (~390 ارتفاعًا) مع الإبقاء على iPad landscape */
 const TABLET_MIN_HEIGHT_PX = 600;
 
-function resolveBodyWidthPx(viewportW: number, viewportH: number): number {
-  const available = viewportW - SIDE_PAD * 2;
-  const isTablet =
-    viewportW >= TABLET_MIN_WIDTH_PX && viewportH >= TABLET_MIN_HEIGHT_PX;
-  if (isTablet) {
-    return Math.max(120, available);
+function isTabletViewport(viewportW: number, viewportH: number): boolean {
+  return viewportW >= TABLET_MIN_WIDTH_PX && viewportH >= TABLET_MIN_HEIGHT_PX;
+}
+
+/**
+ * متن الصفحة: هاتف بسقف 480؛ لوح = عرض الحبر الآمن بعد اختيار الخط من الارتفاع
+ * حتى لا تبقى ورقة بعرض الشاشة مع عمود حبر هاتفي في المنتصف.
+ */
+function resolveBodyAndPageWidthPx(
+  viewportW: number,
+  viewportH: number,
+  bodyH: number,
+): { bodyW: number; pageW: number; size: number } {
+  const available = Math.max(120, viewportW - SIDE_PAD * 2);
+  if (!isTabletViewport(viewportW, viewportH)) {
+    const bodyW = Math.max(120, Math.min(available, PHONE_BODY_CAP_PX));
+    const size = resolveSignatureFontSizePx(bodyW, bodyH);
+    return { bodyW, pageW: viewportW, size };
   }
-  return Math.max(120, Math.min(available, PHONE_BODY_CAP_PX));
+  /* لوح: خط من الارتفاع/العرض (مسار منفصل عن سقف الهاتف 24) ثم غلاف ≈ الحبر */
+  const size = resolveTabletSignatureFontSizePx(available, bodyH);
+  const pageW = resolveTabletPageMaxWidthPx(viewportW, size, SIDE_PAD);
+  const bodyW = Math.max(120, pageW - SIDE_PAD * 2);
+  return { bodyW, pageW, size };
+}
+
+/** توافق البوابات — متن اللوح بلا سقف 480 */
+export function resolveBodyWidthPx(viewportW: number, viewportH: number): number {
+  const bodyH = Math.max(160, viewportH - HEADER_H - FOOTER_H);
+  return resolveBodyAndPageWidthPx(viewportW, viewportH, bodyH).bodyW;
 }
 
 /**
@@ -50,11 +74,17 @@ export function useStableMushafLayout(
     const root = rootRef.current;
     if (!root) return;
 
-    const applyGeometry = (w: number, h: number, size: number, bodyH: number) => {
-      const bodyW = resolveBodyWidthPx(w, h);
+    const applyGeometry = (
+      w: number,
+      h: number,
+      size: number,
+      bodyH: number,
+      bodyW: number,
+      pageW: number,
+    ) => {
       /* ثابت — المشغّل overlay؛ لا نقرأ --reader-bottom-stack حتى لا يتغيّر المقياس */
       const bottomSafe = "0px";
-      root.style.setProperty("--mushaf-page-width", `${w}px`);
+      root.style.setProperty("--mushaf-page-width", `${pageW}px`);
       root.style.setProperty("--mushaf-page-height", `${h}px`);
       root.style.setProperty("--mushaf-header-height", `${HEADER_H}px`);
       root.style.setProperty("--mushaf-footer-height", `${FOOTER_H}px`);
@@ -67,9 +97,9 @@ export function useStableMushafLayout(
        */
       root.style.setProperty("--mushaf-side-pad", `${SIDE_PAD}px`);
       root.style.setProperty("--nm-side-pad", `${SIDE_PAD}px`);
-      /* غلاف الصفحة = عرض الشاشة؛ الحشو داخل الغلاف يعطي متنًا = bodyW */
-      root.style.setProperty("--nm-page-max-w", `${w}px`);
-      root.style.setProperty("--mm-page-max-w", `${w}px`);
+      /* غلاف الصفحة = عرض الحبر الآمن على اللوح؛ على الهاتف = عرض الشاشة */
+      root.style.setProperty("--nm-page-max-w", `${pageW}px`);
+      root.style.setProperty("--mm-page-max-w", `${pageW}px`);
       /* QPC يحمل تباعده؛ أي word-gap إضافي يفيض الأسطر الكثيفة (مثل ص598) */
       root.style.setProperty("--nm-word-gap", "0");
       root.style.setProperty("--mushaf-font-size", `${size}px`);
@@ -91,11 +121,12 @@ export function useStableMushafLayout(
       root.setAttribute("data-font-size", String(size));
       root.setAttribute("data-line-height", LINE_HEIGHT);
       root.setAttribute("data-page-scale", String(SIGNATURE.pageScale));
-      root.setAttribute("data-page-width", String(w));
+      root.setAttribute("data-page-width", String(pageW));
       root.setAttribute("data-content-width", String(bodyW));
       root.setAttribute("data-horizontal-inset", String(SIDE_PAD));
       root.setAttribute("data-number-of-lines", String(SIGNATURE.linesPerPage));
       root.setAttribute("data-render-cache-version", SIGNATURE.renderCacheVersion);
+      root.setAttribute("data-viewport-width", String(w));
       if (import.meta.env.DEV) {
         root.setAttribute("data-debug-signature", "1");
       }
@@ -107,14 +138,20 @@ export function useStableMushafLayout(
       if (w < 80 || h < 120) return;
 
       const measuredBodyH = Math.max(160, h - HEADER_H - FOOTER_H);
+      const resolved = resolveBodyAndPageWidthPx(w, h, measuredBodyH);
 
       /* أثناء قلب الصفحة: لا تُعاد حساب مقاس الخط ولا ارتفاع المتن */
       if (root.getAttribute("data-pager-settled") === "0" && lockedSizeRef.current > 0) {
+        const bodyH =
+          lockedBodyHRef.current > 0 ? lockedBodyHRef.current : measuredBodyH;
+        const locked = resolveBodyAndPageWidthPx(w, h, bodyH);
         applyGeometry(
           w,
           h,
           lockedSizeRef.current,
-          lockedBodyHRef.current > 0 ? lockedBodyHRef.current : measuredBodyH,
+          bodyH,
+          locked.bodyW,
+          locked.pageW,
         );
         return;
       }
@@ -124,24 +161,32 @@ export function useStableMushafLayout(
         Math.abs(w - lockedWidthRef.current) >= WIDTH_LOCK_PX;
 
       if (!widthChanged && lockedSizeRef.current > 0) {
+        const bodyH =
+          lockedBodyHRef.current > 0 ? lockedBodyHRef.current : measuredBodyH;
+        const locked = resolveBodyAndPageWidthPx(w, h, bodyH);
         applyGeometry(
           w,
           h,
           lockedSizeRef.current,
-          lockedBodyHRef.current > 0 ? lockedBodyHRef.current : measuredBodyH,
+          bodyH,
+          locked.bodyW,
+          locked.pageW,
         );
         return;
       }
 
-      const bodyW = resolveBodyWidthPx(w, h);
-      const bodyH = measuredBodyH;
-      const size = resolveSignatureFontSizePx(bodyW, bodyH);
-
       lockedWidthRef.current = w;
-      lockedSizeRef.current = size;
-      lockedBodyHRef.current = bodyH;
+      lockedSizeRef.current = resolved.size;
+      lockedBodyHRef.current = measuredBodyH;
       mushafPerfInc("geometryChange");
-      applyGeometry(w, h, size, bodyH);
+      applyGeometry(
+        w,
+        h,
+        resolved.size,
+        measuredBodyH,
+        resolved.bodyW,
+        resolved.pageW,
+      );
     };
 
     apply();

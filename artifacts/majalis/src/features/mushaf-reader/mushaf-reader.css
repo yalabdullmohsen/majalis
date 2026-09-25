@@ -168,7 +168,8 @@
   text-size-adjust: 100%;
 }
 
-/* iPad / tablet: املأ العرض قبل/بعد metrics — بلا عمود 28rem في المنتصف.
+/* iPad / tablet: ارفع سقف العرض قبل metrics — JS يضبط --nm-page-max-w
+ * بعرض الحبر الآمن (font×15.8) حتى لا تبقى ورقة عريضة بعمود هاتف.
  * min-height يستبعد landscape الهاتف (~390) دون كسر iPad landscape. */
 @media (min-width: 768px) and (min-height: 600px) {
   .nm-root {
@@ -176,6 +177,19 @@
     --mushaf-body-width: 100%;
     --nm-page-max-w: 100%;
     --mm-page-max-w: 100%;
+    /* إطار خارجي يميّز غلاف الصفحة عن الهامش — لا قص ولا overflow */
+    background: color-mix(in srgb, var(--nm-paper) 78%, #b9a57a 22%);
+  }
+
+  .nm-root .mm-page-shell,
+  .nm-root .nm-shell {
+    background: var(--nm-paper);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--mushaf-page-border) 55%, transparent);
+  }
+
+  .nm-root .nm-page--opening .nm-page__body,
+  .nm-root .nm-page--lead .nm-page__body {
+    width: 100%;
   }
 }
 
