@@ -434,7 +434,7 @@ html.pts-immersive .scroll-to-top {
   background-color: #18483A;
   background-image: linear-gradient(165deg, rgba(36, 98, 80, 0.55) 0%, rgba(14, 48, 40, 0.42) 100%);
   color: var(--pts-white);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 24px -16px rgba(0, 0, 0, 0.35);
 }
 .pts-mosque {
   display: none;
@@ -730,12 +730,11 @@ html.pts-immersive .scroll-to-top {
   margin: 0;
   border-radius: var(--pts-radius-sm, var(--radius-tile, 24px));
   border: 1px solid var(--soft-tile-border, rgba(255, 255, 255, 0.13));
-  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04));
+  background-image: none;
+  background-color: rgba(255, 255, 255, 0.06);
   overflow: hidden;
   padding: 0.45rem 0.75rem;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 12px 28px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
 }
 .pts-more > summary {
   cursor: pointer;

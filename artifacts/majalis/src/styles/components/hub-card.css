@@ -220,7 +220,7 @@ button.hub-card {
   background: color-mix(in srgb, var(--mj-brand-soft, var(--brand-soft)) 88%, var(--mj-accent, #b8963f) 12%);
   color: var(--mj-brand-deep, var(--mj-brand, #0d5c4d));
   font-size: 1.15rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow: none;
 }
 
 .hub-card__body {

@@ -125,6 +125,7 @@ function loadNonCriticalCss() {
   void import("./styles/soft-cards.css");
   void import("./styles/ssunnah-semantic-tokens.css");
   void import("./styles/ssunnah-card-unify.css");
+  void import("./styles/card-matte-unify.css");
   void import("./styles/components/badge-system.css");
   void import("./styles/modern-ui-refresh.css");
   void import("./styles/ssunnah-ds-canonical.css");
