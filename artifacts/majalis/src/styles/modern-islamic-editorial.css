@@ -43,8 +43,8 @@
 }
 
 .prophets-lux-page .prophets-lux-hero__title,
-.prophet-detail-lux h1,
-.prophet-story-reader h1 {
+.prophet-detail-lux h1:not(.prophet-identity-hero__name),
+.prophet-story-reader h1:not(.prophet-identity-hero__name) {
   font-family: var(--sf-font-display, var(--font-display, var(--font-app)));
   font-size: var(--mie-type-display);
   font-weight: 700;

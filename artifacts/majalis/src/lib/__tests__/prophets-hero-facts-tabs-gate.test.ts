@@ -50,11 +50,14 @@ assert.doesNotMatch(view, /label:\s*"السور"/);
 
 assert.match(css, /\.prophet-identity-hero\s*\{/);
 assert.match(css, /\.prophet-identity-hero\s*\{[^}]*background-color:\s*var\(--ps-emerald/s);
-assert.match(css, /\.prophet-identity-hero__name\s*\{[^}]*color:\s*var\(--prophets-text-on-accent/s);
+assert.match(css, /\.prophet-identity-hero__name\s*\{[^}]*color:\s*var\(--prophets-text-on-deep/s);
 assert.match(
   css,
-  /\.prophet-detail-lux h1\.prophet-identity-hero__name\s*\{[^}]*color:\s*var\(--ps-on-emerald/s,
+  /\.prophet-detail-lux h1\.prophet-identity-hero__name[\s\S]{0,80}?color:\s*var\(--prophets-text-on-deep/s,
 );
+const tokens = read("src/styles/prophets-semantic-tokens.css");
+assert.match(tokens, /--prophets-text-on-deep\s*:/);
+assert.match(tokens, /html\.dark[\s\S]*?--prophets-text-on-deep:\s*#fffef9/s);
 assert.match(css, /\.prophet-quick-facts\s*,|\.prophet-facts-grid\s*,\s*\.prophet-quick-facts/);
 assert.match(css, /\.prophet-story-tabs__btn\s*,|\.prophet-story-tabs__btn\s*\{/);
 assert.match(css, /min-height:\s*44px/);
