@@ -1,0 +1,42 @@
+{
+  "program": "PROPHETS_STORIES_REBUILD",
+  "stage": "PR-0",
+  "status": "PARTIAL",
+  "commit": "512db452f8fd662967a67aef1fbb60914dc8fa45",
+  "acceptedClaim": false,
+  "productUiChanged": false,
+  "prophetCount": 25,
+  "primaryRoutes": [
+    "/prophets",
+    "/prophets/:slug",
+    "/prophets/tree"
+  ],
+  "legacyRedirects": [
+    "/prophet-stories",
+    "/prophets-stories",
+    "/anbiya"
+  ],
+  "primaryFiles": [
+    "artifacts/majalis/src/views/ProphetStoriesPage.tsx",
+    "artifacts/majalis/src/styles/pages/prophet-stories.css",
+    "artifacts/majalis/src/lib/prophets-data.ts",
+    "artifacts/majalis/src/lib/immersive-chrome.ts"
+  ],
+  "confirmedIssues": [
+    "NAVY_NIGHT_FALLBACK_0B1A2E",
+    "PINNED_CHROME_KEEPS_BOTTOM_NAV",
+    "NOT_IMMERSIVE_HEADER_VISIBLE",
+    "SINGLE_SHELL_LIST_AND_READER",
+    "LARGE_LUX_CARDS_MIN_HEIGHT",
+    "DECORATIVE_STARS_NEAR_TITLES",
+    "HORIZONTAL_TABS_CROWDED"
+  ],
+  "navyHexHitsInProphetCss": ">=16",
+  "screenshots": "NOT_CAPTURED",
+  "requiredOwnerActions": [
+    "Approve PR-1 token migration off #0B1A2E",
+    "Approve Reading Mode hiding app Header/BottomNav",
+    "Device/TestFlight matrix in PR-8"
+  ],
+  "nextPr": "PR-1 Semantic Tokens --prophets-*"
+}
