@@ -57,4 +57,8 @@ assert.match(css, /min-height:\s*44px/);
 assert.match(css, /\.prophet-story-tabs__marker\s*\{/);
 assert.equal((css.match(/#0[Bb]1[Aa]2[Ee]/g) ?? []).length, 0);
 
+const contrastGate = read("scripts/verify-color-contrast-gate.mjs");
+assert.match(contrastGate, /\.prophet-identity-hero__name/);
+assert.doesNotMatch(contrastGate, /prophet-detail-lux__name/);
+
 console.log("prophets-hero-facts-tabs-gate: ok");
