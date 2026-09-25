@@ -100,16 +100,18 @@
    */
   /*
    * رقم أوضح على الـglyph فقط — الصندوق يبقى 0.62em×1.15em (عقد geometry ص600).
-   * 1.40em ≈ +9٪ وضوح داخلي دون تغيير advance width.
+   * 1.52em داخل مركز أوسع (بتلات أرق) دون تغيير advance width.
    */
   --mushaf-ayah-mark-font-size: 0.62em;
-  --mushaf-ayah-mark-number-size: 1.40em;
+  --mushaf-ayah-mark-number-size: 1.52em;
   /* aliases لعقد الفاصل (Fill/Stroke/Number من Quran Gold Tokens) */
   --mushaf-ayah-marker-fill: var(--mushaf-verse-marker-fill);
   --mushaf-ayah-marker-stroke: var(--mushaf-verse-marker-border);
   --mushaf-ayah-marker-number: var(--mushaf-verse-marker-number);
   --mushaf-ayah-marker-size: var(--mushaf-ayah-mark-size);
   --mushaf-ayah-marker-inner-size: var(--mushaf-ayah-mark-number-size);
+  --mushaf-ayah-marker-number-size: var(--mushaf-ayah-mark-number-size);
+  --mushaf-ayah-marker-number-weight: 700;
 
   /* طبقات سفلية داخل القارئ */
   --bottom-nav-height: 64px;
@@ -808,14 +810,13 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 /*
  * SunnahVerseRosette — Visual Baseline: وردة 1.15em مقفلة — الزيادة الإضافية تسبب lineOverflow على ص600.
  * 8 بتلات ناعمة شبه دائرية — بلا أشواك/مسامير/ظل/توهج، بلا overflow، بلا تغيير fontSize للنص.
- * المساحة الداخلية أوسع للرقم عبر تقليل عمق الفصوص (tip≈40 / valley≈35).
+ * سماكة الزخرفة مخفّضة (tip≈14 / valley≈30) لتوسيع المركز وإبراز الرقم دون تكبير العرض الخارجي.
  */
 .nm-ayah-mark {
   position: relative;
   z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-grid;
+  place-items: center;
   width: var(--mushaf-ayah-mark-size);
   height: var(--mushaf-ayah-mark-size);
   min-width: var(--mushaf-ayah-mark-size);
@@ -826,32 +827,32 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   border-radius: 0;
   border: 1px solid var(--mushaf-verse-marker-border);
   background: var(--mushaf-verse-marker-fill);
-  color: var(--mushaf-verse-marker-number);
+  color: var(--mushaf-ayah-marker-number, var(--mushaf-verse-marker-number));
   font-family: inherit;
   font-size: var(--mushaf-ayah-mark-font-size, 0.62em);
-  font-weight: 700;
+  font-weight: var(--mushaf-ayah-marker-number-weight, 700);
   line-height: 1;
   overflow: hidden;
   transform: none;
   box-shadow: none;
-  /* 8 بتلات: طرف 40٪ / وادي 35٪ — حواف مستديرة داخل نفس الـbounding box */
+  /* 8 بتلات: طرف 36٪ / وادي 40٪ — مركز أوسع للرقم داخل نفس الـbounding box */
   clip-path: polygon(
-    50.0% 10.0%,
-    63.4% 17.7%,
-    78.3% 21.7%,
-    82.3% 36.6%,
-    90.0% 50.0%,
-    82.3% 63.4%,
-    78.3% 78.3%,
-    63.4% 82.3%,
-    50.0% 90.0%,
-    36.6% 82.3%,
-    21.7% 78.3%,
-    17.7% 63.4%,
-    10.0% 50.0%,
-    17.7% 36.6%,
-    21.7% 21.7%,
-    36.6% 17.7%
+    50.0% 14.0%,
+    61.0% 20.5%,
+    72.0% 25.0%,
+    79.5% 39.0%,
+    86.0% 50.0%,
+    79.5% 61.0%,
+    72.0% 75.0%,
+    61.0% 79.5%,
+    50.0% 86.0%,
+    39.0% 79.5%,
+    25.0% 75.0%,
+    20.5% 61.0%,
+    14.0% 50.0%,
+    20.5% 39.0%,
+    25.0% 25.0%,
+    39.0% 20.5%
   );
 }
 
@@ -860,11 +861,11 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   display: block;
   line-height: 1;
   text-align: center;
-  font-size: var(--mushaf-ayah-mark-number-size, 1.40em);
+  font-size: var(--mushaf-ayah-mark-number-size, 1.52em);
   font-weight: inherit;
   color: inherit;
   font-variant-numeric: tabular-nums;
-  transform: translateY(0.01em);
+  transform: none;
 }
 
 .nm-basmala__num-hit {
@@ -1269,6 +1270,27 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 }
 
 
+/* مظهر نهاري صريح — يعيد Tokens النهار عند LIGHT حتى لو كان html.dark */
+html[data-mushaf-appearance="light"] .nm-root,
+.nm-root[data-mushaf-appearance="light"] {
+  --mushaf-paper-warm-yellow: var(--mushaf-paper-reading-surface);
+  --mushaf-page-bg: var(--mushaf-paper-reading-surface);
+  --mushaf-text-color: var(--mushaf-ink-primary);
+  --mushaf-meta-color: var(--mushaf-metadata-ink);
+  --nm-paper: var(--mushaf-paper-reading-surface);
+  --nm-paper-deep: var(--mushaf-paper-reading-surface);
+  --nm-ink: var(--mushaf-ink-primary);
+  --nm-meta: var(--mushaf-metadata-ink);
+  --mushaf-marker-background: var(--mushaf-accent-fill);
+  --mushaf-marker-border: var(--mushaf-accent-fill-strong);
+  --mushaf-marker-number: var(--mushaf-accent-number);
+  --mushaf-verse-marker-fill: var(--mushaf-marker-background);
+  --mushaf-verse-marker-border: var(--mushaf-marker-border);
+  --mushaf-verse-marker-number: var(--mushaf-marker-number);
+  --nm-gold: var(--mushaf-marker-background);
+  --nm-gold-deep: var(--mushaf-marker-border);
+}
+
 /* مظهر ليلي للمصحف — يعتمد وضع عرض المصحف فقط، لا Theme التطبيق */
 html[data-mushaf-appearance="night"] .nm-root,
 .nm-root[data-mushaf-appearance="night"] {
@@ -1285,7 +1307,8 @@ html[data-mushaf-appearance="night"] .nm-root,
   --mushaf-accent-secondary: var(--mushaf-verse-marker-dark-border);
   --mushaf-marker-background: var(--mushaf-verse-marker-dark-fill);
   --mushaf-marker-border: var(--mushaf-verse-marker-dark-border);
-  --mushaf-marker-number: var(--mushaf-verse-marker-dark-number);
+  /* رقم داكن على ذهب مطفي — وضوح أعلى من الكريم الفاتح */
+  --mushaf-marker-number: var(--quran-gold-ink);
   --mushaf-surah-header-line: var(--mushaf-verse-marker-dark-fill);
   --mushaf-surah-header-ornament: var(--mushaf-verse-marker-dark-border);
   --mushaf-verse-marker-fill: var(--mushaf-marker-background);
@@ -1846,7 +1869,7 @@ html[data-theme="dark"] .nm-exit-control {
 /* وضع التركيز: أخفِ الطبقات العائمة دون display:none على صفحة المصحف */
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-controls,
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-exit-control,
-.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-page-arrows,
+.nm-root[data-focus-reading="1"][data-chrome="0"]:not([data-page-arrows="1"]) .nm-page-arrows,
 .nm-root[data-focus-reading="1"][data-chrome="0"] .mm-audio-dock {
   opacity: 0 !important;
   visibility: hidden !important;

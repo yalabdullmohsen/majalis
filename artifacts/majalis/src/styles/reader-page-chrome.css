@@ -133,7 +133,7 @@
 .nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__bar,
 .nm-root[data-chrome="0"] .nm-controls--compact .nm-controls__exit,
 .nm-root[data-chrome="0"] .nm-controls-more,
-.nm-root[data-chrome="0"] .nm-page-arrows,
+.nm-root[data-chrome="0"]:not([data-page-arrows="1"]) .nm-page-arrows,
 .nm-root[data-chrome="0"] .nm-page-scrubber,
 .nm-root[data-chrome="0"] .mm-audio-dock {
   opacity: 0 !important;
@@ -160,7 +160,7 @@
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-controls.nm-controls--compact,
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-controls--compact .nm-controls__exit,
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-exit-control,
-.nm-root[data-focus-reading="1"][data-chrome="0"] .nm-page-arrows,
+.nm-root[data-focus-reading="1"][data-chrome="0"]:not([data-page-arrows="1"]) .nm-page-arrows,
 .nm-root[data-focus-reading="1"][data-chrome="0"] .mm-audio-dock,
 .nm-root[data-focus-reading="1"][data-chrome="0"] .nm-page-scrubber {
   opacity: 0 !important;

@@ -69,6 +69,7 @@ assert.match(more, /إعدادات المصحف/);
 
 const css = read("src/features/mushaf-reader/mushaf-reader.css");
 assert.match(css, /html\[data-mushaf-appearance="night"\] \.nm-root/);
+assert.match(css, /html\[data-mushaf-appearance="light"\] \.nm-root/);
 assert.doesNotMatch(
   css,
   /html\[data-mushaf-appearance="night"\] \.nm-root,\s*\.nm-root\[data-mushaf-appearance="night"\],\s*html\[data-theme="dark"\] \.nm-root,\s*html\.dark \.nm-root \{/,
@@ -77,6 +78,9 @@ assert.doesNotMatch(
 const reader = read("src/features/mushaf-reader/NewMushafReader.tsx");
 assert.match(reader, /ssunnah:mushaf-appearance-change/);
 assert.match(reader, /"SYSTEM"/);
+assert.match(reader, /data-mushaf-appearance=\{mushafAppearanceResolved\}/);
+assert.match(reader, /setMushafAppearanceResolved/);
+assert.doesNotMatch(reader, /key=\{[^}]*appearance|key=\{[^}]*displayMode/);
 
 assert.ok(existsSync(resolve(root, "src/features/mushaf-reader/mushaf-display-mode-control.css")));
 

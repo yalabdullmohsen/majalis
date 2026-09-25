@@ -675,7 +675,9 @@
     "test:zero-flicker-pr0": "node --import tsx src/lib/__tests__/zero-flicker-layout-shift-pr0-gate.test.ts",
     "test:search-experience-rebuild": "node --import tsx src/lib/__tests__/search-experience-rebuild-gate.test.ts",
     "test:mushaf-ayah-marker-refine": "node --import tsx src/lib/__tests__/mushaf-ayah-marker-refine-gate.test.ts",
-    "test:prophets-stories-rebuild-pr0": "node --import tsx src/lib/__tests__/prophets-stories-rebuild-pr0-gate.test.ts"
+    "test:prophets-stories-rebuild-pr0": "node --import tsx src/lib/__tests__/prophets-stories-rebuild-pr0-gate.test.ts",
+    "test:mushaf-controls-inventory": "node --import tsx src/lib/__tests__/mushaf-controls-inventory-gate.test.ts",
+    "test:mushaf-page-arrow-toggle": "node --import tsx src/lib/__tests__/mushaf-page-arrows-focus-mode-gate.test.ts"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
