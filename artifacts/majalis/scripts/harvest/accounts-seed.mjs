@@ -19,6 +19,7 @@ const HIGH_HANDLES = new Set([
   "awqaf.gov.kw",
   "almanabr.org",
   "hoffath.org",
+  "othmanalkhamees_schedule",
 ]);
 
 /** @returns {import('./types.mjs').SourceAccount[]} */
@@ -93,6 +94,15 @@ const ACCOUNTS = [
   { platform: "web", handle: "manar-alsabil.org", name_ar: "منار السبيل", kind: "لجنة", site: "https://manar-alsabil.org", topics: ["دعوة", "علم", "دروس"] },
   { platform: "web", handle: "waheen.net", name_ar: "جمعية الوحيين", kind: "جمعية", site: "https://waheen.net", topics: ["قرآن", "علم", "دورات"] },
   { platform: "web", handle: "drosq8-linktree", name_ar: "روابط دروس الكويت", kind: "قناة", site: "https://linktr.ee/drosq8", topics: ["دروس", "خطب", "مشايخ"] },
+  {
+    platform: "web",
+    handle: "othmanalkhamees_schedule",
+    name_ar: "جدول دروس الشيخ عثمان الخميس",
+    kind: "شخصية",
+    site: "https://www.othmanalkhamees.com/schedule",
+    topics: ["دروس", "حديث", "فقه", "تفسير"],
+    poll_priority: "high",
+  },
 ];
 
 function platformUrl(platform, handle, site) {

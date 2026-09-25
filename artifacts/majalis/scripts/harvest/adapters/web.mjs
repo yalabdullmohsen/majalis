@@ -1,4 +1,9 @@
 import { fetchText, extractOg, stripTags, sleep } from "../http.mjs";
+import {
+  isOthmanScheduleAccount,
+  parseOthmanScheduleHtml,
+  OTHMAN_SCHEDULE_CANONICAL,
+} from "./othmanalkhamees-schedule.mjs";
 
 function parseRss(xml) {
   const items = [];
@@ -33,6 +38,26 @@ function guessRssUrls(siteUrl) {
 export const webAdapter = {
   id: "web",
   async fetch(account, since) {
+    if (isOthmanScheduleAccount(account)) {
+      try {
+        const { text } = await fetchText(OTHMAN_SCHEDULE_CANONICAL);
+        const items = parseOthmanScheduleHtml(text);
+        return items
+          .filter((p) => !since || new Date(p.publishedAt) >= since)
+          .map((p) => ({
+            sourceId: account.id,
+            externalId: p.externalId,
+            url: p.url,
+            title: p.title,
+            text: p.text,
+            publishedAt: p.publishedAt,
+            imageUrl: undefined,
+          }));
+      } catch {
+        return [];
+      }
+    }
+
     const site = account.site || account.url;
     let collected = [];
 

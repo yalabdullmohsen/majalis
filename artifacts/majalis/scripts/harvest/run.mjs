@@ -104,7 +104,15 @@ function itemToCard(item, account) {
   if (!gate.ok) {
     return { _rejected: gate.reason, _gate: gate };
   }
-  const title = gate.title_ar;
+  // فضّل عنوان المصدر القصير إن كان عربيًا صالحًا (تجنب دمج أسطر النص بعد stripEmoji)
+  const sourceTitle = String(item.title ?? "").trim();
+  const title =
+    sourceTitle &&
+    sourceTitle.length >= 3 &&
+    /[\u0600-\u06FF]/.test(sourceTitle) &&
+    sourceTitle.length <= 80
+      ? sourceTitle
+      : gate.title_ar;
   const resolvedPublished = resolvePublishedAt(published_at, text);
   const dateKey = fields.starts_at || resolvedPublished?.slice(0, 10) || gate.future_at?.slice(0, 10) || "unknown";
   const id = fingerprintSecondary(title, dateKey, fields.place);
