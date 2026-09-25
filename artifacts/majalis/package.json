@@ -670,6 +670,7 @@
     "test:interactive-audit-pr0": "node scripts/interactive-elements-static-audit.mjs && node --import tsx src/lib/__tests__/interactive-audit-pr0-gate.test.ts",
     "test:startup-and-dark-mode-pr0": "node --import tsx src/lib/__tests__/startup-and-dark-mode-pr0-gate.test.ts",
     "test:mushaf-display-mode": "node --import tsx src/lib/__tests__/mushaf-display-mode-gate.test.ts",
+    "test:mushaf-ayah-no-keyboard": "node --import tsx src/lib/__tests__/mushaf-appearance-ayah-interaction-gate.test.ts && playwright test tests/mushaf-ayah-no-keyboard.spec.ts --project=mobile",
     "test:touch-interaction-system": "node scripts/interaction-touch-static-audit.mjs && node --import tsx src/lib/__tests__/touch-interaction-system-gate.test.ts",
     "test:world-class-engineering-pr0": "node --import tsx src/lib/__tests__/world-class-engineering-pr0-gate.test.ts",
     "test:zero-flicker-pr0": "node --import tsx src/lib/__tests__/zero-flicker-layout-shift-pr0-gate.test.ts",
