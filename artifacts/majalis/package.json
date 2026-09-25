@@ -397,7 +397,7 @@
     "fetch:hadith-sahihayn": "node scripts/fetch-hadith-sahihayn.mjs",
     "verify:hadith-sahihayn": "node scripts/verify-hadith-sahihayn.mjs",
     "test:fawaid-curated-integrity": "node --import tsx src/lib/__tests__/fawaid-curated-integrity.test.ts",
-    "test:prophets-content": "node --import tsx src/lib/__tests__/prophets-content-quality.test.ts && node --import tsx src/lib/__tests__/prophets-final-routes.test.ts && pnpm run test:prophets-stories-rebuild-pr0 && pnpm run test:prophets-stories-rebuild-impl",
+    "test:prophets-content": "node --import tsx src/lib/__tests__/prophets-content-quality.test.ts && node --import tsx src/lib/__tests__/prophets-final-routes.test.ts && pnpm run test:prophets-stories-rebuild-pr0 && pnpm run test:prophets-stories-rebuild-impl && pnpm run test:prophets-color-contract",
     "test:religious-content": "node --import tsx src/lib/__tests__/religious-content-validator.test.ts && node --import tsx src/lib/__tests__/sources-licenses-gate.test.ts && pnpm run test:prophets-content && pnpm run test:pre-launch-content-audit && pnpm run test:content-depth-audit && pnpm run test:ui-view-filler && pnpm run test:no-ui-emoji && pnpm run test:scholarly-content-guard && pnpm run test:content-audit-r2 && pnpm run test:content-audit-gates && pnpm run test:updates-seed-hrefs && pnpm run test:history-related-links && pnpm run test:stories-reflection-filler && pnpm run test:section-verse-inventory && pnpm run test:islamic-sects-inventory && pnpm run test:islamic-sects-batch1-review && pnpm run test:islamic-sects-batch2-review && pnpm run test:islamic-sects-search-filters && pnpm run test:islamic-sects-publish-guards && pnpm run test:publication-honesty && pnpm run test:deeplink-learn-series && pnpm run test:knowledge-summary-card && pnpm run test:knowledge-fabs-spacing && pnpm run test:islamic-sects-a11y-responsive",
     "test:pre-launch-content-audit": "node --import tsx src/lib/__tests__/pre-launch-content-audit.test.ts",
     "test:content-depth-audit": "node --import tsx src/lib/__tests__/content-depth-audit-gate.test.ts && node --import tsx src/lib/__tests__/quran-people-no-prophets-gate.test.ts && node --import tsx src/lib/__tests__/publish-trust-content-gate.test.ts",
@@ -679,6 +679,7 @@
     "test:mushaf-ayah-marker-refine": "node --import tsx src/lib/__tests__/mushaf-ayah-marker-refine-gate.test.ts",
     "test:prophets-stories-rebuild-pr0": "node --import tsx src/lib/__tests__/prophets-stories-rebuild-pr0-gate.test.ts",
     "test:prophets-stories-rebuild-impl": "node --import tsx src/lib/__tests__/prophets-stories-rebuild-impl-gate.test.ts",
+    "test:prophets-color-contract": "node --import tsx src/lib/__tests__/prophets-color-contract-gate.test.ts",
     "test:prophets-no-audio-font-controls": "node --import tsx src/lib/__tests__/prophets-no-audio-font-controls-gate.test.ts && node --import tsx src/lib/__tests__/prophets-stories-mobile-layout-gate.test.ts",
     "test:mushaf-controls-inventory": "node --import tsx src/lib/__tests__/mushaf-controls-inventory-gate.test.ts",
     "test:mushaf-page-arrow-toggle": "node --import tsx src/lib/__tests__/mushaf-page-arrows-focus-mode-gate.test.ts"
