@@ -60,7 +60,7 @@ assert.match(css, /\.prophet-story-reader\s*\{/);
 assert.match(css, /\.prophet-section-lux__rule\s*\{/);
 
 assert.match(css, /\.prophet-identity-hero\s*\{[^}]*background-color:\s*var\(--ps-emerald/s);
-assert.match(css, /\.prophet-identity-hero__name\s*\{[^}]*color:\s*var\(--prophets-text-on-accent/s);
+assert.match(css, /\.prophet-identity-hero__name\s*\{[^}]*color:\s*var\(--prophets-text-on-deep/s);
 assert.match(css, /\.prophet-detail-lux__hero\s*\{[^}]*background-color:\s*var\(--ps-emerald/s);
 assert.match(css, /\.prophet-detail-lux h1\.prophet-detail-lux__name\s*\{[^}]*color:\s*var\(--ps-on-emerald/s);
 assert.doesNotMatch(
