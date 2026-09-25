@@ -633,6 +633,8 @@ html.dark .prophets-page-lead {
   border-radius: var(--mie-radius-card, var(--radius-card, 1.35rem));
   background-color: var(--ps-emerald, var(--brand-olive-deep, #2a4030));
   background-image: none;
+  /* نص عاجي فوق الزمرد — يهزم --prophets-text-on-accent الليلي الداكن داخل الهيرو */
+  --prophets-text-on-accent: var(--ps-on-emerald, #fffef9);
   color: var(--prophets-text-on-accent, var(--ps-on-emerald, #fffef9));
   border: 1px solid color-mix(in srgb, var(--prophets-gold, var(--ps-brass)) 28%, transparent);
   text-align: start;
@@ -667,6 +669,10 @@ html.dark .prophets-page-lead {
   font-weight: 800;
   line-height: 1.25;
   color: var(--prophets-text-on-accent, var(--ps-on-emerald, #fffef9));
+}
+/* يهزم .prophet-detail-lux h1 { color: --ps-text-primary } الذي كان يضع حبرًا داكنًا على الزمرد */
+.prophet-detail-lux h1.prophet-identity-hero__name {
+  color: var(--ps-on-emerald, var(--prophets-text-on-accent, #fffef9));
 }
 .prophet-identity-hero__pbuh {
   margin: 0;
