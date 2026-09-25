@@ -247,7 +247,7 @@ html[data-theme="dark"] :is(
 
 /* (٢) نص أبيض فوق الأخضر النعناعي الفاتح — 2.14:1. */
 html[data-theme="dark"] :is(
-  .hadith-quick-cat--active, .jnz-step__num, .qzg-count-btn,
+  .hadith-quick-cat--active, .jnz-step__num,
   .sb-cat-btn, .twh-pillar-num, .cal-view-tab
 ) {
   color: var(--em-950) !important;
@@ -287,9 +287,18 @@ html[data-theme="dark"] :is(
 .qzg-lifeline-info__title.qzg-ll--transfer { color: #1F6392 !important; }
 .qzg-lifeline-info__title.qzg-ll--exclude  { color: #6D3480 !important; }
 
-/* (٨) زر عدد الفرق النشط: نص أبيض فوق الذهبي (2.81:1). الذهبي لون فاتح
-   نسبيًا فيلزمه نص داكن — وهذا موضع أدخلَته هوية v4 نفسها. */
-.qzg-count-btn--on.qzg-count-btn--on { color: var(--n-950) !important; }
+/* (٨) زر عدد اللاعبين/الفرق النشط: خلفية ذهبية + نص داكن ثابت.
+ * ممنوع --n-950/--em-950 وحدهما ليلاً (يصيران نعناعيًا فوق الذهبي ≈1.5:1). */
+.qzg-count-btn--on.qzg-count-btn--on {
+  background: var(--majalis-brass, #b8963f) !important;
+  border-color: var(--majalis-brass, #b8963f) !important;
+  color: #0a0e0c !important;
+}
+:is(html[data-theme="dark"], html.dark) .qzg-count-btn:not(.qzg-count-btn--on) {
+  background: var(--surface-2, #222d29) !important;
+  color: var(--text, #f8fafc) !important;
+  border-color: var(--border, #35443f) !important;
+}
 
 /* ══════════════════════════════════════════════════════════════
    ز) عناصر متعدّدة الحالات — تُثبَّت خلفيتها ولونها معًا

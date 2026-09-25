@@ -142,13 +142,14 @@
 }
 .qzg-mode-btn--on { background: var(--ds-emerald-soft, var(--majalis-emerald-muted)); border-color: var(--ds-emerald, var(--majalis-emerald)); color: var(--ds-emerald-deep, var(--majalis-emerald-deep)); }
 
-.qzg-team-count-row { display: flex; gap: var(--ds-space-2); margin-bottom: 1rem; }
+.qzg-team-count-row { display: flex; gap: var(--ds-space-2); margin-bottom: 1rem; flex-wrap: wrap; }
 .qzg-count-btn {
-  flex: 1; padding: 0.6rem; border-radius: var(--ds-radius, 0.5rem); border: 1px solid var(--ds-line-color);
+  flex: 1; min-width: 4.5rem; padding: 0.6rem; border-radius: var(--ds-radius, 0.5rem); border: 1px solid var(--ds-line-color);
   background: var(--ds-card, #fff); color: var(--majalis-ink); font-weight: 700; font-size: 0.85rem;
   cursor: pointer; font-family: inherit;
 }
-.qzg-count-btn--on { background: var(--majalis-brass); border-color: var(--majalis-brass); color: #fff; }
+.qzg-count-btn--on { background: var(--majalis-brass); border-color: var(--majalis-brass); color: #0a0e0c; }
+.qzg-solo-name { margin-top: 0.25rem; }
 
 .qzg-cats-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
 .qzg-cats-count { font-size: 0.78rem; color: var(--majalis-ink-soft); }
