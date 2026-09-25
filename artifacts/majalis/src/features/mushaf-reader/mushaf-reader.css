@@ -99,11 +99,12 @@
    * تكبير الرقم على الـglyph فقط — لا تغيّر font-size الحاوية وإلا يكبر العرض ويفيض السطر.
    */
   /*
-   * رقم أوضح على الـglyph فقط — الصندوق يبقى 0.62em×1.15em (عقد geometry ص600).
-   * 1.52em داخل مركز أوسع (بتلات أرق) دون تغيير advance width.
+   * رقم الآية = مجسم QPC مركّب (زخرفة+رقم PUA). تكبيره إلى 1.52em + وزن 700
+   * داخل وردة clip-path يقصّ الرقم ويُفسِد الوجه أحادي الوزن — فيبدو الفاصل فارغًا.
+   * الصندوق الخارجي ثابت (1.15em × 0.62em) · الرقم يُرسم بوزن 400 وبحجم يلائم المركز.
    */
   --mushaf-ayah-mark-font-size: 0.62em;
-  --mushaf-ayah-mark-number-size: 1.52em;
+  --mushaf-ayah-mark-number-size: 1em;
   /* aliases لعقد الفاصل (Fill/Stroke/Number من Quran Gold Tokens) */
   --mushaf-ayah-marker-fill: var(--mushaf-verse-marker-fill);
   --mushaf-ayah-marker-stroke: var(--mushaf-verse-marker-border);
@@ -111,7 +112,7 @@
   --mushaf-ayah-marker-size: var(--mushaf-ayah-mark-size);
   --mushaf-ayah-marker-inner-size: var(--mushaf-ayah-mark-number-size);
   --mushaf-ayah-marker-number-size: var(--mushaf-ayah-mark-number-size);
-  --mushaf-ayah-marker-number-weight: 700;
+  --mushaf-ayah-marker-number-weight: 400;
 
   /* طبقات سفلية داخل القارئ */
   --bottom-nav-height: 64px;
@@ -831,8 +832,8 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
 
 /*
  * SunnahVerseRosette — Visual Baseline: وردة 1.15em مقفلة — الزيادة الإضافية تسبب lineOverflow على ص600.
- * 8 بتلات ناعمة شبه دائرية — بلا أشواك/مسامير/ظل/توهج، بلا overflow، بلا تغيير fontSize للنص.
- * سماكة الزخرفة مخفّضة (tip≈14 / valley≈30) لتوسيع المركز وإبراز الرقم دون تكبير العرض الخارجي.
+ * 8 بتلات ناعمة شبه دائرية — بلا أشواك/مسامير/ظل/توهج، بلا تغيير fontSize للنص.
+ * مجسم QPC end يُرسم بوزن 400 وبحجم يلائم المركز — لا يُكبَّر فوق الصندوق فيُقصّ الرقم.
  */
 .nm-ayah-mark {
   position: relative;
@@ -852,9 +853,9 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   color: var(--mushaf-verse-marker-number);
   font-family: inherit;
   font-size: var(--mushaf-ayah-mark-font-size, 0.62em);
-  font-weight: var(--mushaf-ayah-marker-number-weight, 700);
+  font-weight: var(--mushaf-ayah-marker-number-weight, 400);
   line-height: 1;
-  overflow: hidden;
+  overflow: visible;
   transform: none;
   box-shadow: none;
   /* 8 بتلات: طرف 36٪ / وادي 40٪ — مركز أوسع للرقم داخل نفس الـbounding box */
@@ -883,11 +884,13 @@ html[data-theme="dark"] .nm-ayah-sel__band--navigation {
   display: block;
   line-height: 1;
   text-align: center;
-  font-size: var(--mushaf-ayah-mark-number-size, 1.52em);
-  font-weight: inherit;
+  font-size: var(--mushaf-ayah-mark-number-size, 1em);
+  font-weight: 400;
   color: inherit;
   font-variant-numeric: tabular-nums;
   transform: none;
+  /* لا synthetic bold — وجه QPC أحادي الوزن */
+  -webkit-font-smoothing: antialiased;
 }
 
 .nm-basmala__num-hit {

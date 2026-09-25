@@ -1,5 +1,5 @@
 /**
- * بوابة تنعيم فاصل الآية: وردة 8 بتلات ناعمة + رقم أوضح داخل نفس الصندوق 1.15em.
+ * بوابة فاصل الآية: وردة 8 بتلات · رقم QPC ظاهر (وزن 400 · حجم يلائم المركز).
  * تشغيل: node --import tsx src/lib/__tests__/mushaf-ayah-marker-refine-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -29,7 +29,8 @@ assert.doesNotMatch(marker, /scale\(/);
 /* هندسة خارجية ثابتة */
 assert.match(css, /--mushaf-ayah-mark-size:\s*1\.15em/);
 assert.match(css, /--mushaf-ayah-mark-font-size:\s*0\.62em/);
-assert.match(css, /--mushaf-ayah-mark-number-size:\s*1\.52em/);
+/* مجسم QPC مركّب — لا يُكبَّر فوق الصندوق وإلا يُقصّ الرقم */
+assert.match(css, /--mushaf-ayah-mark-number-size:\s*1em/);
 
 /* Tokens الفاصل */
 assert.match(css, /--mushaf-ayah-marker-fill:\s*var\(--mushaf-verse-marker-fill\)/);
@@ -37,7 +38,8 @@ assert.match(css, /--mushaf-ayah-marker-stroke:\s*var\(--mushaf-verse-marker-bor
 assert.match(css, /--mushaf-ayah-marker-number:\s*var\(--mushaf-verse-marker-number\)/);
 assert.match(css, /--mushaf-ayah-marker-size:\s*var\(--mushaf-ayah-mark-size\)/);
 assert.match(css, /--mushaf-ayah-marker-inner-size:\s*var\(--mushaf-ayah-mark-number-size\)/);
-assert.match(css, /--mushaf-ayah-marker-number-weight:\s*700/);
+/* وزن 400 فقط — وجه QPC أحادي الوزن؛ 700 كان يُخفي الرقم */
+assert.match(css, /--mushaf-ayah-marker-number-weight:\s*400/);
 
 /* وردة ناعمة: clip-path موجود · بلا طرف 2٪ الشائك · بلا أخضر داخل الفاصل */
 assert.match(css, /SunnahVerseRosette/);
@@ -53,11 +55,14 @@ assert.doesNotMatch(
   /\.nm-ayah-mark\s*\{[^}]*(?:#1f4f3c|#0[Ee]7[Aa]6[Bb]|green|emerald)/i,
 );
 
-/* الرقم أوضح · وزن متوسط · tabular إن وُجد */
+/* الرقم ظاهر · وزن وجه QPC · tabular إن وُجد */
 assert.match(css, /\.nm-ayah-mark__glyph[\s\S]*?font-variant-numeric:\s*tabular-nums/);
 assert.match(css, /\.nm-ayah-mark\s*\{[^}]*font-weight:\s*var\(--mushaf-ayah-marker-number-weight/s);
+assert.match(css, /\.nm-ayah-mark__glyph[\s\S]*?font-weight:\s*400/);
 assert.doesNotMatch(css, /\.nm-ayah-mark\s*\{[^}]*font-weight:\s*800/s);
 assert.doesNotMatch(css, /\.nm-ayah-mark[\s\S]{0,400}transform:\s*scale\(/);
+assert.doesNotMatch(css, /--mushaf-ayah-mark-number-size:\s*1\.52em/);
+assert.doesNotMatch(css, /--mushaf-ayah-marker-number-weight:\s*700/);
 
 /* الزخرفة مخفية عن AT — الرقم من glyph بيانات الآية */
 assert.match(marker, /aria-hidden="true"/);
