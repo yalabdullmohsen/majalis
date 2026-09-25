@@ -1,0 +1,48 @@
+/**
+ * توحيد هوية البطاقات — سطح مطفي بلا لمعان زخرفي.
+ * يُحمَّل بعد soft-cards / card-unify؛ يستثني المصحف وfocus-visible.
+ * بلا محددات [class*=…] العامة (بوابة no-global-dangerous-css).
+ */
+
+/* كرات/طبقات الوهج على البطاقات — نهاري وليلي */
+.home-card-glow,
+.prophet-lux-card__glow,
+.soft-card [class*="__glow"],
+.hub-card [class*="__glow"],
+.sc2 [class*="__glow"],
+.ui-card [class*="__glow"],
+.mj-card [class*="__glow"],
+.section-card [class*="__glow"],
+.lesson-unified-card [class*="__glow"],
+.prophet-fact-card [class*="__glow"],
+.hadith-card [class*="__glow"],
+.srch-result-card [class*="__glow"] {
+  display: none !important;
+  opacity: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  animation: none !important;
+  pointer-events: none !important;
+}
+
+.soft-card:not([data-scripture])::before,
+.soft-card:not([data-scripture])::after,
+.hub-card:not([data-scripture])::before,
+.hub-card:not([data-scripture])::after,
+.sc2::before,
+.sc2::after,
+.prophet-lux-card::before,
+.ui-card:not([data-scripture])::before,
+.ui-card:not([data-scripture])::after {
+  box-shadow: none;
+}
+
+/* حلقات التركيز تبقى وظيفية — لا تُمس */
+.soft-card:focus-visible,
+.hub-card:focus-visible,
+.sc2:focus-visible,
+.sc2-cta:focus-visible,
+.ui-card:focus-visible {
+  outline-style: solid;
+}

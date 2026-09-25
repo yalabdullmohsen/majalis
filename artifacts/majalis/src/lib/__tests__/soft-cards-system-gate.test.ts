@@ -26,8 +26,18 @@ assert.match(soft, /--radius-button:\s*18px/, "soft-cards يحمل radius-button
 assert.match(soft, /--radius-card:\s*24px/, "soft-cards يحمل radius-card 24");
 assert.match(soft, /\.soft-card\s*\{/, "فئة soft-card");
 assert.match(soft, /\.soft-tile\s*\{/, "فئة soft-tile");
-assert.match(soft, /inset 0 1px 0 rgba\(255,\s*255,\s*255/, "highlight داخلي");
+assert.doesNotMatch(
+  soft,
+  /--soft-card-shadow:[\s\S]*?inset 0 1px 0 rgba\(255,\s*255,\s*255/,
+  "لا highlight أبيض داخلي على ظل soft-card",
+);
+assert.doesNotMatch(
+  soft,
+  /\.soft-pill\s*\{[\s\S]*?inset 0 1px 0 rgba\(255,\s*255,\s*255/,
+  "لا لمعان داخلي على soft-pill",
+);
 assert.match(main, /soft-cards\.css/, "استيراد soft-cards في main");
+assert.match(main, /card-matte-unify\.css/, "استيراد طبقة البطاقات المطفية");
 
 const finalRelease = read("src/styles/final-release.css");
 assert.match(
@@ -49,7 +59,11 @@ assert.match(
   /--pts-radius:\s*var\(--mie-radius-card,\s*var\(--radius-card,\s*24px\)\)/,
   "الصلاة تستخدم نصف قطر Editorial/البطاقة الناعمة 24px",
 );
-assert.match(prayer, /inset 0 1px 0 rgba\(255,\s*255,\s*255,\s*0\.12\)/, "highlight بطاقة البطل");
+assert.doesNotMatch(
+  prayer,
+  /\.pts-hero[\s\S]{0,400}inset 0 1px 0 rgba\(255,\s*255,\s*255/,
+  "بطل الصلاة بلا highlight أبيض داخلي",
+);
 assert.doesNotMatch(prayer, /\.pts-row--next[\s\S]{0,120}border:\s*1\.5px/, "لا إطار سميك للصلاة القادمة");
 assert.match(prayer, /\.pts-row\s*\{[\s\S]*?grid-template-columns:/, "صفوف المواقيت أفقية مضغوطة");
 assert.match(prayer, /\.pts-list\s*\{[\s\S]*?flex-direction:\s*column/, "قائمة المواقيت عمودية");

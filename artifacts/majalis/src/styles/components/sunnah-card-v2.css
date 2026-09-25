@@ -7,9 +7,7 @@
   border-radius: var(--v2-radius-card);
   border: 1px solid color-mix(in srgb, var(--v2-hairline) 88%, var(--v2-color-emerald));
   background: var(--v2-color-ivory-surface);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #fff 70%, transparent),
-    var(--v2-shadow-card);
+  box-shadow: var(--v2-shadow-card);
   color: var(--v2-color-ink);
   box-sizing: border-box;
   transition:
@@ -20,9 +18,7 @@
 
 .sc2:hover {
   border-color: color-mix(in srgb, var(--v2-color-emerald) 28%, var(--v2-hairline));
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #fff 70%, transparent),
-    var(--v2-shadow-elevated, 0 12px 40px rgba(22, 36, 30, 0.1));
+  box-shadow: var(--v2-shadow-elevated, 0 12px 40px rgba(22, 36, 30, 0.1));
   transform: translateY(-1px);
 }
 
@@ -36,17 +32,11 @@
   gap: var(--v2-space-3);
   min-height: 0;
   padding: var(--v2-pad-card, var(--v2-space-6));
-  background:
-    radial-gradient(
-      120% 80% at 100% 0%,
-      color-mix(in srgb, var(--v2-color-gold) 18%, transparent) 0%,
-      transparent 55%
-    ),
-    linear-gradient(
-      145deg,
-      var(--v2-color-emerald) 0%,
-      var(--v2-color-emerald-deep) 100%
-    );
+  background: linear-gradient(
+    145deg,
+    var(--v2-color-emerald) 0%,
+    var(--v2-color-emerald-deep) 100%
+  );
   color: var(--v2-color-on-emerald);
   border-color: transparent;
   box-shadow: var(--v2-shadow-elevated);
@@ -60,15 +50,7 @@
 }
 
 .sc2--welcome::after {
-  content: "";
-  position: absolute;
-  inset-inline-end: -12%;
-  inset-block-end: -28%;
-  width: 55%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--v2-color-on-emerald) 8%, transparent);
-  pointer-events: none;
+  content: none;
 }
 
 .sc2--quiet {
@@ -90,7 +72,7 @@
       var(--v2-color-emerald-soft) 100%
     );
   color: var(--v2-color-emerald-deep);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--v2-color-gold) 22%, transparent);
+  box-shadow: none;
 }
 
 .sc2--welcome .sc2-icon {

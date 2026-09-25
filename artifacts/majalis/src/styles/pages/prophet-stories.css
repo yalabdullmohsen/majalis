@@ -1705,18 +1705,15 @@ html.dark .prophets-page-lead {
   position: absolute;
   inset: -40% -20% auto;
   height: 70%;
-  background: radial-gradient(
-    ellipse at top,
-    color-mix(in srgb, var(--prophet-accent, var(--prophet-color)) 22%, transparent),
-    transparent 70%
-  );
+  background: none;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  display: none;
 }
 .prophet-lux-card:hover .prophet-lux-card__glow,
 .prophet-lux-card:focus-visible .prophet-lux-card__glow {
-  opacity: 1;
+  opacity: 0;
+  display: none;
 }
 .prophet-lux-card:hover .prophet-lux-card__star svg,
 .prophet-lux-card:focus-visible .prophet-lux-card__star svg {
