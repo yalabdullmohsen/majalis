@@ -1,5 +1,5 @@
 /**
- * بوابة محاذاة قصص الأنبياء + إخفاء الشريط المتحرك + استماع.
+ * بوابة محاذاة قصص الأنبياء — بلا استماع ولا أدوات خط في القارئ.
  * node --import tsx src/lib/__tests__/prophets-stories-mobile-layout-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -12,7 +12,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const css = readFileSync(resolve(root, "src/styles/pages/prophet-stories.css"), "utf8");
 const view = readFileSync(resolve(root, "src/views/ProphetStoriesPage.tsx"), "utf8");
 const app = readFileSync(resolve(root, "src/App.tsx"), "utf8");
-const speech = readFileSync(resolve(root, "src/lib/speech-read-aloud.ts"), "utf8");
+const header = readFileSync(resolve(root, "src/components/prophets/ProphetStoryReaderHeader.tsx"), "utf8");
 const stb = readFileSync(resolve(root, "src/styles/components/scholarly-trust.css"), "utf8");
 
 assert.equal(isCompactHeaderPath("/prophets"), true);
@@ -28,12 +28,13 @@ assert.match(css, /overflow-x:\s*clip/);
 assert.match(css, /\.prophet-reader-header/);
 assert.match(css, /padding-bottom:\s*calc\(var\(--inset-bottom/);
 
-assert.match(view, /prophet-speech-btn/);
 assert.match(view, /ProphetStoryReader/);
-assert.match(view, /playAiNarration|stopAiNarration|speakArabicText|stopSpeechReadAloud/);
-assert.match(view, /استماع/);
-assert.match(speech, /speechSynthesis|playAiNarration/);
-assert.match(speech, /lang\s*=\s*"ar"|lang:\s*"ar"/);
+assert.match(view, /ProphetStoryReaderHeader/);
+assert.doesNotMatch(view, /prophet-speech-btn|playAiNarration|stopAiNarration|speakableText/);
+assert.doesNotMatch(view, /prophet-font-controls|setFontSize|أ\+|أ−/);
+assert.doesNotMatch(view, /aria-label=\{speechPlaying|"استماع لنص القصة"/);
+assert.doesNotMatch(css, /\.prophet-speech-btn|\.prophet-font-controls/);
+assert.match(header, /data-has-actions/);
 assert.match(stb, /html\.dark \.stb-row__value/);
 
 console.log("prophets-stories-mobile-layout-gate: ok");
