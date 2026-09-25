@@ -103,6 +103,7 @@ import {
   mushafPerfInc,
   mushafPerfSnapshot,
 } from "./mushaf-turn-telemetry";
+import { mushafExperienceMark } from "./mushaf-experience-perf";
 import {
   bumpTafsirGeneration,
   createTafsirOpenIntent,
@@ -155,6 +156,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
 
   useEffect(() => {
     mushafPerfInc("readerMount");
+    mushafExperienceMark("mushaf:reader-mounted");
   }, []);
   useEffect(() => {
     migrateLegacyMushafReaderPrefs();
@@ -744,6 +746,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
     if (playerState === "playing" || playerState === "buffering" || playerState === "loading") {
       return;
     }
+    mushafExperienceMark("mushaf:selection-complete");
     setSelectedVerseKey(null);
   }, [playerState]);
 
@@ -753,6 +756,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
         setActionsOpen(false);
         return;
       }
+      mushafExperienceMark("mushaf:selection-start");
       haptics.selection();
       setSelectedVerseKey(verseKey);
       setActionsOpen(true);
@@ -769,6 +773,7 @@ export function NewMushafReader({ pageNumber, onPageChange, onExit, onIndex: _on
           ae.blur();
         }
       }
+      mushafExperienceMark("mushaf:selection-complete");
     },
     [actionsOpen, selectedVerseKey],
   );

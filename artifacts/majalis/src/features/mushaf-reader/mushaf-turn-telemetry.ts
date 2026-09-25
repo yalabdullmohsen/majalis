@@ -5,6 +5,8 @@
  * مقاييس الجلسة: touch→move، أزمنة الإطارات (worst/p95/p99)، dropped، hitch.
  * عدّادات العمر (lifetime): mounts/renders/fonts/geometry عبر الجلسة.
  */
+import { mushafExperienceOnTurnMark } from "./mushaf-experience-perf";
+
 type MushafTurnMark =
   | "touchStart"
   | "firstPageMovement"
@@ -136,6 +138,7 @@ function sampleLoop(ts: number): void {
 }
 
 export function mushafTurnMark(mark: MushafTurnMark, page?: number): void {
+  mushafExperienceOnTurnMark(mark);
   if (!enabled) return;
   const now = performance.now();
   if (!session || (page != null && mark === "touchStart")) {
