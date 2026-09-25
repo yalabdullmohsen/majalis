@@ -16,7 +16,7 @@ const files = {
   topicPage: "src/components/topic/TopicPage.tsx",
   hubCard: "src/components/ui/HubCard.tsx",
   compact: "src/components/ui/CompactSectionHeader.tsx",
-  accordion: "src/components/SectionAccordionLayout.tsx",
+  accordion: "src/components/knowledge-collection/CollectionHero.tsx",
   api: "src/styles/ssunnah-theme-api.css",
 };
 

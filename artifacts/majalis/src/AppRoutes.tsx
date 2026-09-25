@@ -688,18 +688,40 @@ export default function AppRoutes() {
       <Route path="/arbaeen-nawawi"><SafeLazyRoute component={ArbaeenNawawiPage} /></Route>
       <Route path="/sujood-sahw"><SafeLazyRoute component={SujoodSahwPage} /></Route>
       <Route path="/amrad-qalbiyya"><SafeLazyRoute component={AmradQalbiyyaPage} /></Route>
+      <Route path="/durus-imaniyya/:categoryId/:topicId"><SafeLazyRoute component={DurusImaniyyaPage} /></Route>
+      <Route path="/durus-imaniyya/:categoryId"><SafeLazyRoute component={DurusImaniyyaPage} /></Route>
       <Route path="/durus-imaniyya"><SafeLazyRoute component={DurusImaniyyaPage} /></Route>
+      <Route path="/durus-mutanawwia/:categoryId/:topicId"><SafeLazyRoute component={DurusMutanawwiaPage} /></Route>
+      <Route path="/durus-mutanawwia/:categoryId"><SafeLazyRoute component={DurusMutanawwiaPage} /></Route>
       <Route path="/durus-mutanawwia"><SafeLazyRoute component={DurusMutanawwiaPage} /></Route>
+      <Route path="/iman-topics/:categoryId/:topicId"><SafeLazyRoute component={ImanTopicsPage} /></Route>
+      <Route path="/iman-topics/:categoryId"><SafeLazyRoute component={ImanTopicsPage} /></Route>
       <Route path="/iman-topics"><SafeLazyRoute component={ImanTopicsPage} /></Route>
       <Route path="/quran-studies"><Redirect to="/ulum-quran" /></Route>
+      <Route path="/sunnah-studies/:categoryId/:topicId"><SafeLazyRoute component={SunnahStudiesPage} /></Route>
+      <Route path="/sunnah-studies/:categoryId"><SafeLazyRoute component={SunnahStudiesPage} /></Route>
       <Route path="/sunnah-studies"><SafeLazyRoute component={SunnahStudiesPage} /></Route>
+      <Route path="/tazkiya-topics/:categoryId/:topicId"><SafeLazyRoute component={TazkiyaTopicsPage} /></Route>
+      <Route path="/tazkiya-topics/:categoryId"><SafeLazyRoute component={TazkiyaTopicsPage} /></Route>
       <Route path="/tazkiya-topics"><SafeLazyRoute component={TazkiyaTopicsPage} /></Route>
       <Route path="/tarikh-islami"><SafeLazyRoute component={TarikhIslamiPage} /></Route>
+      <Route path="/usra-mujtama/:categoryId/:topicId"><SafeLazyRoute component={UsraMujtamaPage} /></Route>
+      <Route path="/usra-mujtama/:categoryId"><SafeLazyRoute component={UsraMujtamaPage} /></Route>
       <Route path="/usra-mujtama"><SafeLazyRoute component={UsraMujtamaPage} /></Route>
+      <Route path="/fikr-waqia/:categoryId/:topicId"><SafeLazyRoute component={FikrWaqiaPage} /></Route>
+      <Route path="/fikr-waqia/:categoryId"><SafeLazyRoute component={FikrWaqiaPage} /></Route>
       <Route path="/fikr-waqia"><SafeLazyRoute component={FikrWaqiaPage} /></Route>
+      <Route path="/mawsuaat/:categoryId/:topicId"><SafeLazyRoute component={MawsuaatPage} /></Route>
+      <Route path="/mawsuaat/:categoryId"><SafeLazyRoute component={MawsuaatPage} /></Route>
       <Route path="/mawsuaat"><SafeLazyRoute component={MawsuaatPage} /></Route>
+      <Route path="/arabic-language/:categoryId/:topicId"><SafeLazyRoute component={ArabicLanguagePage} /></Route>
+      <Route path="/arabic-language/:categoryId"><SafeLazyRoute component={ArabicLanguagePage} /></Route>
       <Route path="/arabic-language"><SafeLazyRoute component={ArabicLanguagePage} /></Route>
+      <Route path="/maqasid-sharia/:categoryId/:topicId"><SafeLazyRoute component={MaqasidShariaPage} /></Route>
+      <Route path="/maqasid-sharia/:categoryId"><SafeLazyRoute component={MaqasidShariaPage} /></Route>
       <Route path="/maqasid-sharia"><SafeLazyRoute component={MaqasidShariaPage} /></Route>
+      <Route path="/dalail-nubuwwah/:categoryId/:topicId"><SafeLazyRoute component={DalailNubuwwahPage} /></Route>
+      <Route path="/dalail-nubuwwah/:categoryId"><SafeLazyRoute component={DalailNubuwwahPage} /></Route>
       <Route path="/dalail-nubuwwah"><SafeLazyRoute component={DalailNubuwwahPage} /></Route>
       <Route path="/masarat"><Redirect to="/lessons" /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>

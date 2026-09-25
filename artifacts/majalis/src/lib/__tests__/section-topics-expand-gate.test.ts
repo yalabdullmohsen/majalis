@@ -1,5 +1,5 @@
 /**
- * بوابة: توسيع موضوعات الأقسام بلا تمدد فارغ / بلا متن كامل داخل البطاقة.
+ * بوابة: نظام المجموعات المعرفية L1–L4 — بلا شيت مواضيع.
  * node --import tsx src/lib/__tests__/section-topics-expand-gate.test.ts
  */
 import assert from "node:assert/strict";
@@ -10,46 +10,44 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const read = (rel: string) => readFileSync(resolve(root, rel), "utf8");
 
-assert.ok(existsSync(resolve(root, "src/lib/section-topics-expand.ts")));
+assert.ok(existsSync(resolve(root, "src/components/knowledge-collection/KnowledgeCollectionSystem.tsx")));
+assert.ok(existsSync(resolve(root, "src/components/knowledge-collection/TopicReaderPage.tsx")));
+assert.ok(existsSync(resolve(root, "src/styles/pages/knowledge-collection.css")));
 
-const contract = read("src/lib/section-topics-expand.ts");
-const layout = read("src/components/SectionAccordionLayout.tsx");
-const css = read("src/styles/pages/section-hub.css");
-const glossary = read("src/pages/account/ui/IslamicGlossaryView.tsx");
+const system = read("src/components/knowledge-collection/KnowledgeCollectionSystem.tsx");
+const reader = read("src/components/knowledge-collection/TopicReaderPage.tsx");
+const layoutShim = read("src/components/SectionAccordionLayout.tsx");
+const css = read("src/styles/pages/knowledge-collection.css");
+const routes = read("src/AppRoutes.tsx");
 const pkg = read("package.json");
+const glossary = read("src/pages/account/ui/IslamicGlossaryView.tsx");
 
-assert.match(contract, /INLINE_SECTION_TOPIC_LIMIT\s*=\s*8/);
-assert.match(contract, /shouldInlineExpandTopics/);
+/* النظام الجديد: بلا BottomSheet للمواضيع */
+assert.match(system, /KnowledgeCollectionSystem/);
+assert.match(system, /data-kc-level/);
+assert.doesNotMatch(system, /AppBottomSheet/);
+assert.doesNotMatch(system, /عرض الموضوعات/);
+assert.match(reader, /kc-topic-reader/);
+assert.match(layoutShim, /KnowledgeCollectionSystem/);
 
-assert.match(layout, /shouldInlineExpandTopics/);
-assert.match(layout, /AppBottomSheet/);
-assert.match(layout, /section-hub__topics--compact/);
-assert.doesNotMatch(layout, /ابدأ الباب/);
-assert.doesNotMatch(layout, /section-hub__cta--ghost/);
+/* iPad: 3–4 أعمدة */
+assert.match(css, /grid-template-columns:\s*repeat\(3/);
+assert.match(css, /grid-template-columns:\s*repeat\(4/);
+assert.match(css, /max-width:\s*min\(1120px/);
 
-/* داخل الأكورديون المضغوط: لا حقن body لكل موضوع */
-assert.match(layout, /compact \?[\s\S]*lesson\.summary/);
-assert.match(layout, /!compact && lesson\.body/);
-
-assert.match(css, /align-items:\s*start/);
-assert.match(css, /min-height:\s*0/);
-assert.doesNotMatch(css, /\.section-hub__card\s*\{[^}]*min-height:\s*100%/s);
-assert.match(css, /section-hub__topic-summary--clamp/);
+/* مسارات متداخلة */
+assert.match(routes, /\/iman-topics\/:categoryId\/:topicId/);
+assert.match(routes, /\/tazkiya-topics\/:categoryId\/:topicId/);
+assert.match(routes, /\/maqasid-sharia\/:categoryId\/:topicId/);
 
 assert.match(glossary, /بطاقات المراجعة/);
 assert.doesNotMatch(glossary, /راجِع بالبطاقات|راجع بالبطاقات/);
-
 assert.match(pkg, /test:section-topics-expand/);
 
-const {
-  shouldInlineExpandTopics,
-  INLINE_SECTION_TOPIC_LIMIT,
-} = await import("../section-topics-expand.ts");
-
-assert.equal(INLINE_SECTION_TOPIC_LIMIT, 8);
-assert.equal(shouldInlineExpandTopics(0), false);
-assert.equal(shouldInlineExpandTopics(7), true);
-assert.equal(shouldInlineExpandTopics(8), false);
-assert.equal(shouldInlineExpandTopics(20), false);
+/* العقد القديم تبقى متاحة للتوافق إن وُجدت */
+if (existsSync(resolve(root, "src/lib/section-topics-expand.ts"))) {
+  const contract = read("src/lib/section-topics-expand.ts");
+  assert.match(contract, /INLINE_SECTION_TOPIC_LIMIT/);
+}
 
 console.log("section-topics-expand-gate.test.ts: ok");
