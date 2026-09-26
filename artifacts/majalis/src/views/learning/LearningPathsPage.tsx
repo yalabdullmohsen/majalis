@@ -194,7 +194,11 @@ export default function LearningPathsPage() {
                 const weeks = estimateWeeksRange(path.totalSessions, 4);
                 return (
                   <Link key={path.slug} href={`/learning/paths/${path.slug}`} className="lpp-path-link">
-                    <article className={`lpp-path-card soft-card soft-card--on-light${hasContent ? "" : " lpp-path-card--pending"}`}>
+                    <article
+                      data-cs-card="1"
+                      data-cs-type="course"
+                      className={`lpp-path-card cs-course soft-card soft-card--on-light${hasContent ? "" : " lpp-path-card--pending"}`}
+                    >
                       <div className="lpp-path-card__top">
                         <h3 className="lpp-path-card__title">{path.title}</h3>
                         <span className="lpp-path-level-icon">{(() => { const I = LEVEL_ICON[path.level] ?? Sprout; return <I size={14} />; })()}</span>

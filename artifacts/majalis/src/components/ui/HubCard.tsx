@@ -81,7 +81,7 @@ export const SectionEntryCard = memo(function SectionEntryCard({
     (Icon ? <Icon size={20} strokeWidth={1.85} aria-hidden="true" /> : null);
 
   const classNames = cn(
-    "hub-card sec-entry soft-card soft-card--on-light ss-hub-card mj-pressable",
+    "hub-card sec-entry soft-card soft-card--on-light ss-hub-card mj-pressable cs-card",
     `hub-card--${variant}`,
     (featured || variant === "featured") && "hub-card--featured",
     variant === "detailed" && "hub-card--detailed",
@@ -90,6 +90,7 @@ export const SectionEntryCard = memo(function SectionEntryCard({
     loading && "hub-card--loading",
     className,
   );
+  const csAttrs = { "data-cs-card": "1", "data-cs-type": "section" } as const;
 
   const warmRoute = useCallback(() => {
     if (nonInteractive || samePathHash || !safeHref) return;
@@ -162,6 +163,7 @@ export const SectionEntryCard = memo(function SectionEntryCard({
         aria-disabled={disabled || loading ? true : undefined}
         data-hub-card-current={isCurrent ? "1" : undefined}
         data-section-entry="1"
+        {...csAttrs}
       >
         {body}
       </div>
@@ -175,6 +177,7 @@ export const SectionEntryCard = memo(function SectionEntryCard({
         className={classNames}
         aria-label={title}
         data-section-entry="1"
+        {...csAttrs}
         onClick={(e) => {
           handleClick(e);
           scrollToHash(e);
@@ -192,6 +195,7 @@ export const SectionEntryCard = memo(function SectionEntryCard({
         className={classNames}
         aria-label={title}
         data-section-entry="1"
+        {...csAttrs}
         onPointerEnter={warmRoute}
         onPointerDown={warmRoute}
         onClick={handleClick}
@@ -207,6 +211,7 @@ export const SectionEntryCard = memo(function SectionEntryCard({
       className={classNames}
       aria-label={title}
       data-section-entry="1"
+      {...csAttrs}
       onClick={(e) => handleClick(e as unknown as MouseEvent)}
     >
       {body}

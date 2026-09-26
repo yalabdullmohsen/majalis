@@ -1,0 +1,95 @@
+/**
+ * Card System — رموز أسطح وطبقات سُنّة
+ * Surface 1/2/3 · Primary Emerald · Gold · Text
+ * Compact (هاتف) · Comfortable (iPad)
+ * بلا لمعان · تباين AA
+ */
+
+:root {
+  /* طبقات السطح — واضحة وليست أخضر باهت واحد */
+  --cs-surface-1: #f7f4ee;
+  --cs-surface-2: #fffcf7;
+  --cs-surface-3: #ffffff;
+  --cs-primary: #1a5c45;
+  --cs-primary-deep: #0f3d2e;
+  --cs-primary-soft: color-mix(in srgb, var(--cs-primary) 12%, var(--cs-surface-2));
+  --cs-gold: #b8923a;
+  --cs-gold-ink: #6a5218;
+  --cs-text-primary: #16241c;
+  --cs-text-secondary: #3a4a42;
+  --cs-text-muted: #5c6b63;
+  --cs-border: color-mix(in srgb, var(--cs-primary) 16%, #d7ddd8);
+  --cs-border-strong: color-mix(in srgb, var(--cs-primary) 28%, #c8d0cb);
+  --cs-shadow: 0 1px 2px color-mix(in srgb, var(--cs-primary-deep) 6%, transparent),
+    0 6px 18px -10px color-mix(in srgb, var(--cs-primary-deep) 14%, transparent);
+  --cs-focus-ring: 2px solid color-mix(in srgb, var(--cs-gold) 70%, var(--cs-primary));
+
+  /* كثافة — هاتف مضغوط */
+  --cs-radius: 16px;
+  --cs-pad-y: 0.7rem;
+  --cs-pad-x: 0.85rem;
+  --cs-gap: 0.4rem;
+  --cs-title-size: 1.02rem;
+  --cs-body-size: 0.9rem;
+  --cs-meta-size: 0.78rem;
+  --cs-icon-size: 1.85rem;
+  --cs-hero-pad-block: 1.15rem;
+  --cs-hero-min-h: 0;
+
+  /* جسور للمنتج الحالي */
+  --soft-card-pad: var(--cs-pad-y) var(--cs-pad-x);
+  --soft-tile-pad: 0.6rem 0.75rem;
+  --radius-card: var(--cs-radius);
+  --radius-tile: var(--cs-radius);
+  --surface-feature: var(--cs-surface-2);
+  --surface-feature-border: var(--cs-border);
+  --surface-feature-shadow: var(--cs-shadow);
+  --surface-feature-ink: var(--cs-text-primary);
+  --surface-feature-radius: var(--cs-radius);
+  --ss-card-bg: var(--cs-surface-2);
+  --mj-brand-soft: var(--cs-primary-soft);
+  --brand-soft: var(--cs-primary-soft);
+  --soft-card-bg: var(--cs-surface-2);
+  --soft-card-border: var(--cs-border);
+  --soft-card-shadow: var(--cs-shadow);
+  --soft-tile-bg: var(--cs-surface-3);
+  --soft-tile-border: var(--cs-border);
+  --soft-tile-shadow: none;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --cs-pad-y: 0.95rem;
+    --cs-pad-x: 1.1rem;
+    --cs-gap: 0.55rem;
+    --cs-title-size: 1.12rem;
+    --cs-body-size: 0.95rem;
+    --cs-meta-size: 0.82rem;
+    --cs-icon-size: 2.1rem;
+    --cs-hero-pad-block: 1.45rem;
+    --cs-radius: 18px;
+  }
+}
+
+html.dark,
+html[data-theme="dark"] {
+  --cs-surface-1: #101714;
+  --cs-surface-2: #1a2420;
+  --cs-surface-3: #24302b;
+  --cs-primary: #5fb892;
+  --cs-primary-deep: #3d8f6c;
+  --cs-primary-soft: color-mix(in srgb, var(--cs-primary) 16%, var(--cs-surface-2));
+  --cs-gold: #d4b45c;
+  --cs-gold-ink: #f0e2b0;
+  --cs-text-primary: #eef3f0;
+  --cs-text-secondary: #c2d0c9;
+  --cs-text-muted: #95a8a0;
+  --cs-border: color-mix(in srgb, var(--cs-primary) 26%, #2a3531);
+  --cs-border-strong: color-mix(in srgb, var(--cs-primary) 40%, #35443f);
+  --cs-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 22px -12px rgba(0, 0, 0, 0.55);
+  --mj-brand-soft: var(--cs-primary-soft);
+  --brand-soft: var(--cs-primary-soft);
+  --soft-card-bg: var(--cs-surface-2);
+  --soft-card-border: var(--cs-border);
+  --soft-tile-bg: var(--cs-surface-3);
+}

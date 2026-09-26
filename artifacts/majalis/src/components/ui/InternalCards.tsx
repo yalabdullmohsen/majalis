@@ -44,7 +44,7 @@ export const TopicCard = memo(function TopicCard({
   return (
     <ContentCard
       {...props}
-      className={cn("topic-card ss-topic-card soft-card soft-card--on-light", className)}
+      className={cn("topic-card ss-topic-card cs-topic soft-card soft-card--on-light", className)}
     />
   );
 });

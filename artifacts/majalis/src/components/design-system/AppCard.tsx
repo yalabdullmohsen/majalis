@@ -23,9 +23,10 @@ export function AppCard({
   return (
     <Tag
       data-app-card="1"
+      data-cs-card="1"
       className={cn(
-        "soft-card soft-card--on-light ss-app-card",
-        tone === "accent" && "soft-card--accent",
+        "cs-card soft-card soft-card--on-light ss-app-card",
+        tone === "accent" && "soft-card--accent cs-action",
         tone === "muted" && "ss-app-card--muted",
         padding === "sm" && "ss-app-card--pad-sm",
         padding === "none" && "ss-app-card--pad-none",

@@ -37,7 +37,9 @@ export const SectionCard = memo(function SectionCard({ section, className, onNav
       data-section-card="1"
       data-section-id={section.id}
       aria-label={aria}
-      className={cn("card", className)}
+      data-cs-card="1"
+      data-cs-type="section"
+      className={cn("card cs-card cs-section soft-card soft-card--on-light", className)}
       onPointerDown={() => prefetchRoute(section.route)}
       onClick={() => {
         go(section.route, setLocation);

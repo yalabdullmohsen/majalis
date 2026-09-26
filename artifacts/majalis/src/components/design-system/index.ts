@@ -7,6 +7,25 @@ export { SunnahCardV2, type SunnahCardV2Props } from "./SunnahCardV2";
 export { PageHeaderV2, type PageHeaderV2Props } from "./PageHeaderV2";
 export { EmptyStateV2, type EmptyStateV2Props } from "./EmptyStateV2";
 export { FeatureCard, type FeatureCardProps } from "./FeatureCard";
+/** نظام البطاقات الرسمي — الأنواع العشرة فقط */
+export {
+  HeroCard,
+  CourseCard,
+  QuranCard,
+  ReferenceCard,
+  ActionCard,
+  CS_CARD_TYPES,
+  type HeroCardProps,
+  type CourseCardProps,
+  type ActionCardProps,
+  type CsCardTypeName,
+} from "./CardSystem";
+export {
+  RelatedContentCard,
+  RelatedContentStack,
+  type RelatedContentCardProps,
+} from "@/components/content/RelatedContentCard";
+export { HadithCard } from "@/components/hadith/HadithCard";
 export {
   CompactNavigationCard,
   ContentRow,
