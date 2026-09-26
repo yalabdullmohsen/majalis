@@ -89,8 +89,6 @@ html[data-v2-app="1"] .lesson-unified-card__title {
 }
 
 html[data-v2-app="1"] .sc2-desc,
-html[data-v2-app="1"] .hub-card__desc,
-html[data-v2-app="1"] .section-entry-card__desc,
 html[data-v2-app="1"] .ph2__desc,
 html[data-v2-app="1"] .es2__desc {
   font-size: var(--v2-type-supporting);
@@ -121,10 +119,8 @@ html[data-v2-app="1"] [dir="ltr"]:not(html):not(body) {
 }
 
 /* ── Surfaces: أقل أخضر باهت · أقل ظل ضبابي ── */
-html[data-v2-app="1"] .soft-card,
+html[data-v2-app="1"] .soft-card:not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.section-entry-card),
 html[data-v2-app="1"] .mj-card,
-html[data-v2-app="1"] .hub-card,
-html[data-v2-app="1"] .section-entry-card,
 html[data-v2-app="1"] .ss-app-card,
 html[data-v2-app="1"] .sc2:not(.sc2--welcome) {
   background: var(--v2-surface-raised);

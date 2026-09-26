@@ -42,23 +42,24 @@ const mss = read("src/styles/components/modern-section-shell.css");
 
 console.log("\n=== عناوين الوضع الليلي — رموز ===");
 
-/* ليلي: mss-on-hero يُعاد ضبطه عبر حبر السطح (لا يبقى #16241e) */
+/* ليلي/نهاري: هيرو زمرد داكن → نص عاجي (لا حبر غامق فوق #0A2F24) */
 {
   const darkIdx = green.indexOf('html[data-theme="dark"]');
   assert.ok(darkIdx >= 0, "green-surface dark block");
   const darkBlock = green.slice(darkIdx, darkIdx + 1800);
   assert.match(darkBlock, /--surface-feature-ink:\s*#f3efe6/i);
   assert.match(darkBlock, /--surface-feature-ink-muted:\s*#d8d0c4/i);
-  assert.match(darkBlock, /--mss-on-hero:\s*var\(--surface-feature-ink\)/i);
-  assert.match(darkBlock, /--mss-on-hero-muted:\s*var\(--surface-feature-ink-muted\)/i);
-  assert.match(darkBlock, /--mss-on-hero-accent:\s*var\(--surface-islamic-accent\)/i);
+  assert.match(darkBlock, /--mss-on-hero:\s*#ffffff/i);
+  assert.match(darkBlock, /--mss-on-hero-muted:\s*#e4ddd0/i);
+  assert.match(darkBlock, /--mss-on-hero-accent:\s*#f0e2b0/i);
   assert.doesNotMatch(darkBlock, /--mss-on-hero:\s*#16241e/i);
 }
 
 assert.match(refine, /--mss-on-hero:\s*var\(--pd-ink/);
 assert.match(lobby, /section-lobby__title[\s\S]*?--mss-on-hero/);
 assert.match(refine, /section-lobby__title/);
-assert.match(mss, /--mss-on-hero:\s*#16241e/, "نهاري يبقى حبر غامق");
+assert.match(mss, /--mss-on-hero:\s*#ffffff/, "هيرو زمرد داكن · نص عاجي");
+assert.match(mss, /--mss-section-hero-bg:\s*var\(--cs-ink-hero|#0a2f24/, "خلفية هيرو زمرد داكن");
 
 /* تباين محسوب: عنوان أساسي + ثانوي + تمييز على سطح islamic الداكن */
 const BG = "#131c19";

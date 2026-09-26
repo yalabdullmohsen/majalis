@@ -70,6 +70,15 @@
   --soft-tile-bg: var(--cs-surface-3);
   --soft-tile-border: var(--cs-border);
   --soft-tile-shadow: none;
+
+  /* يتجاوز green-surface الذي يعيد حبرًا داكنًا على هيرو زمردي داكن */
+  --mss-section-hero-bg: var(--cs-ink-hero);
+  --mss-on-hero: var(--cs-on-ink-title);
+  --mss-on-hero-muted: var(--cs-on-ink-body);
+  --mss-on-hero-accent: var(--cs-gold-ink);
+  --mss-on-dark-hero: var(--cs-on-ink-title);
+  --mss-on-dark-hero-muted: var(--cs-on-ink-body);
+  --mss-on-dark-hero-accent: var(--cs-gold-ink);
 }
 
 @media (min-width: 768px) {
@@ -117,4 +126,9 @@ html[data-theme="dark"] {
   --soft-card-bg: var(--cs-surface-2);
   --soft-card-border: var(--cs-border);
   --soft-tile-bg: var(--cs-surface-3);
+  /* هيرو داكن يبقى عاجيًا فوق الزمرد في الوضع الليلي أيضًا */
+  --mss-section-hero-bg: var(--cs-ink-hero);
+  --mss-on-hero: var(--cs-on-ink-title);
+  --mss-on-hero-muted: var(--cs-on-ink-body);
+  --mss-on-hero-accent: var(--cs-gold-ink);
 }

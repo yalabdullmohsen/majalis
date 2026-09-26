@@ -57,8 +57,7 @@ import "./styles/breakpoints.css";
 import "./styles/typography-scale.css";
 import "./styles/typography-app.css";
 import "./index.css";
-/* لغة الهيرو/البطاقات العصرية — تُعمَّم على كل الأقسام */
-import "./styles/components/modern-section-shell.css";
+/* لغة الهيرو/البطاقات العصرية — مؤجّلة تحت ميزانية CSS الحرج ≤60KiB gzip */
 // contrast/a11y الثقيلة + صفحات متخصصة — بعد load (انظر loadNonCriticalCss)
 // جسر aliases: يوجّه --brand/--em-* /shadcn إلى لوحة --mj-* (آخر شيء)
 import "./styles/theme-aliases.css";
@@ -70,11 +69,8 @@ import "./styles/visual-identity-unify.css";
 /* تلميع الأقسام: بطاقات/فلاتر/قائمة/عائم — بعد طبقة التوحيد */
 import "./styles/sections-calm-polish.css";
 /* نمط مكارم الأخلاق — مؤجَّل (زينة أقسام، ليس أول طلاء) */
-/* تباين بطاقات الأقسام/المعجم/العقيدة — نهاري وليلي */
-import "./styles/section-cards-theme.css";
-/* Modern Islamic Editorial — آخر طبقة رموز تعليمية حتى تفوز على الجسور */
-import "./styles/modern-islamic-editorial-tokens.css";
-import "./styles/modern-islamic-editorial.css";
+/* تباين بطاقات الأقسام/المعجم/العقيدة — مؤجّل تحت ميزانية الحرج */
+/* Modern Islamic Editorial — مؤجّل (انظر loadNonCriticalCss) حتى لا يتجاوز ميزانية الحرج */
 /* صقل منتج سُنّة — توكنات/بطاقات/درج/بحث/ليلي */
 import "./styles/ssunnah-ux-polish.css";
 /* semantic-tokens + card-unify مؤجّلان — ميزانية CSS الحرج ≤60KiB gzip */
@@ -120,13 +116,14 @@ if (
 // طبقات مظهر غير حرجة — بعد load + idle حتى لا تنافس LCP (كانت void import فوريًا)
 function loadNonCriticalCss() {
   /* طبقات تحديث الواجهة + رموز ds-* — مؤجّلة تحت ميزانية CSS الحرج (<60KiB gzip) */
+  void import("./styles/components/modern-section-shell.css");
+  void import("./styles/section-cards-theme.css");
   void import("./styles/sunnah-foundation-type.css");
   void import("./styles/green-surface-system.css");
   void import("./styles/soft-cards.css");
   void import("./styles/ssunnah-semantic-tokens.css");
   void import("./styles/ssunnah-card-unify.css");
   void import("./styles/card-matte-unify.css");
-  void import("./styles/card-system.css");
   void import("./styles/components/badge-system.css");
   void import("./styles/modern-ui-refresh.css");
   void import("./styles/ssunnah-ds-canonical.css");
@@ -150,7 +147,10 @@ function loadNonCriticalCss() {
       void import("./styles/card-decorative-strip-cleanup.css");
       /* Editorial أخيرًا حتى تفوز رموز الورق/الزيتون على الطبقات المتأخرة */
       void import("./styles/modern-islamic-editorial-tokens.css");
-      void import("./styles/modern-islamic-editorial.css");
+      void import("./styles/modern-islamic-editorial.css").then(() => {
+        /* Card System بعد كل الطبقات حتى تفوز هوية الزمرد الداكن على soft/hub */
+        void import("./styles/card-system.css");
+      });
     });
   });
   void import("./styles/components/instant-interaction.css");

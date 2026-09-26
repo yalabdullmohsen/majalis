@@ -6,19 +6,16 @@
 
 @import "./card-system-tokens.css";
 
-/* ── قاعدة البطاقة ── */
-.cs-card,
-[data-cs-card],
-.card:not([data-scripture]),
-.soft-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
-.soft-card--on-light:not([data-scripture]),
-.hub-card:not([data-scripture]),
+/* ── قاعدة البطاقة — أسطح قراءة فاتحة (لا تشمل الرئيسية الداكنة) ── */
+.cs-card:not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.mk-lane-card):not(.ss-feature-card__inner):not(.kuwait-lesson-card):not(.fiqh-category-card):not(.iman-topic-card):not(.tawheed-type-card):not(.dii-hub-card):not(.kids-hub-card):not(.twh-hub-card):not(.twh-pillar-card),
+[data-cs-card]:not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card),
+.card:not([data-scripture]):not(.hub-card):not(.topic-card):not(.mk-lane-card),
+.soft-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card):not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.mk-lane-card):not(.ss-feature-card__inner):not(.kuwait-lesson-card):not(.section-entry-card),
+.soft-card--on-light:not([data-scripture]):not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.mk-lane-card):not(.section-entry-card),
 .ui-card:not([data-scripture]):not(.mushaf-page),
 .mj-card:not([data-scripture]),
-.section-card:not([data-scripture]),
+.section-card:not([data-scripture]):not(.hub-card),
 .ss-card:not([data-scripture]),
-.lesson-unified-card,
-.kuwait-lesson-card,
 .hadith-card:not([data-scripture]),
 .hadith-hub-card,
 .hdl-card,
@@ -29,36 +26,25 @@
 .rsc,
 .sc2,
 .qzg-section-card.soft-card,
-.topic-card,
 .ilm-card,
 .inst-card,
 .tarikh-card,
-.mk-lane-card,
 .fiqh-issue-card,
 .fiqh-book-card,
-.fiqh-category-card,
-.lpp-path-card,
 .lib-card,
 .settings-card,
 .nf2-card,
 .ads-card,
 .cmp-card,
-.kids-hub-card,
-.iman-topic-card,
-.dii-hub-card,
 .about-card,
 .ss-app-card,
-.ss-content-card,
-.ss-feature-card__inner,
+.ss-content-card:not(.topic-card),
 .prophet-lesson-card,
 .prophet-topic-card,
 .gl-term,
 .gl-cat,
 .ai-card,
 .arkan-card,
-.twh-hub-card,
-.twh-pillar-card,
-.tawheed-type-card,
 .uq-fact-item,
 .akl-card,
 .sect-card,
@@ -72,8 +58,6 @@
 .fiqh-council-category-card,
 .srch-hit,
 .quiz-card {
-
-
   background: var(--cs-surface-2) !important;
   background-image: none !important;
   border: 1px solid var(--cs-border) !important;
@@ -228,8 +212,42 @@ html[data-theme="dark"] .sc2-icon {
 .sh-hero__title,
 .section-hero .ScreenTitle,
 .topic-page__hero h1,
+.topic-page__hero .topic-page__title,
+.topic-page__hero .topic-page__eyebrow,
+.topic-page__hero .safe-hero__badge,
+.topic-page__hero .ss-text,
+.topic-page__hero .ss-text--on-brand,
 .stp-hero h1 {
   color: var(--cs-on-ink-title) !important;
+}
+
+.topic-page__hero .topic-page__sub,
+.topic-page__hero .topic-page__quote-text,
+.topic-page__hero .topic-page__quote-ref,
+.topic-page__hero .SupportingText,
+.topic-page__hero p {
+  color: var(--cs-on-ink-body) !important;
+}
+
+html[data-v2-app="1"] .topic-page__hero,
+html[data-v2-app="1"] .topic-page__hero.safe-hero,
+html[data-v2-app="1"] .topic-page__hero.on-dark {
+  background: var(--cs-ink-hero) !important;
+  background-image: none !important;
+  color: var(--cs-on-ink) !important;
+}
+
+html[data-v2-app="1"] .topic-page__hero .topic-page__title,
+html[data-v2-app="1"] .topic-page__hero .topic-page__eyebrow,
+html[data-v2-app="1"] .topic-page__hero .safe-hero__badge,
+html[data-v2-app="1"] .topic-page__hero .ss-text--on-brand {
+  color: var(--cs-on-ink-title) !important;
+}
+
+html[data-v2-app="1"] .topic-page__hero .topic-page__sub,
+html[data-v2-app="1"] .topic-page__hero .topic-page__quote-text,
+html[data-v2-app="1"] .topic-page__hero .topic-page__quote-ref {
+  color: var(--cs-on-ink-body) !important;
 }
 
 .qzg-setup__hero {
@@ -355,8 +373,11 @@ html[data-theme="dark"] .sc2-icon {
 .fiqh-category-card,
 .mk-lane-card,
 .kids-hub-card,
-.ss-feature-card__inner {
+.ss-feature-card__inner,
+.soft-card.hub-card,
+.hub-card.soft-card--on-light {
   background: var(--cs-ink-topic) !important;
+  background-color: var(--cs-ink-topic) !important;
   background-image: none !important;
   border-color: var(--cs-ink-border) !important;
   box-shadow: var(--cs-ink-shadow) !important;
@@ -364,6 +385,9 @@ html[data-theme="dark"] .sc2-icon {
 }
 
 .hub-card__title,
+.hub-card__body,
+.hub-card__top,
+.hub-card__foot,
 .cs-topic .cs-card__title,
 .cs-section .cs-card__title,
 .topic-card .ss-content-card__title,
@@ -373,6 +397,7 @@ html[data-theme="dark"] .sc2-icon {
 .twh-hub-card .hub-card__title,
 .iman-topic-card .cs-card__title {
   color: var(--cs-on-ink-title) !important;
+  background: transparent !important;
 }
 
 .hub-card__desc,
@@ -414,8 +439,11 @@ html[data-theme="dark"] .sc2-icon {
 /* Lesson — أخضر داكن متوسط · metadata أوضح */
 .lesson-unified-card,
 .kuwait-lesson-card,
-[data-cs-type="lesson"] {
+[data-cs-type="lesson"],
+.lesson-unified-card.soft-card,
+.lesson-unified-card.soft-card--on-light {
   background: var(--cs-ink-lesson) !important;
+  background-color: var(--cs-ink-lesson) !important;
   background-image: none !important;
   border-color: var(--cs-ink-border) !important;
   box-shadow: var(--cs-ink-shadow) !important;
@@ -469,8 +497,11 @@ html[data-theme="dark"] .sc2-icon {
 .lpp-path-card,
 .lesson-course-card,
 .cs-course,
-[data-cs-type="course"] {
+[data-cs-type="course"],
+.lpp-path-card.soft-card,
+.lpp-path-card.soft-card--on-light {
   background: var(--cs-ink-path) !important;
+  background-color: var(--cs-ink-path) !important;
   background-image: none !important;
   border-color: var(--cs-ink-border) !important;
   box-shadow: var(--cs-ink-shadow) !important;
