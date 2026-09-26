@@ -20,7 +20,12 @@ export function RelatedContentCard({
   className = "",
 }: RelatedContentCardProps) {
   return (
-    <Link href={href} className={`rcc${className ? ` ${className}` : ""}`}>
+    <Link
+      href={href}
+      data-cs-card="1"
+      data-cs-type="related"
+      className={`rcc cs-related${className ? ` ${className}` : ""}`}
+    >
       {category ? <span className="rcc__cat">{category}</span> : null}
       <span className="rcc__title">{title}</span>
       {summary ? <span className="rcc__summary">{summary}</span> : null}

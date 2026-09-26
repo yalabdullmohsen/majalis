@@ -38,6 +38,7 @@ assert.doesNotMatch(
 );
 assert.match(main, /soft-cards\.css/, "استيراد soft-cards في main");
 assert.match(main, /card-matte-unify\.css/, "استيراد طبقة البطاقات المطفية");
+assert.match(main, /card-system\.css/, "استيراد نظام البطاقات الموحّد");
 
 const finalRelease = read("src/styles/final-release.css");
 assert.match(

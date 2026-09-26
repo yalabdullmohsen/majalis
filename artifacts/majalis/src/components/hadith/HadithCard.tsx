@@ -181,9 +181,11 @@ export function HadithCard({ item: h, onExpand, detailHref }: Props) {
   return (
     <article
       id={h.id}
-      className="hadith-card soft-card soft-card--on-light hadith-card--pressable hdl-card"
+      className="hadith-card cs-card soft-card soft-card--on-light hadith-card--pressable hdl-card"
       data-testid="hadith-card"
       data-hdl="card"
+      data-cs-card="1"
+      data-cs-type="hadith"
     >
       {href ? (
         <Link href={href} className="hadith-card__hit hdl-card__hit" aria-label={ariaLabel}>

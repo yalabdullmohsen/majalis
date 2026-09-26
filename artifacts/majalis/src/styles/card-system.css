@@ -1,0 +1,490 @@
+/**
+ * Card System — توحيد بصري لكل بطاقات المنتج
+ * الأنواع: Hero · Section · Topic · Lesson · Course · Hadith · Quran · Reference · Related · Action
+ * يُحمَّل بعد soft-cards / unify / matte — يفوز على الأسطح الباهتة والفراغ الزائد.
+ */
+
+@import "./card-system-tokens.css";
+
+/* ── قاعدة البطاقة ── */
+.cs-card,
+[data-cs-card],
+.card:not([data-scripture]),
+.soft-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
+.soft-card--on-light:not([data-scripture]),
+.hub-card:not([data-scripture]),
+.ui-card:not([data-scripture]):not(.mushaf-page),
+.mj-card:not([data-scripture]),
+.section-card:not([data-scripture]),
+.ss-card:not([data-scripture]),
+.lesson-unified-card,
+.kuwait-lesson-card,
+.hadith-card:not([data-scripture]),
+.hadith-hub-card,
+.hdl-card,
+.srch-result-card,
+.prophet-lux-card,
+.prophet-fact-card,
+.rcc,
+.rsc,
+.sc2,
+.qzg-section-card.soft-card,
+.topic-card,
+.ilm-card,
+.inst-card,
+.tarikh-card,
+.mk-lane-card,
+.fiqh-issue-card,
+.fiqh-book-card,
+.fiqh-category-card,
+.lpp-path-card,
+.lib-card,
+.settings-card,
+.nf2-card,
+.ads-card,
+.cmp-card,
+.kids-hub-card,
+.iman-topic-card,
+.dii-hub-card,
+.about-card,
+.ss-app-card,
+.ss-content-card,
+.ss-feature-card__inner,
+.prophet-lesson-card,
+.prophet-topic-card,
+.gl-term,
+.gl-cat,
+.ai-card,
+.arkan-card,
+.twh-hub-card,
+.twh-pillar-card,
+.tawheed-type-card,
+.uq-fact-item,
+.akl-card,
+.sect-card,
+.mdb-card,
+.hk-card,
+.tf-card,
+.jn-desc-card,
+.atl-card,
+.hs-card,
+.notif-card,
+.fiqh-council-category-card,
+.srch-hit,
+.quiz-card {
+
+
+  background: var(--cs-surface-2) !important;
+  background-image: none !important;
+  border: 1px solid var(--cs-border) !important;
+  border-radius: var(--cs-radius) !important;
+  box-shadow: var(--cs-shadow) !important;
+  color: var(--cs-text-primary);
+  padding: var(--cs-pad-y) var(--cs-pad-x) !important;
+  min-height: 0 !important;
+  gap: var(--cs-gap);
+  overflow: hidden;
+  box-sizing: border-box;
+  outline: none;
+}
+
+/* منع بطاقة داخل بطاقة تُضاعف الحد */
+.cs-card .cs-card,
+.soft-card .soft-card:not([data-scripture]),
+.hub-card .soft-card,
+.lesson-unified-card .soft-card {
+  box-shadow: none !important;
+  border-color: var(--cs-border) !important;
+  background: var(--cs-surface-3) !important;
+}
+
+/* ── Hierarchy نص ── */
+.cs-card__title,
+.hub-card__title,
+.sc2-title,
+.ss-content-card__title,
+.lesson-unified-card__title,
+.hadith-card__matn,
+.rcc__title,
+.prophet-lux-card__name,
+.quran-hub-card__title,
+.section-card .card-title {
+  margin: 0;
+  font-size: var(--cs-title-size);
+  font-weight: 750;
+  line-height: 1.35;
+  color: var(--cs-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.cs-card__desc,
+.hub-card__desc,
+.sc2-desc,
+.ss-content-card__excerpt,
+.rcc__summary,
+.lesson-unified-card__fact-value {
+  margin: 0;
+  font-size: var(--cs-body-size);
+  line-height: 1.55;
+  color: var(--cs-text-secondary);
+  font-weight: 450;
+}
+
+.cs-card__meta,
+.hub-card__meta,
+.rcc__cat,
+.ss-content-card__meta,
+.lesson-unified-card__fact-label,
+.lesson-unified-card__meta-label,
+.hadith-card__source,
+.hadith-card__meta {
+  margin: 0;
+  font-size: var(--cs-meta-size);
+  line-height: 1.4;
+  color: var(--cs-text-muted);
+  font-weight: 600;
+}
+
+/* حديث: المتن بارز · المصدر أخفت */
+.hadith-card__matn,
+.hadith-card__text--matn,
+.hadith-card__text,
+.hadith-entry__matn,
+.hdl-card__matn,
+.hdl-role--matn {
+  font-size: clamp(1.02rem, 0.95rem + 0.35vw, 1.15rem) !important;
+  font-weight: 600 !important;
+  color: var(--cs-text-primary) !important;
+  line-height: 1.75 !important;
+}
+
+.hadith-card__source,
+.hadith-entry__source,
+.hdl-card__source,
+.hadith-card .hadith-meta {
+  font-size: var(--cs-meta-size) !important;
+  font-weight: 500 !important;
+  color: var(--cs-text-muted) !important;
+  opacity: 0.92;
+}
+
+/* أيقونة صغيرة بدل مربع أخضر كبير */
+.hub-card__icon,
+.sc2-icon,
+.quran-hub-card__icon,
+.fqh-hub-card__emoji,
+.twh-hub-card__emoji,
+.cs-card__icon,
+.card__icon,
+.ss-feature-card__icon {
+  width: var(--cs-icon-size) !important;
+  height: var(--cs-icon-size) !important;
+  min-width: var(--cs-icon-size);
+  border-radius: 10px !important;
+  background: var(--cs-primary-soft) !important;
+  color: var(--cs-primary-deep) !important;
+  box-shadow: none !important;
+  font-size: calc(var(--cs-icon-size) * 0.48) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+html.dark .hub-card__icon,
+html[data-theme="dark"] .hub-card__icon,
+html.dark .sc2-icon,
+html[data-theme="dark"] .sc2-icon {
+  background: var(--cs-primary-soft) !important;
+  color: var(--cs-primary) !important;
+}
+
+/* ── Hero مضغوط ── */
+.cs-hero,
+.page-hero-mj,
+.sh-hero,
+.mss-section-hero,
+.section-hero,
+.qzg-setup__hero,
+.prophets-lux-hero,
+.m2030-hero:not([data-home-hero]),
+.topic-page__hero,
+.stp-hero {
+  min-height: var(--cs-hero-min-h) !important;
+  padding-block: var(--cs-hero-pad-block) !important;
+  padding-inline: max(1rem, var(--page-gutter, 1rem)) !important;
+  background: var(--cs-surface-2) !important;
+  background-image: none !important;
+  border: 1px solid var(--cs-border) !important;
+  border-radius: var(--cs-radius) !important;
+  box-shadow: none !important;
+  color: var(--cs-text-primary);
+}
+
+.qzg-setup__hero {
+  text-align: center;
+}
+
+.qzg-setup__icon {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  margin-inline: auto;
+  color: var(--cs-primary);
+}
+
+.qzg-setup__title,
+.page-hero-mj__title,
+.sh-hero__title {
+  font-size: clamp(1.25rem, 1.1rem + 1.2vw, 1.65rem) !important;
+  margin-block: 0.35rem !important;
+  color: var(--cs-text-primary) !important;
+}
+
+.qzg-setup__sub,
+.page-hero-mj__sub,
+.sh-hero__sub {
+  font-size: var(--cs-body-size) !important;
+  color: var(--cs-text-secondary) !important;
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+/* ── Lesson / Course layout ── */
+.lesson-unified-card__header,
+.lesson-unified-card__body {
+  gap: 0.35rem !important;
+}
+
+.lesson-unified-card__facts,
+.lesson-unified-card__meta-grid,
+.lesson-unified-card__meta {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem 0.75rem !important;
+  margin-block: 0.35rem 0 !important;
+}
+
+.cs-card__meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  margin-block-start: 0.15rem;
+}
+
+.card__label {
+  font-size: var(--cs-title-size) !important;
+  font-weight: 700 !important;
+  color: var(--cs-text-primary) !important;
+}
+
+.card__subtitle {
+  font-size: var(--cs-body-size) !important;
+  color: var(--cs-text-secondary) !important;
+  min-height: 0 !important;
+}
+
+.lesson-unified-card__fact,
+.lesson-unified-card__meta-cell {
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  min-height: 0 !important;
+}
+
+.lesson-unified-card__badges {
+  gap: 0.3rem !important;
+  margin-block-end: 0.15rem !important;
+}
+
+/* مسارات / دورات — بلا فراغ عمودي ضخم */
+.lpp-path-card,
+.lesson-course-card,
+.cs-course {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-gap);
+}
+
+.lpp-path-card__spacer,
+.lesson-course-card__spacer {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  flex: 0 !important;
+}
+
+/* Related — Notion/Books style */
+.rcc {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  grid-template-rows: auto auto auto !important;
+  row-gap: 0.15rem !important;
+  column-gap: 0.55rem !important;
+  background: var(--cs-surface-3) !important;
+  border-color: var(--cs-border) !important;
+  padding: 0.7rem 0.85rem !important;
+}
+
+.rcc__cat {
+  color: var(--cs-primary) !important;
+}
+
+.rcc__arrow {
+  grid-row: 1 / -1;
+  align-self: center;
+  color: var(--cs-primary);
+  opacity: 0.65;
+}
+
+/* Action */
+.cs-action,
+.soft-card--accent {
+  background: var(--cs-primary-soft) !important;
+  border-color: var(--cs-border-strong) !important;
+  color: var(--cs-text-primary) !important;
+}
+
+/* Section / Topic — صف أيقونة + نص */
+.hub-card,
+.cs-section,
+.cs-topic {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.hub-card__top {
+  min-height: 0 !important;
+  margin-block-end: 0.15rem;
+}
+
+.hub-card__body {
+  gap: 0.2rem !important;
+}
+
+.hub-card__desc {
+  -webkit-line-clamp: 2;
+  min-height: 0 !important;
+}
+
+.hub-card__foot {
+  margin-block-start: 0.25rem !important;
+  min-height: 0 !important;
+}
+
+/* شبكة فئات سين جيم — مضغوطة */
+.qzg-cat-btn {
+  min-height: 3.25rem !important;
+  padding: 0.55rem 0.65rem !important;
+  background: var(--cs-surface-3) !important;
+  border: 1px solid var(--cs-border) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+.qzg-cat-btn--on {
+  background: var(--cs-primary-soft) !important;
+  border-color: var(--cs-border-strong) !important;
+}
+
+.qzg-cat-btn__icon {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  background: transparent !important;
+}
+
+.qzg-section-card {
+  padding: var(--cs-pad-y) var(--cs-pad-x) !important;
+}
+
+.qzg-cats-count {
+  font-size: var(--cs-meta-size);
+  color: var(--cs-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* تفاعل بلا glow */
+.cs-card:hover,
+.hub-card:hover,
+.soft-card:hover,
+.rcc:hover,
+.lesson-unified-card:hover,
+.sc2:hover,
+.srch-result-card:hover {
+  border-color: var(--cs-border-strong) !important;
+  box-shadow: var(--cs-shadow) !important;
+  filter: none !important;
+  transform: none;
+}
+
+.cs-card:active,
+.hub-card:active,
+.soft-card:active,
+.rcc:active {
+  opacity: 0.94;
+  transform: scale(0.99);
+}
+
+.cs-card:focus-visible,
+.hub-card:focus-visible,
+.soft-card:focus-visible,
+.rcc:focus-visible,
+.sc2:focus-visible,
+.sc2-cta:focus-visible {
+  outline: var(--cs-focus-ring);
+  outline-offset: 2px;
+}
+
+.cs-card[aria-pressed="true"],
+.cs-card[aria-current="page"],
+.hub-card--current,
+.qzg-cat-btn--on,
+.qzg-play-mode--on,
+.qzg-count-btn--on {
+  background: var(--cs-primary-soft) !important;
+  border-color: var(--cs-border-strong) !important;
+  box-shadow: none !important;
+}
+
+/* بحث */
+.srch-result-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* iPad comfortable — أعمدة أوسع بلا تمدد ارتفاع الهاتف */
+@media (min-width: 768px) {
+  .hub-card-grid {
+    gap: 0.85rem !important;
+  }
+
+  .lesson-unified-card__facts,
+  .lesson-unified-card__meta-grid,
+  .lesson-unified-card__meta {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .card,
+  .cs-card,
+  .hub-card,
+  .lesson-unified-card {
+    /* iPad comfortable — كثافة أوضح بلا ارتفاع هاتف ثابت */
+    min-height: 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-card,
+  .hub-card,
+  .soft-card,
+  .rcc {
+    transition: none !important;
+  }
+
+  .cs-card:active,
+  .hub-card:active,
+  .soft-card:active,
+  .rcc:active {
+    transform: none;
+  }
+}

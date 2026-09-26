@@ -184,7 +184,9 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
 
   return (
     <article
-      className={`lesson-unified-card soft-card soft-card--on-light card-v2${compact ? " lesson-unified-card--compact" : ""}${todayClass} ${prominence}`.trim()}
+      data-cs-card="1"
+      data-cs-type="lesson"
+      className={`lesson-unified-card soft-card soft-card--on-light cs-card card-v2${compact ? " lesson-unified-card--compact" : ""}${todayClass} ${prominence}`.trim()}
     >
       <header className="lesson-unified-card__header">
         <div className="lesson-unified-card__badges">
