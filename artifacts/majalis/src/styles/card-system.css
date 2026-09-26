@@ -6,19 +6,16 @@
 
 @import "./card-system-tokens.css";
 
-/* ── قاعدة البطاقة ── */
-.cs-card,
-[data-cs-card],
-.card:not([data-scripture]),
-.soft-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
-.soft-card--on-light:not([data-scripture]),
-.hub-card:not([data-scripture]),
+/* ── قاعدة البطاقة — أسطح قراءة فاتحة (لا تشمل الرئيسية الداكنة) ── */
+.cs-card:not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.mk-lane-card):not(.ss-feature-card__inner):not(.kuwait-lesson-card):not(.fiqh-category-card):not(.iman-topic-card):not(.tawheed-type-card):not(.dii-hub-card):not(.kids-hub-card):not(.twh-hub-card):not(.twh-pillar-card),
+[data-cs-card]:not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card),
+.card:not([data-scripture]):not(.hub-card):not(.topic-card):not(.mk-lane-card),
+.soft-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card):not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.mk-lane-card):not(.ss-feature-card__inner):not(.kuwait-lesson-card):not(.section-entry-card),
+.soft-card--on-light:not([data-scripture]):not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.mk-lane-card):not(.section-entry-card),
 .ui-card:not([data-scripture]):not(.mushaf-page),
 .mj-card:not([data-scripture]),
-.section-card:not([data-scripture]),
+.section-card:not([data-scripture]):not(.hub-card),
 .ss-card:not([data-scripture]),
-.lesson-unified-card,
-.kuwait-lesson-card,
 .hadith-card:not([data-scripture]),
 .hadith-hub-card,
 .hdl-card,
@@ -29,36 +26,25 @@
 .rsc,
 .sc2,
 .qzg-section-card.soft-card,
-.topic-card,
 .ilm-card,
 .inst-card,
 .tarikh-card,
-.mk-lane-card,
 .fiqh-issue-card,
 .fiqh-book-card,
-.fiqh-category-card,
-.lpp-path-card,
 .lib-card,
 .settings-card,
 .nf2-card,
 .ads-card,
 .cmp-card,
-.kids-hub-card,
-.iman-topic-card,
-.dii-hub-card,
 .about-card,
 .ss-app-card,
-.ss-content-card,
-.ss-feature-card__inner,
+.ss-content-card:not(.topic-card),
 .prophet-lesson-card,
 .prophet-topic-card,
 .gl-term,
 .gl-cat,
 .ai-card,
 .arkan-card,
-.twh-hub-card,
-.twh-pillar-card,
-.tawheed-type-card,
 .uq-fact-item,
 .akl-card,
 .sect-card,
@@ -72,8 +58,6 @@
 .fiqh-council-category-card,
 .srch-hit,
 .quiz-card {
-
-
   background: var(--cs-surface-2) !important;
   background-image: none !important;
   border: 1px solid var(--cs-border) !important;
@@ -198,7 +182,7 @@ html[data-theme="dark"] .sc2-icon {
   color: var(--cs-primary) !important;
 }
 
-/* ── Hero مضغوط ── */
+/* ── Hero — زمرد داكن · نص عاجي · Accent ذهبي ── */
 .cs-hero,
 .page-hero-mj,
 .sh-hero,
@@ -208,16 +192,62 @@ html[data-theme="dark"] .sc2-icon {
 .prophets-lux-hero,
 .m2030-hero:not([data-home-hero]),
 .topic-page__hero,
-.stp-hero {
+.stp-hero,
+[data-cs-type="hero"] {
   min-height: var(--cs-hero-min-h) !important;
   padding-block: var(--cs-hero-pad-block) !important;
   padding-inline: max(1rem, var(--page-gutter, 1rem)) !important;
-  background: var(--cs-surface-2) !important;
+  background: var(--cs-ink-hero) !important;
   background-image: none !important;
-  border: 1px solid var(--cs-border) !important;
+  border: 1px solid color-mix(in srgb, var(--cs-gold) 35%, var(--cs-ink-hero)) !important;
   border-radius: var(--cs-radius) !important;
-  box-shadow: none !important;
-  color: var(--cs-text-primary);
+  box-shadow: var(--cs-ink-shadow) !important;
+  color: var(--cs-on-ink) !important;
+}
+
+.cs-hero .cs-card__title,
+.cs-hero .cs-card__desc,
+.qzg-setup__title,
+.page-hero-mj__title,
+.sh-hero__title,
+.section-hero .ScreenTitle,
+.topic-page__hero h1,
+.topic-page__hero .topic-page__title,
+.topic-page__hero .topic-page__eyebrow,
+.topic-page__hero .safe-hero__badge,
+.topic-page__hero .ss-text,
+.topic-page__hero .ss-text--on-brand,
+.stp-hero h1 {
+  color: var(--cs-on-ink-title) !important;
+}
+
+.topic-page__hero .topic-page__sub,
+.topic-page__hero .topic-page__quote-text,
+.topic-page__hero .topic-page__quote-ref,
+.topic-page__hero .SupportingText,
+.topic-page__hero p {
+  color: var(--cs-on-ink-body) !important;
+}
+
+html[data-v2-app="1"] .topic-page__hero,
+html[data-v2-app="1"] .topic-page__hero.safe-hero,
+html[data-v2-app="1"] .topic-page__hero.on-dark {
+  background: var(--cs-ink-hero) !important;
+  background-image: none !important;
+  color: var(--cs-on-ink) !important;
+}
+
+html[data-v2-app="1"] .topic-page__hero .topic-page__title,
+html[data-v2-app="1"] .topic-page__hero .topic-page__eyebrow,
+html[data-v2-app="1"] .topic-page__hero .safe-hero__badge,
+html[data-v2-app="1"] .topic-page__hero .ss-text--on-brand {
+  color: var(--cs-on-ink-title) !important;
+}
+
+html[data-v2-app="1"] .topic-page__hero .topic-page__sub,
+html[data-v2-app="1"] .topic-page__hero .topic-page__quote-text,
+html[data-v2-app="1"] .topic-page__hero .topic-page__quote-ref {
+  color: var(--cs-on-ink-body) !important;
 }
 
 .qzg-setup__hero {
@@ -228,7 +258,7 @@ html[data-theme="dark"] .sc2-icon {
   width: 2.5rem !important;
   height: 2.5rem !important;
   margin-inline: auto;
-  color: var(--cs-primary);
+  color: var(--cs-gold) !important;
 }
 
 .qzg-setup__title,
@@ -236,16 +266,26 @@ html[data-theme="dark"] .sc2-icon {
 .sh-hero__title {
   font-size: clamp(1.25rem, 1.1rem + 1.2vw, 1.65rem) !important;
   margin-block: 0.35rem !important;
-  color: var(--cs-text-primary) !important;
+  color: var(--cs-on-ink-title) !important;
 }
 
 .qzg-setup__sub,
 .page-hero-mj__sub,
-.sh-hero__sub {
+.sh-hero__sub,
+.cs-hero .cs-card__desc {
   font-size: var(--cs-body-size) !important;
-  color: var(--cs-text-secondary) !important;
+  color: var(--cs-on-ink-body) !important;
   max-width: 40rem;
   margin-inline: auto;
+}
+
+.cs-hero__cta a,
+.cs-hero__cta .soft-btn,
+.page-hero-mj a[class*="btn"],
+.sh-hero a[class*="btn"] {
+  color: var(--cs-ink-hero) !important;
+  background: var(--cs-gold) !important;
+  border-color: var(--cs-gold) !important;
 }
 
 /* ── Lesson / Course layout ── */
@@ -273,12 +313,13 @@ html[data-theme="dark"] .sc2-icon {
 .card__label {
   font-size: var(--cs-title-size) !important;
   font-weight: 700 !important;
-  color: var(--cs-text-primary) !important;
+  color: inherit !important;
 }
 
 .card__subtitle {
   font-size: var(--cs-body-size) !important;
-  color: var(--cs-text-secondary) !important;
+  color: inherit !important;
+  opacity: 0.88;
   min-height: 0 !important;
 }
 
@@ -312,16 +353,257 @@ html[data-theme="dark"] .sc2-icon {
   flex: 0 !important;
 }
 
-/* Related — Notion/Books style */
-.rcc {
-  display: grid !important;
-  grid-template-columns: 1fr auto !important;
-  grid-template-rows: auto auto auto !important;
-  row-gap: 0.15rem !important;
-  column-gap: 0.55rem !important;
-  background: var(--cs-surface-3) !important;
+/* ══════════════════════════════════════════
+   بطاقات رئيسية — زمرد داكن (هوية سُنّة)
+   Hero / Topic·Section / Lesson / Path
+   ══════════════════════════════════════════ */
+
+/* Topic + Section + Hub */
+.hub-card:not([data-scripture]),
+.cs-section,
+.cs-topic,
+.topic-card,
+.card:not([data-scripture]),
+.card--compact:not([data-scripture]),
+[data-cs-type="section"],
+[data-cs-type="topic"],
+.iman-topic-card,
+.dii-hub-card,
+.twh-hub-card,
+.fiqh-category-card,
+.mk-lane-card,
+.kids-hub-card,
+.ss-feature-card__inner,
+.soft-card.hub-card,
+.hub-card.soft-card--on-light {
+  background: var(--cs-ink-topic) !important;
+  background-color: var(--cs-ink-topic) !important;
+  background-image: none !important;
+  border-color: var(--cs-ink-border) !important;
+  box-shadow: var(--cs-ink-shadow) !important;
+  color: var(--cs-on-ink) !important;
+}
+
+.hub-card__title,
+.hub-card__body,
+.hub-card__top,
+.hub-card__foot,
+.cs-topic .cs-card__title,
+.cs-section .cs-card__title,
+.topic-card .ss-content-card__title,
+.topic-card .cs-card__title,
+.card__label,
+.ss-feature-card__title,
+.twh-hub-card .hub-card__title,
+.iman-topic-card .cs-card__title {
+  color: var(--cs-on-ink-title) !important;
+  background: transparent !important;
+}
+
+.hub-card__desc,
+.cs-topic .cs-card__desc,
+.cs-section .cs-card__desc,
+.topic-card .ss-content-card__excerpt,
+.card__subtitle,
+.ss-feature-card__desc {
+  color: var(--cs-on-ink-body) !important;
+}
+
+.hub-card__meta,
+.hub-card__chip,
+.hub-card__soon,
+.hub-card__go {
+  color: var(--cs-on-ink-meta) !important;
+}
+
+.hub-card__icon,
+.card__icon,
+.cs-card__icon,
+.ss-feature-card__icon,
+.quran-hub-card__icon,
+.fqh-hub-card__emoji,
+.twh-hub-card__emoji {
+  background: var(--cs-on-ink-icon-bg) !important;
+  color: var(--cs-on-ink-icon) !important;
+  box-shadow: none !important;
+}
+
+html.dark .hub-card__icon,
+html[data-theme="dark"] .hub-card__icon,
+html.dark .sc2-icon,
+html[data-theme="dark"] .sc2-icon {
+  background: var(--cs-on-ink-icon-bg) !important;
+  color: var(--cs-on-ink-icon) !important;
+}
+
+/* Lesson — أخضر داكن متوسط · metadata أوضح */
+.lesson-unified-card,
+.kuwait-lesson-card,
+[data-cs-type="lesson"],
+.lesson-unified-card.soft-card,
+.lesson-unified-card.soft-card--on-light {
+  background: var(--cs-ink-lesson) !important;
+  background-color: var(--cs-ink-lesson) !important;
+  background-image: none !important;
+  border-color: var(--cs-ink-border) !important;
+  box-shadow: var(--cs-ink-shadow) !important;
+  color: var(--cs-on-ink) !important;
+}
+
+.lesson-unified-card__title,
+.lesson-unified-card__sheikh {
+  color: var(--cs-on-ink-title) !important;
+}
+
+.lesson-unified-card__desc,
+.lesson-unified-card__organizer,
+.lesson-unified-card__fact-value,
+.lesson-unified-card__meta-cell strong {
+  color: var(--cs-on-ink-body) !important;
+}
+
+.lesson-unified-card__fact-label,
+.lesson-unified-card__meta-label,
+.lesson-unified-card__status,
+.lesson-unified-card__category,
+.lesson-unified-card__delivery,
+.lesson-unified-card__today-flag {
+  color: var(--cs-on-ink-meta) !important;
+  opacity: 1 !important;
+  font-weight: 650 !important;
+}
+
+.lesson-unified-card__category,
+.lesson-unified-card__delivery,
+.lesson-unified-card__today-flag {
+  background: var(--cs-on-ink-icon-bg) !important;
+  border: 1px solid color-mix(in srgb, var(--cs-gold) 40%, transparent) !important;
+}
+
+.lesson-unified-card__btn--primary {
+  background: var(--cs-gold) !important;
+  color: var(--cs-ink-hero) !important;
+  border-color: var(--cs-gold) !important;
+}
+
+.lesson-unified-card__btn--secondary,
+.lesson-unified-card__btn--ghost {
+  background: var(--cs-on-ink-icon-bg) !important;
+  color: var(--cs-on-ink-title) !important;
+  border-color: color-mix(in srgb, var(--cs-on-ink) 28%, transparent) !important;
+}
+
+/* Path / Course — زمرد داكن · أيقونة فاتحة · مؤشرات واضحة */
+.lpp-path-card,
+.lesson-course-card,
+.cs-course,
+[data-cs-type="course"],
+.lpp-path-card.soft-card,
+.lpp-path-card.soft-card--on-light {
+  background: var(--cs-ink-path) !important;
+  background-color: var(--cs-ink-path) !important;
+  background-image: none !important;
+  border-color: var(--cs-ink-border) !important;
+  box-shadow: var(--cs-ink-shadow) !important;
+  color: var(--cs-on-ink) !important;
+}
+
+.lpp-path-card__title,
+.cs-course .cs-card__title,
+.lesson-course-card__title {
+  color: var(--cs-on-ink-title) !important;
+}
+
+.lpp-path-card__desc,
+.cs-course .cs-card__desc {
+  color: var(--cs-on-ink-body) !important;
+}
+
+.lpp-path-card__badge,
+.lpp-path-level-icon,
+.cs-course .cs-card__meta {
+  color: var(--cs-on-ink-meta) !important;
+  background: var(--cs-on-ink-icon-bg) !important;
+  border: 1px solid color-mix(in srgb, var(--cs-gold) 32%, transparent);
+}
+
+.lpp-path-card__badge--progress {
+  color: var(--cs-ink-hero) !important;
+  background: var(--cs-gold) !important;
+  border-color: var(--cs-gold) !important;
+  font-weight: 700;
+}
+
+.lpp-path-level-icon {
+  color: var(--cs-on-ink-icon) !important;
+}
+
+/* Action — تمييز ذهبي على زمرد */
+.cs-action,
+.soft-card--accent,
+[data-cs-type="action"] {
+  background: var(--cs-ink-topic) !important;
+  border-color: color-mix(in srgb, var(--cs-gold) 45%, var(--cs-ink-topic)) !important;
+  color: var(--cs-on-ink) !important;
+}
+
+.cs-action .cs-card__title {
+  color: var(--cs-on-ink-title) !important;
+}
+
+.cs-action .cs-card__desc {
+  color: var(--cs-on-ink-body) !important;
+}
+
+/* ── قراءة طويلة — أسطح فاتحة إلزامية ── */
+.hadith-card:not([data-scripture]),
+.hadith-hub-card,
+.hdl-card,
+.rsc,
+.rcc,
+.gl-term,
+.ss-content-card:not(.topic-card):not(.cs-topic),
+[data-cs-type="hadith"],
+[data-cs-type="reference"],
+[data-cs-type="related"],
+[data-cs-type="quran"],
+.srch-result-card,
+.prophet-fact-card,
+.uq-fact-item,
+.uq-dalil-box,
+.uq-info-box,
+.settings-card,
+.about-card {
+  background: var(--cs-surface-2) !important;
+  background-image: none !important;
   border-color: var(--cs-border) !important;
-  padding: 0.7rem 0.85rem !important;
+  box-shadow: var(--cs-shadow) !important;
+  color: var(--cs-text-primary) !important;
+}
+
+.hadith-card__matn,
+.hadith-card__text--matn,
+.hadith-card__text,
+.hdl-card__matn,
+.rsc__title,
+.rsc__prose,
+.rcc__title,
+.gl-term__arabic,
+.ss-content-card__title,
+.srch-result-card .cs-card__title {
+  color: var(--cs-text-primary) !important;
+}
+
+.rcc__summary,
+.ss-content-card__excerpt,
+.rsc__body {
+  color: var(--cs-text-secondary) !important;
+}
+
+.hadith-card__source,
+.rcc__cat,
+.ss-content-card__meta {
+  color: var(--cs-text-muted) !important;
 }
 
 .rcc__cat {
@@ -329,18 +611,23 @@ html[data-theme="dark"] .sc2-icon {
 }
 
 .rcc__arrow {
-  grid-row: 1 / -1;
-  align-self: center;
-  color: var(--cs-primary);
-  opacity: 0.65;
+  color: var(--cs-primary) !important;
 }
 
-/* Action */
-.cs-action,
-.soft-card--accent {
-  background: var(--cs-primary-soft) !important;
-  border-color: var(--cs-border-strong) !important;
-  color: var(--cs-text-primary) !important;
+/* Related — Notion/Books layout على سطح فاتح */
+.rcc {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  grid-template-rows: auto auto auto !important;
+  row-gap: 0.15rem !important;
+  column-gap: 0.55rem !important;
+  padding: 0.7rem 0.85rem !important;
+}
+
+.rcc__arrow {
+  grid-row: 1 / -1;
+  align-self: center;
+  opacity: 0.65;
 }
 
 /* Section / Topic — صف أيقونة + نص */
@@ -409,17 +696,30 @@ html[data-theme="dark"] .sc2-icon {
 .rcc:hover,
 .lesson-unified-card:hover,
 .sc2:hover,
-.srch-result-card:hover {
-  border-color: var(--cs-border-strong) !important;
-  box-shadow: var(--cs-shadow) !important;
+.srch-result-card:hover,
+.lpp-path-card:hover,
+.card:hover {
+  border-color: color-mix(in srgb, var(--cs-gold) 40%, var(--cs-ink-border)) !important;
+  box-shadow: var(--cs-ink-shadow) !important;
   filter: none !important;
   transform: none;
+}
+
+.rcc:hover,
+.hadith-card:hover,
+.srch-result-card:hover,
+.rsc:hover {
+  border-color: var(--cs-border-strong) !important;
+  box-shadow: var(--cs-shadow) !important;
 }
 
 .cs-card:active,
 .hub-card:active,
 .soft-card:active,
-.rcc:active {
+.rcc:active,
+.lesson-unified-card:active,
+.lpp-path-card:active,
+.card:active {
   opacity: 0.94;
   transform: scale(0.99);
 }
@@ -429,14 +729,22 @@ html[data-theme="dark"] .sc2-icon {
 .soft-card:focus-visible,
 .rcc:focus-visible,
 .sc2:focus-visible,
-.sc2-cta:focus-visible {
+.sc2-cta:focus-visible,
+.lesson-unified-card:focus-visible,
+.lpp-path-card:focus-visible {
   outline: var(--cs-focus-ring);
   outline-offset: 2px;
 }
 
 .cs-card[aria-pressed="true"],
 .cs-card[aria-current="page"],
-.hub-card--current,
+.hub-card--current {
+  background: color-mix(in srgb, var(--cs-ink-topic) 82%, var(--cs-gold) 18%) !important;
+  border-color: var(--cs-gold) !important;
+  box-shadow: none !important;
+  color: var(--cs-on-ink) !important;
+}
+
 .qzg-cat-btn--on,
 .qzg-play-mode--on,
 .qzg-count-btn--on {

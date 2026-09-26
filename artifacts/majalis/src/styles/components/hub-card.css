@@ -97,12 +97,12 @@
   gap: 0.45rem;
   min-height: var(--sec-entry-min-h);
   padding: var(--sec-entry-pad);
-  background: var(--surface-feature, var(--ss-card-bg, var(--mj-surface, #f4faf7)));
-  border: 1px solid var(--surface-feature-border, color-mix(in srgb, var(--ss-primary-green, var(--mj-brand)) 20%, var(--ss-border, var(--mj-hairline, #e3e8e6))));
+  background: var(--cs-ink-topic, #0f3d2e);
+  border: 1px solid var(--cs-ink-border, color-mix(in srgb, #d4b45c 28%, #0f3d2e));
   border-radius: var(--surface-feature-radius, var(--radius-card, 24px));
-  box-shadow: var(--surface-feature-shadow, var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.12)));
+  box-shadow: var(--cs-ink-shadow, var(--ss-shadow-soft, 0 2px 10px -6px rgba(11, 32, 24, 0.12)));
   text-decoration: none;
-  color: var(--surface-feature-ink, inherit);
+  color: var(--cs-on-ink, #f7f1e4);
   min-width: 0;
   overflow: hidden;
   margin-inline: auto;
@@ -217,8 +217,8 @@ button.hub-card {
   justify-content: center;
   flex-shrink: 0;
   border-radius: 14px;
-  background: color-mix(in srgb, var(--mj-brand-soft, var(--brand-soft)) 88%, var(--mj-accent, #b8963f) 12%);
-  color: var(--mj-brand-deep, var(--mj-brand, #0d5c4d));
+  background: var(--cs-on-ink-icon-bg, color-mix(in srgb, #ffffff 14%, transparent));
+  color: var(--cs-on-ink-icon, #f7f1e4);
   font-size: 1.15rem;
   box-shadow: none;
 }
@@ -238,7 +238,7 @@ button.hub-card {
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: -0.01em;
-  color: var(--text-primary, var(--mj-ink));
+  color: var(--cs-on-ink-title, #ffffff);
   overflow-wrap: anywhere;
   text-wrap: pretty;
 }
@@ -249,7 +249,7 @@ button.hub-card {
   font-size: var(--type-card-desc, var(--mj-fs-small));
   font-weight: 500;
   line-height: 1.6;
-  color: var(--text-secondary, var(--mj-ink-2));
+  color: var(--cs-on-ink-body, #e4ddd0);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -257,7 +257,6 @@ button.hub-card {
   overflow-wrap: anywhere;
   text-wrap: pretty;
   min-height: 0;
-  color: var(--text-secondary, var(--mj-ink-2, #3d4f47));
 }
 
 .hub-card--compact .hub-card__desc {
@@ -287,7 +286,7 @@ button.hub-card {
   font-family: var(--mj-num);
   font-size: var(--mj-fs-tiny, 0.75rem);
   font-weight: 650;
-  color: var(--mj-brand-deep, #123f2e);
+  color: var(--cs-on-ink-meta, #c9c0ae);
 }
 
 .hub-card__chip,
@@ -296,8 +295,8 @@ button.hub-card {
   align-items: center;
   padding: 0.18rem 0.55rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-brand-soft, var(--brand-soft)) 88%, var(--mj-accent, #b8963f) 12%);
-  color: var(--mj-brand-deep, #123f2e);
+  background: var(--cs-on-ink-icon-bg, color-mix(in srgb, #ffffff 14%, transparent));
+  color: var(--cs-gold-ink, #f0e2b0);
   border: none;
   font-family: var(--mj-ui);
   font-size: var(--mj-fs-tiny);
@@ -310,7 +309,7 @@ button.hub-card {
   font-family: var(--mj-ui);
   font-size: var(--mj-fs-tiny);
   font-weight: 700;
-  color: var(--mj-muted);
+  color: var(--cs-on-ink-meta, #c9c0ae);
 }
 
 .hub-card__go {
@@ -323,15 +322,15 @@ button.hub-card {
   border-radius: 0;
   border: none;
   background: transparent;
-  color: color-mix(in srgb, var(--mj-brand) 72%, var(--mj-ink-2, #4a5a53));
-  opacity: 0.72;
+  color: var(--cs-on-ink-meta, #c9c0ae);
+  opacity: 0.92;
   pointer-events: none;
   transition: opacity 0.14s ease, color 0.14s ease;
 }
 
 .hub-card:hover .hub-card__go {
   opacity: 1;
-  color: var(--mj-brand);
+  color: var(--cs-gold-ink, #f0e2b0);
   background: transparent;
   border-color: transparent;
 }
@@ -448,11 +447,12 @@ html.dark .hub-card .mj-badge {
   flex-direction: column !important;
   gap: var(--mj-s3) !important;
   padding: var(--mj-s4) !important;
-  background: var(--mj-surface) !important;
-  border: 1px solid transparent !important;
+  background: var(--cs-ink-topic, #0f3d2e) !important;
+  border: 1px solid var(--cs-ink-border, color-mix(in srgb, #d4b45c 28%, #0f3d2e)) !important;
   border-radius: var(--radius-card, 24px) !important;
-  box-shadow: none !important;
+  box-shadow: var(--cs-ink-shadow, none) !important;
   overflow: visible !important;
+  color: var(--cs-on-ink, #f7f1e4) !important;
 }
 
 .quran-hub-card:hover {
@@ -472,14 +472,14 @@ html.dark .hub-card .mj-badge {
   font-size: var(--mj-fs-h2) !important;
   font-weight: 800 !important;
   line-height: var(--mj-lh-card) !important;
-  color: var(--mj-ink) !important;
+  color: var(--cs-on-ink-title, #ffffff) !important;
 }
 
 .quran-hub-card__desc {
   font-family: var(--mj-ui) !important;
   font-size: var(--mj-fs-small) !important;
   line-height: var(--mj-lh-small) !important;
-  color: var(--mj-ink-2) !important;
+  color: var(--cs-on-ink-body, #e4ddd0) !important;
 }
 
 .quran-hub-card__link {
@@ -502,12 +502,13 @@ html.dark .hub-card .mj-badge {
 
 .fqh-hub-card,
 .twh-hub-card {
-  background: var(--mj-surface) !important;
-  border: 1px solid color-mix(in srgb, var(--mj-brand) 22%, var(--mj-hairline)) !important;
+  background: var(--cs-ink-topic, #0f3d2e) !important;
+  border: 1px solid var(--cs-ink-border, color-mix(in srgb, #d4b45c 28%, #0f3d2e)) !important;
   border-radius: var(--radius-card, 24px) !important;
   padding: var(--mj-s4) !important;
-  box-shadow: 0 2px 10px -6px rgba(11, 32, 24, 0.14) !important;
+  box-shadow: var(--cs-ink-shadow, 0 2px 10px -6px rgba(11, 32, 24, 0.14)) !important;
   min-height: 0 !important;
+  color: var(--cs-on-ink, #f7f1e4) !important;
 }
 
 .fqh-hub-card:hover,
@@ -520,7 +521,7 @@ html.dark .hub-card .mj-badge {
   font-family: var(--mj-face) !important;
   font-size: var(--type-card-title, var(--mj-fs-h2)) !important;
   font-weight: 800 !important;
-  color: var(--text-primary, var(--mj-ink)) !important;
+  color: var(--cs-on-ink-title, #ffffff) !important;
 }
 
 .fqh-hub-card__desc,
@@ -528,7 +529,7 @@ html.dark .hub-card .mj-badge {
   font-family: var(--font-body-ui, var(--mj-ui)) !important;
   font-size: var(--type-card-desc, var(--mj-fs-small)) !important;
   line-height: var(--mj-lh-small) !important;
-  color: var(--text-secondary, var(--mj-ink-2)) !important;
+  color: var(--cs-on-ink-body, #e4ddd0) !important;
 }
 
 .fqh-hub-card__emoji,
@@ -539,8 +540,8 @@ html.dark .hub-card .mj-badge {
   align-items: center;
   justify-content: center;
   border-radius: 12px !important;
-  background: var(--mj-brand-soft) !important;
-  color: var(--mj-brand) !important;
+  background: var(--cs-on-ink-icon-bg, color-mix(in srgb, #ffffff 14%, transparent)) !important;
+  color: var(--cs-on-ink-icon, #f7f1e4) !important;
 }
 
 .page-action-btn,

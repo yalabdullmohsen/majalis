@@ -71,6 +71,12 @@ assert.doesNotMatch(
 );
 
 assert.match(info, /--surface-knowledge/, "InformationCard على عائلة خضراء");
-assert.match(mss, /--mss-section-hero-bg:\s*var\(--surface-islamic/, "هيرو الأقسام من surface-islamic");
+assert.match(
+  green,
+  /--mss-section-hero-bg:\s*#0a2f24/,
+  "هيرو الأقسام زمرد داكن للهوية الرئيسية",
+);
+assert.match(green, /--mss-on-hero:\s*#ffffff/, "نص هيرو عاجي على الزمرد الداكن");
+assert.match(mss, /--mss-section-hero-bg:\s*var\(--cs-ink-hero|#0a2f24/, "MSS يوافق زمرد داكن");
 
 console.log("green-surface-system-gate.test.ts: ok");

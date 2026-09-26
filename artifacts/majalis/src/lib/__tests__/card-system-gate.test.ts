@@ -26,15 +26,24 @@ assert.match(tokens, /--cs-gold:/);
 assert.match(tokens, /--cs-text-primary:/);
 assert.match(tokens, /--cs-text-secondary:/);
 assert.match(tokens, /--cs-text-muted:/);
+assert.match(tokens, /--cs-ink-hero:/);
+assert.match(tokens, /--cs-ink-topic:/);
+assert.match(tokens, /--cs-ink-lesson:/);
+assert.match(tokens, /--cs-ink-path:/);
+assert.match(tokens, /--cs-on-ink-title:/);
+assert.match(tokens, /--cs-on-ink-body:/);
 assert.match(tokens, /@media \(min-width:\s*768px\)/);
 assert.match(tokens, /html\.dark/);
 
-console.log("=== استيراد بعد matte ===");
+console.log("=== استيراد بعد matte / بعد editorial ===");
 assert.match(main, /card-matte-unify\.css/);
 assert.match(main, /card-system\.css/);
+assert.match(main, /modern-islamic-editorial\.css/);
 const matteIdx = main.indexOf("card-matte-unify.css");
-const csIdx = main.indexOf("card-system.css");
+const editorialIdx = main.indexOf("modern-islamic-editorial.css");
+const csIdx = main.lastIndexOf("card-system.css");
 assert.ok(csIdx > matteIdx, "card-system بعد card-matte-unify");
+assert.ok(csIdx > editorialIdx, "card-system بعد editorial حتى تفوز الهوية الداكنة");
 
 console.log("=== أنوع Card System العشرة ===");
 const required = [
@@ -84,5 +93,29 @@ assert.match(css, /\.cs-card:hover/);
 assert.match(css, /filter:\s*none/);
 assert.match(css, /\.cs-card:active/);
 assert.match(css, /aria-pressed="true"/);
+
+console.log("=== زمرد داكن للعناصر الرئيسية · قراءة فاتحة ===");
+assert.match(css, /--cs-ink-hero/);
+assert.match(css, /--cs-ink-topic/);
+assert.match(css, /--cs-ink-lesson/);
+assert.match(css, /--cs-ink-path/);
+assert.match(css, /--cs-on-ink-title/);
+assert.match(css, /\.hub-card:not\(\[data-scripture\]\)[\s\S]*?--cs-ink-topic/);
+assert.match(css, /\.lesson-unified-card[\s\S]*?--cs-ink-lesson/);
+assert.match(css, /\.lpp-path-card[\s\S]*?--cs-ink-path/);
+assert.match(css, /\.cs-hero[\s\S]*?--cs-ink-hero/);
+assert.match(css, /\.topic-page__hero \.topic-page__title/);
+assert.match(css, /--cs-on-ink-title/);
+assert.match(css, /\.hub-card\.soft-card--on-light|--cs-ink-topic/);
+assert.match(css, /background-color:\s*var\(--cs-ink-topic\)/);
+assert.match(css, /background-color:\s*var\(--cs-ink-lesson\)/);
+assert.match(css, /\.hadith-card:not\(\[data-scripture\]\)[\s\S]*?--cs-surface-2/);
+assert.match(css, /\.rsc[\s\S]*?--cs-surface-2/);
+assert.match(css, /\[data-cs-type="reference"\][\s\S]*?--cs-surface-2/);
+assert.doesNotMatch(
+  css,
+  /\.hadith-card:not\(\[data-scripture\]\)[\s\S]{0,200}--cs-ink-/,
+  "حديث ليس على زمرد داكن",
+);
 
 console.log("card-system-gate.test.ts: ok");

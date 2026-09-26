@@ -41,9 +41,12 @@
   --surfaceIslamic: var(--surface-islamic);
   --surfaceHighlighted: var(--surface-highlighted);
 
-  /* ربط soft-card / MSS بالعائلة نفسها */
+  /* ربط soft-card / MSS — هيرو زمرد داكن · نص عاجي */
   --soft-card-on-light-bg: var(--surface-feature);
-  --mss-section-hero-bg: var(--surface-islamic);
+  --mss-section-hero-bg: #0a2f24;
+  --mss-on-hero: #ffffff;
+  --mss-on-hero-muted: #e4ddd0;
+  --mss-on-hero-accent: #f0e2b0;
 }
 
 html[data-theme="dark"],
@@ -67,13 +70,13 @@ html.dark,
 
   --surface-feature-ink: #f3efe6;
   --surface-feature-ink-muted: #d8d0c4;
-  --mss-on-hero: var(--surface-feature-ink);
-  --mss-on-hero-muted: var(--surface-feature-ink-muted);
-  --mss-on-hero-accent: var(--surface-islamic-accent);
+  --mss-on-hero: #ffffff;
+  --mss-on-hero-muted: #e4ddd0;
+  --mss-on-hero-accent: #f0e2b0;
 
   --surface-feature-shadow: 0 6px 16px -14px rgba(0, 0, 0, 0.45);
 
-  --mss-section-hero-bg: var(--surface-islamic);
+  --mss-section-hero-bg: #06241c;
   --soft-card-on-light-bg: var(--surface-feature);
 }
 
@@ -106,35 +109,78 @@ html.dark,
 /* ── بطاقات المحتوى الرئيسية (Legacy → Green Surface) ──
  * يستثنى المصحف/آيات/data-scripture صراحةً.
  */
-.soft-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
-.soft-card--on-light:not([data-scripture]),
-.soft-tile--on-light:not([data-scripture]),
 .hub-card:not([data-legacy-ok]):not([data-scripture]),
 .hub-tile:not([data-scripture]),
 .section-card:not([data-scripture]),
 .section-hub__card:not([data-scripture]),
+.topic-card:not([data-scripture]),
+.mk-topic-card,
+.mk-lane-card,
+.lesson-unified-card,
+.kuwait-lesson-card,
+.fiqh-category-card,
+.fqh-hub-card,
+.twh-hub-card,
+.quran-hub-card,
+.lpp-path-card,
+.iman-topic-card,
+.tawheed-type-card,
+.dii-hub-card,
+.card--featured:not([data-scripture]) {
+  background: var(--cs-ink-topic, #0f3d2e) !important;
+  background-image: none !important;
+  border: 1px solid var(--cs-ink-border, color-mix(in srgb, #d4b45c 28%, #0f3d2e)) !important;
+  border-radius: var(--surface-feature-radius) !important;
+  box-shadow: var(--cs-ink-shadow, var(--surface-feature-shadow)) !important;
+  color: var(--cs-on-ink, #f7f1e4) !important;
+}
+
+.lesson-unified-card,
+.kuwait-lesson-card {
+  background: var(--cs-ink-lesson, #134a38) !important;
+  background-color: var(--cs-ink-lesson, #134a38) !important;
+}
+
+.lpp-path-card {
+  background: var(--cs-ink-path, #0f3d2e) !important;
+  background-color: var(--cs-ink-path, #0f3d2e) !important;
+}
+
+.hub-card__title,
+.section-card__title,
+.lesson-card__title,
+.topic-card__title,
+.lesson-unified-card__title {
+  color: var(--cs-on-ink-title, #ffffff) !important;
+  font-weight: 800;
+}
+
+.hub-card__desc,
+.section-card__desc,
+.lesson-card__meta,
+.topic-card__meta,
+.lesson-unified-card__sheikh,
+.lesson-unified-card__desc {
+  color: var(--cs-on-ink-body, #e4ddd0) !important;
+}
+
+/* قراءة طويلة تبقى فاتحة */
+.soft-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card):not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.section-entry-card),
+.soft-card--on-light:not([data-scripture]):not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.section-entry-card),
+.soft-tile--on-light:not([data-scripture]),
 .ds-card:not([data-scripture]),
 .mj-card:not([data-scripture]),
 .ui-card:not([data-scripture]):not(.mushaf-page):not(.ayah-card),
 .list-card:not([data-scripture]),
 .page-card:not([data-scripture]),
 .content-card:not([data-scripture]),
-.topic-card:not([data-scripture]),
-.mk-topic-card,
 .mk-card,
-.mk-lane-card,
-.lesson-unified-card,
 .lesson-card:not(.lesson-card--legacy-ok):not([data-scripture]),
-.kuwait-lesson-card,
 .hadith-card:not([data-scripture]),
 .hadith-hub-card,
 .hdl-card,
 .fiqh-book-card,
-.fiqh-category-card,
 .fiqh-issue-card,
-.fqh-hub-card,
-.twh-hub-card,
-.quran-hub-card,
 .tarikh-card,
 .seerah-panel,
 .seerah-notice,
@@ -150,7 +196,6 @@ html.dark,
 .nb-azm-card,
 .nb-miracle-card,
 .lib-card,
-.lpp-path-card,
 .settings-card,
 .nf2-card,
 .ads-card,
@@ -175,16 +220,12 @@ html.dark,
 .jnz-card,
 .mw-card,
 .sw-card,
-.iman-topic-card,
-.tawheed-type-card,
-.dii-hub-card,
 .dii-list-card,
 .dii-block,
 .dii-answer-card,
 .about-card,
 .home-daily-card,
 .section-lobby__featured,
-.card--featured:not([data-scripture]),
 .ss-state-card,
 .an-card,
 .tf-card,
@@ -215,7 +256,20 @@ html.dark,
   color: var(--surface-feature-ink) !important;
 }
 
-/* بطاقات معرفة (تعريف / مصادر / منهجية) */
+.hadith-hub-card .hub-card__title,
+.info-card__title,
+.ui-card__title,
+.mj-card__title {
+  color: var(--surface-feature-ink) !important;
+  font-weight: 800;
+}
+
+.ui-card__desc,
+.mj-card__desc,
+.info-card__body,
+.settings-toggle-desc {
+  color: var(--surface-feature-ink-muted) !important;
+}
 .info-card,
 .uq-info-box,
 .uq-dalil-box,
@@ -226,20 +280,25 @@ html.dark,
   border-color: var(--surface-knowledge-border) !important;
 }
 
-/* بطاقات إسلامية مميزة (سيرة / عقيدة / تاريخ / إعجاز) */
+/* بطاقات إسلامية مميزة — زمرد داكن للهوية */
 .seerah-panel,
 .seerah-phase,
 .seerah-timeline,
 .tarikh-card,
 .prophet-lux-card,
-.nb-miracle-card,
+.nb-miracle-card {
+  background: var(--surface-islamic) !important;
+  border-color: var(--surface-islamic-border) !important;
+}
+
 .tawheed-type-card,
 .iman-topic-card,
 .mk-lane-card,
 .section-lobby__featured,
 .card--featured:not([data-scripture]) {
-  background: var(--surface-islamic) !important;
-  border-color: var(--surface-islamic-border) !important;
+  background: var(--cs-ink-topic, #0f3d2e) !important;
+  border-color: var(--cs-ink-border, color-mix(in srgb, #d4b45c 28%, #0f3d2e)) !important;
+  color: var(--cs-on-ink, #f7f1e4) !important;
 }
 
 /* تنبيه حذر — حد موحّد دافئ (بلا شريط جانبي زخرفي) */
@@ -249,11 +308,28 @@ html.dark,
   color: var(--surface-feature-ink) !important;
 }
 
-/* عناوين / أوصاف فوق السطح الأخضر */
+/* عناوين فوق الزمرد الداكن (بطاقات رئيسية) */
 .hub-card__title,
 .section-card__title,
 .lesson-card__title,
 .topic-card__title,
+.lesson-unified-card__title {
+  color: var(--cs-on-ink-title, #ffffff) !important;
+  font-weight: 800;
+}
+
+.hub-card__desc,
+.section-card__desc,
+.lesson-card__meta,
+.topic-card__meta,
+.lesson-unified-card__sheikh,
+.lesson-unified-card__desc,
+.hub-card__meta,
+.hub-card__go {
+  color: var(--cs-on-ink-body, #e4ddd0) !important;
+}
+
+/* عناوين أسطح القراءة الفاتحة */
 .ui-card__title,
 .mj-card__title,
 .hadith-hub-card .hub-card__title,
@@ -262,10 +338,6 @@ html.dark,
   font-weight: 800;
 }
 
-.hub-card__desc,
-.section-card__desc,
-.lesson-card__meta,
-.topic-card__meta,
 .ui-card__desc,
 .mj-card__desc,
 .info-card__body,
@@ -273,8 +345,8 @@ html.dark,
   color: var(--surface-feature-ink-muted) !important;
 }
 
-/* soft-card على سطح فاتح: استخدم رموز العائلة */
-.soft-card--on-light,
+/* soft-card على سطح فاتح: استخدم رموز العائلة — إلا البطاقات الرئيسية الداكنة */
+.soft-card--on-light:not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.section-entry-card),
 .soft-tile--on-light {
   --soft-card-grad: none;
   --soft-tile-grad: none;
@@ -286,8 +358,19 @@ html.dark,
   --soft-tile-bg: var(--surface-knowledge);
 }
 
-html[data-theme="dark"] .soft-card--on-light,
-html.dark .soft-card--on-light,
+.soft-card--on-light.hub-card,
+.soft-card--on-light.lesson-unified-card,
+.soft-card--on-light.lpp-path-card,
+.soft-card--on-light.topic-card,
+.soft-card--on-light.section-entry-card {
+  --soft-card-bg: var(--cs-ink-topic, #0f3d2e);
+  --soft-card-border: var(--cs-ink-border, transparent);
+  --soft-card-shadow: var(--cs-ink-shadow, none);
+  color: var(--cs-on-ink, #f7f1e4);
+}
+
+html[data-theme="dark"] .soft-card--on-light:not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.section-entry-card),
+html.dark .soft-card--on-light:not(.hub-card):not(.lesson-unified-card):not(.lpp-path-card):not(.topic-card):not(.section-entry-card),
 html[data-theme="dark"] .soft-tile--on-light,
 html.dark .soft-tile--on-light {
   --soft-card-grad: none;

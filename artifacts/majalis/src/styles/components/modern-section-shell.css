@@ -10,25 +10,24 @@
  */
 
 :root {
-  --mss-hero-from: #0f4a3a;
-  --mss-hero-mid: #1f6b56;
-  --mss-hero-to: #245f4d;
-  --mss-hero-glow: rgba(210, 180, 93, 0.22);
-  --mss-hero-glow-strong: rgba(210, 180, 93, 0.28);
-  /* soft-hero: نهاري حبر غامق؛ ليلي يُعاد ضبطه في green-surface / premium-dark */
-  --mss-on-hero: #16241e;
-  --mss-on-hero-muted: #3d4f47;
-  --mss-on-hero-accent: #123f2e;
-  /* هيرو الأقسام = Green Surface (islamic) — مرجع السيرة */
-  --mss-section-hero-bg: var(--surface-islamic, color-mix(in srgb, #1f6b56 5.5%, #fffef9));
-  /* هيرو الأقسام = Green Surface (islamic) — مرجع السيرة */
+  --mss-hero-from: #0a2f24;
+  --mss-hero-mid: #0f3d2e;
+  --mss-hero-to: #134a38;
+  --mss-hero-glow: rgba(212, 180, 92, 0.22);
+  --mss-hero-glow-strong: rgba(212, 180, 92, 0.28);
+  /* هيرو زمرد داكن · نص عاجي · Accent ذهبي */
+  --mss-on-hero: #ffffff;
+  --mss-on-hero-muted: #e4ddd0;
+  --mss-on-hero-accent: #f0e2b0;
+  /* هيرو الأقسام = زمرد داكن (هوية رئيسية) */
+  --mss-section-hero-bg: var(--cs-ink-hero, #0a2f24);
   /* نص فوق هيرو أخضر غامق (asp-hero / بطاقات مميزة) */
   --mss-on-dark-hero: #ffffff;
-  --mss-on-dark-hero-muted: #f3efe6;
-  --mss-on-dark-hero-accent: #fff1c4;
+  --mss-on-dark-hero-muted: #e4ddd0;
+  --mss-on-dark-hero-accent: #f0e2b0;
   --mss-radius-hero: 1.35rem;
   --mss-radius-card: 1.15rem;
-  --mss-shadow-hero: 0 16px 40px rgba(15, 74, 58, 0.22);
+  --mss-shadow-hero: 0 16px 40px rgba(10, 47, 36, 0.35);
   --mss-shadow-card: 0 10px 28px rgba(36, 31, 24, 0.08);
   --color-hero-bg: var(--mss-hero-from);
   --color-hero-fg: var(--mss-on-hero);
@@ -238,20 +237,20 @@
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back {
-  color: var(--mss-on-hero, #16241e) !important;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, var(--mj-surface, #fff)) !important;
-  background-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, var(--mj-surface, #fff)) !important;
+  color: var(--mss-on-hero, #ffffff) !important;
+  background: var(--cs-ink-topic, #0f3d2e) !important;
+  background-color: var(--cs-ink-topic, #0f3d2e) !important;
   background-image: none !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent) !important;
+  border-color: color-mix(in srgb, #ffffff 32%, transparent) !important;
 }
 
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn.mj-btn--ghost,
 .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--ghost {
-  color: var(--mss-on-hero, #16241e) !important;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, var(--mj-surface, #fff)) !important;
-  background-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, var(--mj-surface, #fff)) !important;
+  color: var(--mss-on-hero, #ffffff) !important;
+  background: var(--cs-ink-topic, #0f3d2e) !important;
+  background-color: var(--cs-ink-topic, #0f3d2e) !important;
   background-image: none !important;
-  border-color: color-mix(in srgb, var(--mj-brand, #1f6b56) 28%, transparent) !important;
+  border-color: color-mix(in srgb, #ffffff 32%, transparent) !important;
 }
 
 html[data-theme="dark"] .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .page-hero-mj__back,
@@ -289,21 +288,21 @@ html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--gh
 
 .topic-page__eyebrow,
 .topic-page__hero .safe-hero__badge {
-  color: var(--mss-on-hero-accent, #123f2e) !important;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 10%, transparent) !important;
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent);
+  color: var(--mss-on-hero-accent, #f0e2b0) !important;
+  background: color-mix(in srgb, #ffffff 14%, transparent) !important;
+  border: 1px solid color-mix(in srgb, #d4b45c 40%, transparent);
   border-radius: 999px;
   font-weight: 800;
 }
 
 .topic-page__title,
 .topic-page__hero .topic-page__title {
-  color: var(--mss-on-hero, #16241e) !important;
+  color: var(--mss-on-hero, #ffffff) !important;
 }
 
 .topic-page__sub,
 .topic-page__hero .topic-page__sub {
-  color: var(--mss-on-hero-muted, #3d4f47) !important;
+  color: var(--mss-on-hero-muted, #e4ddd0) !important;
 }
 
 .section-hero__icon {
@@ -312,9 +311,9 @@ html.dark .page-hero-mj--bleed:not(.home-page-hero):not(.m2030-hero) .mj-btn--gh
   width: 3rem;
   height: 3rem;
   border-radius: 1rem;
-  background: color-mix(in srgb, var(--mj-brand, #1f6b56) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--mj-brand, #1f6b56) 22%, transparent);
-  color: var(--mss-on-hero-accent, #123f2e);
+  background: color-mix(in srgb, #ffffff 14%, transparent);
+  border: 1px solid color-mix(in srgb, #d4b45c 32%, transparent);
+  color: var(--mss-on-hero-accent, #f0e2b0);
   flex-shrink: 0;
 }
 
