@@ -26,6 +26,12 @@ assert.match(tokens, /--cs-gold:/);
 assert.match(tokens, /--cs-text-primary:/);
 assert.match(tokens, /--cs-text-secondary:/);
 assert.match(tokens, /--cs-text-muted:/);
+assert.match(tokens, /--cs-ink-hero:/);
+assert.match(tokens, /--cs-ink-topic:/);
+assert.match(tokens, /--cs-ink-lesson:/);
+assert.match(tokens, /--cs-ink-path:/);
+assert.match(tokens, /--cs-on-ink-title:/);
+assert.match(tokens, /--cs-on-ink-body:/);
 assert.match(tokens, /@media \(min-width:\s*768px\)/);
 assert.match(tokens, /html\.dark/);
 
@@ -84,5 +90,24 @@ assert.match(css, /\.cs-card:hover/);
 assert.match(css, /filter:\s*none/);
 assert.match(css, /\.cs-card:active/);
 assert.match(css, /aria-pressed="true"/);
+
+console.log("=== زمرد داكن للعناصر الرئيسية · قراءة فاتحة ===");
+assert.match(css, /--cs-ink-hero/);
+assert.match(css, /--cs-ink-topic/);
+assert.match(css, /--cs-ink-lesson/);
+assert.match(css, /--cs-ink-path/);
+assert.match(css, /--cs-on-ink-title/);
+assert.match(css, /\.hub-card:not\(\[data-scripture\]\)[\s\S]*?--cs-ink-topic/);
+assert.match(css, /\.lesson-unified-card[\s\S]*?--cs-ink-lesson/);
+assert.match(css, /\.lpp-path-card[\s\S]*?--cs-ink-path/);
+assert.match(css, /\.cs-hero[\s\S]*?--cs-ink-hero/);
+assert.match(css, /\.hadith-card:not\(\[data-scripture\]\)[\s\S]*?--cs-surface-2/);
+assert.match(css, /\.rsc[\s\S]*?--cs-surface-2/);
+assert.match(css, /\[data-cs-type="reference"\][\s\S]*?--cs-surface-2/);
+assert.doesNotMatch(
+  css,
+  /\.hadith-card:not\(\[data-scripture\]\)[\s\S]{0,200}--cs-ink-/,
+  "حديث ليس على زمرد داكن",
+);
 
 console.log("card-system-gate.test.ts: ok");

@@ -6,15 +6,15 @@
  */
 
 :root {
-  /* طبقات السطح — واضحة وليست أخضر باهت واحد */
+  /* طبقات السطح — للقراءة والمراجع (فاتحة) */
   --cs-surface-1: #f7f4ee;
   --cs-surface-2: #fffcf7;
   --cs-surface-3: #ffffff;
   --cs-primary: #1a5c45;
   --cs-primary-deep: #0f3d2e;
   --cs-primary-soft: color-mix(in srgb, var(--cs-primary) 12%, var(--cs-surface-2));
-  --cs-gold: #b8923a;
-  --cs-gold-ink: #6a5218;
+  --cs-gold: #d4b45c;
+  --cs-gold-ink: #f0e2b0;
   --cs-text-primary: #16241c;
   --cs-text-secondary: #3a4a42;
   --cs-text-muted: #5c6b63;
@@ -23,6 +23,21 @@
   --cs-shadow: 0 1px 2px color-mix(in srgb, var(--cs-primary-deep) 6%, transparent),
     0 6px 18px -10px color-mix(in srgb, var(--cs-primary-deep) 14%, transparent);
   --cs-focus-ring: 2px solid color-mix(in srgb, var(--cs-gold) 70%, var(--cs-primary));
+
+  /* أسطح رئيسية — زمرد داكن (Hero / Topic / Lesson / Path) */
+  --cs-ink-hero: #0a2f24;
+  --cs-ink-topic: #0f3d2e;
+  --cs-ink-lesson: #134a38;
+  --cs-ink-path: #0f3d2e;
+  --cs-ink-border: color-mix(in srgb, #0a2f24 70%, #d4b45c 12%);
+  --cs-on-ink: #f7f1e4;
+  --cs-on-ink-title: #ffffff;
+  --cs-on-ink-body: #e4ddd0;
+  --cs-on-ink-meta: #c9c0ae;
+  --cs-on-ink-icon-bg: color-mix(in srgb, #ffffff 14%, transparent);
+  --cs-on-ink-icon: #f7f1e4;
+  --cs-ink-shadow: 0 1px 2px rgba(0, 0, 0, 0.22),
+    0 10px 24px -12px rgba(10, 47, 36, 0.55);
 
   /* كثافة — هاتف مضغوط */
   --cs-radius: 16px;
@@ -87,6 +102,16 @@ html[data-theme="dark"] {
   --cs-border: color-mix(in srgb, var(--cs-primary) 26%, #2a3531);
   --cs-border-strong: color-mix(in srgb, var(--cs-primary) 40%, #35443f);
   --cs-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 22px -12px rgba(0, 0, 0, 0.55);
+  /* الهوية الداكنة تبقى زمردية عميقة فوق سطح التطبيق الليلي */
+  --cs-ink-hero: #06241c;
+  --cs-ink-topic: #0a2f24;
+  --cs-ink-lesson: #0f3d2e;
+  --cs-ink-path: #0a2f24;
+  --cs-ink-border: color-mix(in srgb, var(--cs-gold) 28%, #0a2f24);
+  --cs-on-ink: #f7f1e4;
+  --cs-on-ink-title: #ffffff;
+  --cs-on-ink-body: #e4ddd0;
+  --cs-on-ink-meta: #c9c0ae;
   --mj-brand-soft: var(--cs-primary-soft);
   --brand-soft: var(--cs-primary-soft);
   --soft-card-bg: var(--cs-surface-2);
